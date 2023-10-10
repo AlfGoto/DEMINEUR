@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares = []
     let isGameOver = false
     let flags = 0
-    let firstSquare = 1
+    let firstSquare = true
+
 
     //create board
     function createBoard() {
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         const shuffledArray = shuffle(gameArray)
 
-        let firstSquare = 1
+        firstSquare = true
 
 
         //créé les squares
@@ -69,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === 379 && squares[i  +20].classList.contains('bomb')) total++
                 if (i === 378 && squares[i  +21].classList.contains('bomb')) total++
                 squares[i].setAttribute('data', total)
-                console.log(squares[i])
             }
         }
 
@@ -99,21 +99,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //click on square action
     function click(square){
+        console.log(click)
         let currentId = square.id
-        if ((firstSquare === 1) && square.classList.contains('bomb')) {
+        let total = square.getAttribute('data')
+        if (firstSquare === true) {
+            if (square.classList.contains('bomb')){
+                restart()
+                let squareRestart = document.getElementById(currentId)
+                click(squareRestart)
+                return
+            }else if(total !=0){
+                restart()
+                let squareRestart = document.getElementById(currentId)
+                click(squareRestart)
+            } 
         }
+        firstSquare = false
         if (isGameOver) return
         if (square.classList.contains('checked') || square.classList.contains('flag')) return
         if (square.classList.contains('bomb')) {
+            console.log('UNE BOMBE A EXPLOSE')
             alert('Game over')
             isGameOver = true
         }else {
-            let total = square.getAttribute('data')
             if (total !=0) {
                 square.classList.add('checked')
                 square.innerHTML = total
-                firstSquare = 0
-                console.log(firstSquare)
                 checkForWin()
                 return
             }
@@ -151,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
             }
-            if(currentId < 398 && !isRightEdge) {
+            if(currentId <= 399 && !isRightEdge) {
                 const newId = squares[parseInt(currentId) +1].id
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
@@ -171,21 +182,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
             }
-            if (currentId === 398){
+            if(currentId == 398){
                 const newId = squares[parseInt(currentId) +1].id
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
-            } 
-            if (currentId === 379) {
-                const newId = squares[parseInt(currentId) +20].id
+            }
+            if(currentId == 379){
+                const newId = squares[parseInt(currentId) +width].id
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
-            } 
-            if (currentId === 378) {
-                const newId = squares[parseInt(currentId) +21].id
+            }
+            if(currentId == 378){
+                const newId = squares[parseInt(currentId) +width +1].id
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
-            } 
+            }
+ 
+ 
+            
+            
 
         }, 10)
     }
@@ -228,9 +243,17 @@ document.addEventListener('DOMContentLoaded', () => {
         isGameOver = false
         createBoard()
     })
-    
 
-    
+    function restart(){
+        grid.innerHTML = ''
+        flags = 0
+        squares.length = 0
+        isGameOver = false
+        createBoard()
+        console.log('RESTART')
+    }
+
+  
 
 
 
