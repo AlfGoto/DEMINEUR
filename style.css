@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+}
+
+.grid{
+    height: 800px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: grey;
+}
+
+.grid div {
+    height: 40px;
+    width: 40px;
+    border: white solid 1px;
+    text-align: center;
+    font-size: 200%;
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+
+.checked{
+    background-color: white;
+}
+ .bomb{
+    background-color: orange;
+ }
+
+  #buttonRestart{
+    height: 400%;
+    width: 300px;
+    font-size: 400%;
+    text-align: center;
+    background-color: orange;
+  }
