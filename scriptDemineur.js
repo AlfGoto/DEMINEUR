@@ -28,13 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
         firstSquare = true
 
 
-        //créé les squares
+        //create squares
         for(let i = 0; i < width*width; i++) {
             const square = document.createElement('div');
             square.setAttribute('id', i)
             square.classList.add(shuffledArray[i])
             grid.appendChild(square);
             squares.push(square);
+
+
+            //squares grid
+            if(i<20 || (i>39 && i<60) || (i>39 && i<60) || (i>79 && i<100) || (i>119 && i<140) || (i>159 && i<180) || (i>199 && i<220) || (i>239 && i<260) || (i>279 && i<300)|| (i>319 && i<340) || (i>359 && i<380)){
+                if(i%2 == 0){
+                    square.classList.add('green')
+                }else{
+                    square.classList.add('lightGreen')
+                }
+            }
+            if((i>19 && i<40) || (i>59 && i<80) || (i>19 && i<40) || (i>99 && i<120)|| (i>139 && i<160) || (i>179 && i<200) || (i>219 && i<240)|| (i>259 && i<280) || (i>299 && i<320) || (i>339 && i<360) || (i>379 && i<400)){
+                if(i%2 == 0){
+                    square.classList.add('lightGreen')
+                }else{
+                    square.classList.add('green')
+                }
+            }
+        
+
+
+
+
 
             //normal click
             square.addEventListener('mousedown', function(e) {
@@ -124,11 +146,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }else {
             if (total !=0) {
                 square.classList.add('checked')
+                if(square.classList.contains('green')){
+                    square.classList.remove('green')
+                    square.classList.add('gray')
+                }else{
+                    square.classList.remove('lightGreen')
+                    square.classList.add('silver')
+                }
+
                 square.innerHTML = total
                 checkForWin()
                 return
             }
             checkSquare(square, currentId) 
+            if(square.classList.contains('green')){
+                square.classList.remove('green')
+                square.classList.add('gray')
+            }else{
+                square.classList.remove('lightGreen')
+                square.classList.add('silver')
+            }
         }
         square.classList.add('checked')
         checkForWin()
@@ -136,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
-    //check les carrés voisins quand le carré est cliqué
+    //check neighbourg squares
     function checkSquare(square, currentId) {
         const isLeftEdge = (currentId % width === 0)
         const isRightEdge = (currentId % width === width -1)
