@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isGameOver = false
     let flags = 0
     let firstSquare = true
+    let total = 0
 
 
     //create board
@@ -66,16 +67,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             })
 
+            //right click
+            square.addEventListener('mousedown', function(e) {
+                if (e.button === 2 ){
+                    e.preventDefault()
+                    addFlag(square)
+                }
+                
+            })
+
+            //left and right click
+            let rightClick = false
+            let leftClick = false
+            square.addEventListener('mousedown', function(f) {
+                if (f.button === 2){
+                    rightClick = true
+                }
+                if (f.button === 0){
+                    leftClick = true
+                }
+                if ((leftClick == true) && (rightClick == true)){
+                    leftRightClick(i, square)
+                }
+            })
+            square.addEventListener('mouseup', function(g){
+                if (g.button === 2){
+                    rightClick = false
+                }
+                if (g.button === 0){
+                    leftClick = false
+                }
+            })
+
+
             //cntrl and left click
             square.oncontextmenu = function(e) {
                 e.preventDefault()
-                addFlag(square)
             }
         }
 
         //numbers on square
         for (let i = 0; i < squares.length; i++) {
-            let total = 0
+            total = 0
             const isLeftEdge = (i % width === 0)
             const isRightEdge = (i % width === width -1)
 
@@ -114,6 +147,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.classList.remove('flag')
                 square.innerHTML = ''
                 flags --
+            }
+        }
+    }
+
+
+    //left and right Click
+    function leftRightClick(i, square){
+        console.log('leftRightClick function   data = '+i)
+        let bombAround = square.getAttribute('data')
+        let totalFlags = 0
+        const isLeftEdge = (i % width === 0)
+        const isRightEdge = (i % width === width -1)
+        if (bombAround > 0) { console.log('total plus grand que zero')
+            if (i > 0 && !isLeftEdge && squares[i -1].classList.contains('flag')) totalFlags++
+            if (i > 19 && !isRightEdge && squares[i +1 -width].classList.contains('flag')) totalFlags++
+            if (i > 20 && squares[i - width].classList.contains('flag')) totalFlags++
+            if (i > 21 && !isLeftEdge && squares[i  -1 -width].classList.contains('flag')) totalFlags++
+            if (i < 398 && !isRightEdge && squares[i  +1].classList.contains('flag')) totalFlags++
+            if (i < 380 && !isLeftEdge && squares[i  -1 +width].classList.contains('flag')) totalFlags++
+            if (i < 378 && !isRightEdge && squares[i  +1 +width].classList.contains('flag')) totalFlags++
+            if (i < 379 && squares[i  +width].classList.contains('flag')) totalFlags++
+            if (i === 398 && squares[i  +1].classList.contains('flag')) totalFlags++
+            if (i === 379 && squares[i  +20].classList.contains('flag')) totalFlags++
+            if (i === 378 && squares[i  +21].classList.contains('flag')) totalFlags++
+            if (totalFlags == bombAround){
+                console.log('click autour leftright click')
+                click(squares[i -1])
+                click(squares[i +1 -width])
+                click(squares[i - width])
+                click(squares[i  -1 -width])
+                click(squares[i  +1])
+                click(squares[i  -1 +width])
+                click(squares[i  +1 +width])
+                click(squares[i  +width])
             }
         }
     }
@@ -256,19 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
     }
-
-
-
-    //reloadscript
-    function reloadScript() {
-        with(document) {
-         var newscr = createElement('script');
-         newscr.id = 'demineurScript';
-         newscr.appendChild(createTextNode(getElementById('demineurScript').innerHTML));
-         body.removeChild(getElementById('demineurScript'));
-         body.appendChild(newscr);
-        }
-       }
 
 
     //restart
