@@ -7,14 +7,24 @@
 </head>
 
 
-<body>
+<body class="bodyMain">
  <div class="grid">
  </div>
  <div id="divInterfaceDemineur">
-  <button class="button" type="button" id="buttonRestart">Restart</button>
+  <button class="button" type="button" id="theBigOne">Restart</button>
  </div>
- <div id="timerDemineur">
-  <p>0</p>
+ <div class="hidden" id="timerDemineur">
+  <p></p>
+ </div>
+ <div id="InterfaceEndGame">
+  <div class="hidden" id="interfaceVictory">
+    <p>Victoire !</p>
+    <button class="button" type="button" id="victoryButton">Restart</button>
+  </div>
+  <div class="hidden" id="interfaceLose" class="visible">
+    <p>Tu as fais sauter une bombe</p>
+    <button class="button" type="button" id="loseButton">Restart</button>
+  </div>
  </div>
 </body>
 

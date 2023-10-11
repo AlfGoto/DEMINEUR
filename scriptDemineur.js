@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstSquare = true
     let total = 0
 
+    //timmer declaration
+    let timer;
+    let startTime;
+    let elapsedTime = 0;
+    let isRunning = false;
+    let timerHTML = document.getElementById('timerDemineur')
 
     //create board
     function createBoard() {
@@ -212,7 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (square.classList.contains('checked') || square.classList.contains('flag')) return
         if (square.classList.contains('bomb')) {
             console.log('UNE BOMBE A EXPLOSE')
-            alert('Game over')
+            let loseInterface = document.getElementById('interfaceLose')
+            loseInterface.classList.remove('hidden')
+            loseInterface.classList.add('visible')
             stopTimer()
             isGameOver = true
         }else {
@@ -325,7 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (matches === (width*width-bombAmount)) {
                 stopTimer()
-                alert('YOU WIN')
+                let victoryInterface = document.getElementById('interfaceVictory')
+                victoryInterface.classList.remove('hidden')
+                victoryInterface.classList.add('visible')
                 isGameOver = true
             }
         }
@@ -334,57 +344,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //restart
-    const buttonRestart = document.getElementById('buttonRestart')
-    buttonRestart.addEventListener("click", function(){
-        grid.innerHTML = ''
-        flags = 0
-        squares.length = 0
-        isGameOver = false
-        createBoard()
-    })
-
     function restart(){
         grid.innerHTML = ''
         flags = 0
         squares.length = 0
         isGameOver = false
+        stopTimer()
+        resetTimer()
         createBoard()
-        console.log('RESTART')
+        let victoryInterface = document.getElementById('interfaceVictory')
+        victoryInterface.classList.remove('visible')
+        victoryInterface.classList.add('hidden')
+        let loseInterface = document.getElementById('interfaceLose')
+        loseInterface.classList.remove('visible')
+        loseInterface.classList.add('hidden')
     }
+    const theBigOne = document.getElementById('theBigOne')
+    theBigOne.addEventListener("click", ()=>{restart()})
 
+    const victoryButton = document.getElementById('victoryButton')
+    victoryButton.addEventListener("click", ()=>{restart()})
 
-    //timer
-let timer;
-let startTime;
-let elapsedTime = 0;
-let isRunning = false;
-let timerHTML = document.getElementById('timerDemineur')
+    const loseButton = document.getElementById('loseButton')
+    loseButton.addEventListener("click", ()=>{restart()})
 
-function startTimer() {
-    if (!isRunning) {
-        isRunning = true;
-        startTime = Date.now() - elapsedTime;
-        timer = setInterval(function() {
-            const now = Date.now();
-            elapsedTime = now - startTime;
-            const seconds = Math.floor(elapsedTime / 1000);
-            const milliseconds = elapsedTime % 1000;
-            timerHTML.innerHTML = seconds + '.' + milliseconds
-    })
+        //timer
+    function startTimer() {
+        if (!isRunning) {
+            isRunning = true;
+            startTime = Date.now() - elapsedTime;
+            timer = setInterval(function() {
+                const now = Date.now();
+                elapsedTime = now - startTime;
+                const seconds = Math.floor(elapsedTime / 1000);
+                const milliseconds = elapsedTime % 1000;
+                timerHTML.classList.remove('hidden')
+                timerHTML.classList.add('visible')
+                timerHTML.innerHTML = seconds + '.' + milliseconds
+            })
+        }
     }
-}
-
-function stopTimer() {
-    if (isRunning) {
-        isRunning = false;
+    
+    function stopTimer() {
+        if (isRunning) {
+            isRunning = false;
+            clearInterval(timer);
+            timerHTML.classList.remove('visible')
+            timerHTML.classList.add('hidden')
+        }
+    }
+    function resetTimer() {
         clearInterval(timer);
+        isRunning = false;
+        elapsedTime = 0;
+        console.log("Timer reset");
     }
-}
-
-function resetTimer() {
-    clearInterval(timer);
-    isRunning = false;
-    elapsedTime = 0;
-    console.log("Timer réinitialisé.");
-}
 })
