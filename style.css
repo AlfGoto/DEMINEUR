@@ -40,8 +40,15 @@
     background-color: lightgreen;
   }
   .gray{
-    background-color: darkgray;
+    background-color: tan;
   }
   .silver{
-    background-color: silver;
+    background-color: wheat;
+  }
+
+  #timerDemineur{
+    position: relative;
+    left: 500px;
+    bottom: 10px;
+    font-size: 60px;
   }

@@ -203,12 +203,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 click(squareRestart)
             } 
         }
-        firstSquare = false
+        if(firstSquare === true){
+            firstSquare = false
+            startTimer()
+        }
+        
         if (isGameOver) return
         if (square.classList.contains('checked') || square.classList.contains('flag')) return
         if (square.classList.contains('bomb')) {
             console.log('UNE BOMBE A EXPLOSE')
             alert('Game over')
+            stopTimer()
             isGameOver = true
         }else {
             if (total !=0) {
@@ -220,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     square.classList.remove('lightGreen')
                     square.classList.add('silver')
                 }
-
                 square.innerHTML = total
                 checkForWin()
                 return
@@ -235,6 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         square.classList.add('checked')
+        if(firstSquare === true){
+            startTimer()
+        }
         checkForWin()
     }
 
@@ -317,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 matches++
             }
             if (matches === (width*width-bombAmount)) {
+                stopTimer()
                 alert('YOU WIN')
                 isGameOver = true
             }
@@ -344,9 +352,39 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('RESTART')
     }
 
-  
 
+    //timer
+let timer;
+let startTime;
+let elapsedTime = 0;
+let isRunning = false;
+let timerHTML = document.getElementById('timerDemineur')
 
+function startTimer() {
+    if (!isRunning) {
+        isRunning = true;
+        startTime = Date.now() - elapsedTime;
+        timer = setInterval(function() {
+            const now = Date.now();
+            elapsedTime = now - startTime;
+            const seconds = Math.floor(elapsedTime / 1000);
+            const milliseconds = elapsedTime % 1000;
+            timerHTML.innerHTML = seconds + '.' + milliseconds
+    })
+    }
+}
 
-    
+function stopTimer() {
+    if (isRunning) {
+        isRunning = false;
+        clearInterval(timer);
+    }
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    elapsedTime = 0;
+    console.log("Timer réinitialisé.");
+}
 })
