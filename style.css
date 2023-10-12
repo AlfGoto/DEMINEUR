@@ -136,3 +136,27 @@
   visibility: visible;
   z-index: 100;
 }
+.data1{
+  color: rgb(0,0,0);
+}
+.data2{
+  color: rgb(24,24,24);
+}
+.data3{
+  color: rgb(48,48,48);
+}
+.data4{
+  color: rgb(72,72,72);
+}
+.data5{
+  color: rgb(96,96,96);
+}
+.data6{
+  color: rgb(112,112,112);
+}
+.data7{
+  color: rgb(136,136,136);
+}
+.data8{
+  color: rgb(160,160,160);
+}

@@ -135,6 +135,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === 20 && squares[i  -19].classList.contains('bomb')) total++
                 if (i === 21 && squares[i  -20].classList.contains('bomb')) total++
                 squares[i].setAttribute('data', total)
+
+                //differents colors for the numbers
+                switch(total){
+                    case 1:
+                        squares[i].classList.add('data1')
+                        break;
+                    case 2:
+                        squares[i].classList.add('data2')
+                        break;
+                    case 3:
+                        squares[i].classList.add('data3')
+                        break;
+                    case 4:
+                        squares[i].classList.add('data4')
+                        break;
+                    case 5:
+                        squares[i].classList.add('data5')
+                        break;
+                    case 6:
+                        squares[i].classList.add('data6')
+                        break;
+                    case 7:
+                        squares[i].classList.add('data7')
+                        break;
+                    case 8:
+                        squares[i].classList.add('data8')
+                        break;
+                    default: 
+                        console.log('pas de couleur differentes sur les chiffres deso') 
+
+                }
             }
         }
 
@@ -181,15 +212,41 @@ document.addEventListener('DOMContentLoaded', () => {
             if (i === 379 && squares[i  +20].classList.contains('flag')) totalFlags++
             if (i === 378 && squares[i  +21].classList.contains('flag')) totalFlags++
             if (totalFlags == bombAround){
-                console.log('click autour leftright click')
-                click(squares[i -1])
-                click(squares[i +1 -width])
-                click(squares[i - width])
-                click(squares[i  -1 -width])
-                click(squares[i  +1])
-                click(squares[i  -1 +width])
-                click(squares[i  +1 +width])
-                click(squares[i  +width])
+                if(isLeftEdge){
+                    click(squares[i +1 -width])
+                    click(squares[i - width])
+                    click(squares[i  +1])
+                    click(squares[i  +1 +width])
+                    click(squares[i  +width])
+                }else if(isRightEdge){
+                    click(squares[i -1])
+                    click(squares[i - width])
+                    click(squares[i  -1 -width])
+                    click(squares[i  -1 +width])
+                    click(squares[i  +width])
+                }else if(i<20){
+                    click(squares[i -1])
+                    click(squares[i  +1])
+                    click(squares[i  -1 +width])
+                    click(squares[i  +1 +width])
+                    click(squares[i  +width])
+                }else if(i<400 && i>379){
+                    click(squares[i -1])
+                    click(squares[i +1 -width])
+                    click(squares[i - width])
+                    click(squares[i  -1 -width])
+                    click(squares[i  +1])
+                }else{
+                    click(squares[i -1])
+                    click(squares[i +1 -width])
+                    click(squares[i - width])
+                    click(squares[i  -1 -width])
+                    click(squares[i  +1])
+                    click(squares[i  -1 +width])
+                    click(squares[i  +1 +width])
+                    click(squares[i  +width])
+                }
+                
             }
         }
     }
