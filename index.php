@@ -19,6 +19,7 @@
  <div id="InterfaceEndGame">
   <div class="hidden" id="interfaceVictory">
     <p>Victoire !</p>
+    <p id='timerVictory'></p>
     <button class="button" type="button" id="victoryButton">Restart</button>
   </div>
   <div class="hidden" id="interfaceLose" class="visible">

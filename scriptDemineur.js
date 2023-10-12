@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let width = 20
-    let bombAmount = 20
+    let bombAmount = 90
     let squares = []
     let isGameOver = false
     let flags = 0
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let elapsedTime = 0;
     let isRunning = false;
     let timerHTML = document.getElementById('timerDemineur')
+    let now;
 
     //create board
     function createBoard() {
@@ -130,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === 398 && squares[i  +1].classList.contains('bomb')) total++
                 if (i === 379 && squares[i  +20].classList.contains('bomb')) total++
                 if (i === 378 && squares[i  +21].classList.contains('bomb')) total++
+                if (i === 2 && squares[i  -1].classList.contains('bomb')) total++
+                if (i === 20 && squares[i  -19].classList.contains('bomb')) total++
+                if (i === 21 && squares[i  -20].classList.contains('bomb')) total++
                 squares[i].setAttribute('data', total)
             }
         }
@@ -160,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //left and right Click
     function leftRightClick(i, square){
-        console.log('leftRightClick function   data = '+i)
         let bombAround = square.getAttribute('data')
         let totalFlags = 0
         const isLeftEdge = (i % width === 0)
@@ -337,6 +340,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 victoryInterface.classList.remove('hidden')
                 victoryInterface.classList.add('visible')
                 isGameOver = true
+
+                //timer in victory interface
+                let timerVictory = document.getElementById('timerVictory')
+                elapsedTime = now - startTime;
+                const seconds = Math.floor(elapsedTime / 1000);
+                const milliseconds = elapsedTime % 1000;
+                timerVictory.innerHTML = seconds + '.' + milliseconds
             }
         }
         
@@ -374,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isRunning = true;
             startTime = Date.now() - elapsedTime;
             timer = setInterval(function() {
-                const now = Date.now();
+                now = Date.now();
                 elapsedTime = now - startTime;
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;

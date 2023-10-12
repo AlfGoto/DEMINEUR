@@ -48,15 +48,19 @@
 
 .green{
   background-color: limegreen;
+  filter: contrast(80%);
 }
 .lightGreen{
   background-color: lightgreen;
+  filter: contrast(80%);
 }
 .gray{
   background-color: tan;
+  filter: contrast(80%);
 }
 .silver{
   background-color: wheat;
+  filter: contrast(80%);
 }
 
 #timerDemineur{
@@ -75,11 +79,11 @@
 #interfaceVictory{
   margin: 0 auto;
   position: absolute;
-  top: 30%;
+  top: 20%;
   left: 39.5%;
   border: solid gray 2px;
   border-radius: 5%;
-  height: 300px;
+  height: 350px;
   width: 400px;
   padding: 10px;
   text-align: center;
