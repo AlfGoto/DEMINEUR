@@ -151,11 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!square.classList.contains('checked') && (flags < bombAmount)) {
             if (!square.classList.contains('flag')) {
                 square.classList.add('flag')
-                square.innerHTML = 'F'
+                square.innerHTML = `<img class='imageFlag' src='image/flag.png'></img>`
                 flags++
             } else {
                 square.classList.remove('flag')
-                square.innerHTML = ''
+                square.innerHTML = ' '
                 flags --
             }
         }
