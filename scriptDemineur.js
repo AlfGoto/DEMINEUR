@@ -131,9 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === 398 && squares[i  +1].classList.contains('bomb')) total++
                 if (i === 379 && squares[i  +20].classList.contains('bomb')) total++
                 if (i === 378 && squares[i  +21].classList.contains('bomb')) total++
-                if (i === 2 && squares[i  -1].classList.contains('bomb')) total++
-                if (i === 20 && squares[i  -19].classList.contains('bomb')) total++
-                if (i === 21 && squares[i  -20].classList.contains('bomb')) total++
+                if (i === 21 && squares[i  -21].classList.contains('bomb')) total++
+                if (i === 20 && squares[i  -20].classList.contains('bomb')) total++
                 squares[i].setAttribute('data', total)
 
                 //differents colors for the numbers
@@ -162,8 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 8:
                         squares[i].classList.add('data8')
                         break;
-                    default: 
-                        console.log('pas de couleur differentes sur les chiffres deso') 
 
                 }
             }
@@ -236,6 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     click(squares[i - width])
                     click(squares[i  -1 -width])
                     click(squares[i  +1])
+                }else if(i == 0){
+                    click(squares[i  +1])
+                    click(squares[i  +1 +width])
+                    click(squares[i  +width])
                 }else{
                     click(squares[i -1])
                     click(squares[i +1 -width])
@@ -373,6 +374,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if(currentId == 378){
                 const newId = squares[parseInt(currentId) +width +1].id
+                const newSquare = document.getElementById(newId)
+                click(newSquare)
+            }
+            if(currentId == 20){
+                const newId = squares[parseInt(currentId) -width].id
+                const newSquare = document.getElementById(newId)
+                click(newSquare)
+            }
+            if(currentId == 21){
+                const newId = squares[parseInt(currentId) -width -1].id
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
             }
