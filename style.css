@@ -80,12 +80,12 @@
 }
 .gray{
   background-color: tan;
-  filter: contrast(80%);
+  filter: contrast(90%);
   animation: animChecked 0.1s;
 }
 .silver{
   background-color: wheat;
-  filter: contrast(80%);
+  filter: contrast(90%);
   animation: animChecked 0.1s;
 }
 
@@ -101,7 +101,10 @@
   height: auto;
   height: 80px;
 }
+
+
 #interfaceVictory{
+  user-select: none;
   margin: 0 auto;
   position: absolute;
   top: 20%;
@@ -127,6 +130,7 @@
 }
 
 #interfaceLose{
+  user-select: none;
   margin: 0 auto;
   position: absolute;
   top: 30%;
@@ -182,4 +186,21 @@
 }
 .data8{
   color: rgb(160,160,160);
+}
+
+
+#loginDiv{
+  position: absolute;
+  top: 450px;
+}
+#registerDiv{
+  position: absolute;
+  top: 150px;
+}
+.loginAndRegisterDiv{
+  border: solid black 2px;
+  font-family: Arial, Helvetica, sans-serif;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255,250,250, 0.2);
+  padding: 10px;
 }
