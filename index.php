@@ -1,6 +1,13 @@
 <?php
 
-$is_logged = false;
+session_start();
+
+
+if(isset($_COOKIE['pseudo']) == true){
+  $_SESSION['isLogged'] = true;
+  $_SESSION['user'] = $_COOKIE['pseudo'];
+  echo "Hello ". $_SESSION['user'];
+}
 
 ?>
 
@@ -51,7 +58,7 @@ $is_logged = false;
       <label id='loginCookieLabel'>Remember this computer for a year?</label>
       <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
     </div>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Login">
   </form>
   <p id='goToRegister'>Register</p>
  </div>
@@ -72,7 +79,7 @@ $is_logged = false;
       <label id='registerCookieLabel'>Remember this computer for a year ?</label>
       <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
     </div>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Register">
   </form>
   <p id='goToLogin'>Login</p>
  </div>
@@ -83,8 +90,6 @@ $is_logged = false;
 
 
 </body>
-
-
 
 
 </html>
