@@ -8,11 +8,12 @@ $is_logged = false;
 if(isset($_COOKIE['pseudo']) == true){
   $_SESSION['isLogged'] = true;
   $_SESSION['user'] = $_COOKIE['pseudo'];
-  echo "Hello ". $_SESSION['user'];
   $is_logged = true;
 }
 
+
 $is_logged = false;
+
 #Transfer the variables to JS
 echo "<script>var isLogged = '$is_logged';</script>";
 if(isset($_SESSION['user']) == true){
@@ -60,39 +61,39 @@ if(isset($_SESSION['user']) == true){
  <h2 id='loginTitle'>Login</h2>
   <form id='loginForm' method='post'>
     <div id='loginPseudoDiv'>
-      <label id='loginPseudoLabel'>Pseudo</label>
-      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10'></input>
+      <label id='loginPseudoLabel'>Pseudo : </label>
+      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10' class='textInput'></input>
     </div>
     <div id='loginPasswordDiv'>
-      <label id='loginPasswordLabel'>Password</label>
-      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10'></input>
+      <label id='loginPasswordLabel'>Password : </label>
+      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10' class='textInput'></input>
     </div>
     <div id='loginCookieDiv'>
       <label id='loginCookieLabel'>Remember this computer for a year?</label>
       <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
     </div>
-    <input type="submit" value="Login">
+    <input type="submit" value="Login" class='submitButton'>
   </form>
-  <p id='goToRegister'>Register</p>
+  <p id='goToRegister'>Create your account</p>
  </div>
  
  <div id='registerDiv' class='loginAndRegisterDiv'>
-  <h2 id='registerTitle'>Register</h2>
+  <h2 id='registerTitle'>Create your account</h2>
   <form id='registerForm' method='post'>
     <div id='registerPseudoDiv'>
-      <label id='registerPseudoLabel'>Pseudo</label>
-      <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='10'></input>
+      <label id='registerPseudoLabel'>Pseudo : </label>
+      <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='10' class='textInput'></input>
     </div>
     <div id='registerPasswordDiv'>
-      <label id='registerPasswordLabel'>Password</label>
-      <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='10'></input>
+      <label id='registerPasswordLabel'>Password : </label>
+      <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='10' class='textInput'></input>
       <p>don't put your usual password, <br/> i'm still working on making this site ultra safe</p>
     </div>
     <div id='registerCookieDiv'>
       <label id='registerCookieLabel'>Remember this computer for a year ?</label>
       <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
     </div>
-    <input type="submit" value="Register">
+    <input type="submit" value="Register" class='submitButton'>
   </form>
   <p id='goToLogin'>Login</p>
  </div>
