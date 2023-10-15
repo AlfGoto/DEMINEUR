@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if(isset($_POST['registerCookie'])){
         if(isset($_COOKIE['pseudo']) == false){
           setcookie('pseudo', $registerPseudo, time() + (365*24*60*60));
+          echo 'Cookie set';
         }
       }
     }
@@ -65,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST['loginCookie'])){
           if(isset($_COOKIE['pseudo']) == false){
             setcookie('pseudo', $loginPseudo, time() + (365*24*60*60));
+            echo 'Cookie set';
           }
         }
       }else{

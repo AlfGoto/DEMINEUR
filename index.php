@@ -3,16 +3,29 @@
 session_start();
 
 
+$is_logged = false;
+
 if(isset($_COOKIE['pseudo']) == true){
   $_SESSION['isLogged'] = true;
   $_SESSION['user'] = $_COOKIE['pseudo'];
   echo "Hello ". $_SESSION['user'];
+  $is_logged = true;
+}
+
+$is_logged = false;
+#Transfer the variables to JS
+echo "<script>var isLogged = '$is_logged';</script>";
+if(isset($_SESSION['user']) == true){
+  $sessionPseudo = $_SESSION['user'];
+  echo "<script>var sessionPseudo = '$sessionPseudo';</script>";
 }
 
 ?>
 
 <!DOCTYPE html>
 <html>
+
+<script src='loginInterface.js'></script>
 
 <head>
   <link href="./style.css" rel="stylesheet"></link>
@@ -86,6 +99,10 @@ if(isset($_COOKIE['pseudo']) == true){
  <?php
  include "loginRegister.php"
  ?>
+</div>
+
+<div id='loggedInterface'>
+  <p>Logged as <? echo $_SESSION['user'] ?></p>
 </div>
 
 
