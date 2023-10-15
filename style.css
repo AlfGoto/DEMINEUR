@@ -6,6 +6,10 @@
   background-size: 105%;
 }
 
+.notSelectable{
+  user-select: none;
+}
+
 .grid{
   height: 800px;
   width: 800px;
@@ -200,6 +204,11 @@
   margin: 10px;
   font-size: 16px;
 }
+#loginRegisterInterface{
+  position: absolute;
+  left: 40%;
+  top: 150px;
+}
 .loginAndRegisterDiv{
   text-align: center;
   z-index: 20;
@@ -208,10 +217,6 @@
   backdrop-filter: blur(3px);
   background-color: rgba(255,250,250, 0.2);
   padding: 10px;
-  position: absolute;
-  left: 40%;
-  top: 150px;
-  height: 330px;
   width: 400px;
 }
 #goToLogin{
@@ -232,6 +237,26 @@
   padding: 5px;
   user-select: none;
 }
+.registerDivOpen{
+  position: relative;
+  height: 280px;
+}
+.registerDivClosed{
+  position: relative;
+  height: 100px;
+}
+.loginDivOpen{
+  position: relative;
+  height: 280px;
+  top: 5px;
+}
+.loginDivClosed{
+  position: relative;
+  height: 100px;
+  top: 5px;
+}
+
+
 #loggedInterface{
   position: absolute;
   top: 10px;

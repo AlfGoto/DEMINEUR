@@ -12,7 +12,6 @@ if(isset($_COOKIE['pseudo']) == true){
 }
 
 
-$is_logged = false;
 
 #Transfer the variables to JS
 echo "<script>var isLogged = '$is_logged';</script>";
@@ -57,46 +56,51 @@ if(isset($_SESSION['user']) == true){
 
 
 <div id='loginRegisterInterface'>
- <div id='loginDiv' class='loginAndRegisterDiv'>
- <h2 id='loginTitle'>Login</h2>
-  <form id='loginForm' method='post'>
-    <div id='loginPseudoDiv'>
-      <label id='loginPseudoLabel'>Pseudo : </label>
-      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10' class='textInput'></input>
-    </div>
-    <div id='loginPasswordDiv'>
-      <label id='loginPasswordLabel'>Password : </label>
-      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10' class='textInput'></input>
-    </div>
-    <div id='loginCookieDiv'>
-      <label id='loginCookieLabel'>Remember this computer for a year?</label>
-      <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
-    </div>
-    <input type="submit" value="Login" class='submitButton'>
-  </form>
-  <p id='goToRegister'>Create your account</p>
- </div>
- 
- <div id='registerDiv' class='loginAndRegisterDiv'>
-  <h2 id='registerTitle'>Create your account</h2>
-  <form id='registerForm' method='post'>
+<div id='registerDiv' class='loginAndRegisterDiv registerDivOpen'>
+  <h2 class='notSelectable' id='registerTitle'>Create your account</h2>
+  <div id='registerContent'>
+    <form id='registerForm' method='post'>
     <div id='registerPseudoDiv'>
-      <label id='registerPseudoLabel'>Pseudo : </label>
+      <label class='notSelectable' id='registerPseudoLabel'>Pseudo : </label>
       <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='10' class='textInput'></input>
     </div>
     <div id='registerPasswordDiv'>
-      <label id='registerPasswordLabel'>Password : </label>
+      <label class='notSelectable' id='registerPasswordLabel'>Password : </label>
       <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='10' class='textInput'></input>
-      <p>don't put your usual password, <br/> i'm still working on making this site ultra safe</p>
+      <p class='notSelectable'>don't put your usual password, <br/> i'm still working on making this site ultra safe</p>
     </div>
     <div id='registerCookieDiv'>
-      <label id='registerCookieLabel'>Remember this computer for a year ?</label>
+      <label class='notSelectable' id='registerCookieLabel'>Remember this computer for a year ?</label>
       <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
     </div>
     <input type="submit" value="Register" class='submitButton'>
   </form>
-  <p id='goToLogin'>Login</p>
+</div>
+  <!-- <p id='goToLogin'>Login</p> -->
  </div>
+
+ <div id='loginDiv' class='loginAndRegisterDiv loginDivOpen'>
+  <h2 class='notSelectable' id='loginTitle'>Login</h2>
+  <div id='loginContent'>
+    <form id='loginForm' method='post'>
+    <div id='loginPseudoDiv'>
+      <label class='notSelectable' id='loginPseudoLabel'>Pseudo : </label>
+      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10' class='textInput'></input>
+    </div>
+    <div id='loginPasswordDiv'>
+      <label class='notSelectable' id='loginPasswordLabel'>Password : </label>
+      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10' class='textInput'></input>
+    </div>
+    <div id='loginCookieDiv'>
+      <label class='notSelectable' id='loginCookieLabel'>Remember this computer for a year?</label>
+      <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
+    </div>
+    <input type="submit" value="Login" class='submitButton'>
+  </form>
+</div>
+  <!-- <p id='goToRegister'>Create your account</p> -->
+ </div>
+
  <?php
  include "loginRegister.php"
  ?>
