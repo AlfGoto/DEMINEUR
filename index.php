@@ -110,6 +110,65 @@ if(isset($_SESSION['user']) == true){
 </div>
 
 
+
+<div id='tableDiv'>
+  <table id='table' border='1'>
+    <thead>
+      <tr>
+        <th id='tableTitreClassment'>Classment</th>
+        <td id='tableTitrePseudo'>Pseudo</td>
+        <td id='tableTitreTime'>Time</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th id='tableClassment1'>1</th>
+        <td id='tablePseudo1'>Pseudo1</td>
+        <td id='tableTime1'>Time1</td>
+      </tr>
+        <th id='tableClassment2'>2</th>
+        <td id='tablePseudo2'>Pseudo2</td>
+        <td id='tableTime2'>Time2</td>
+      </tr>
+        <th id='tableClassment3'>3</th>
+        <td id='tablePseudo3'>Pseudo3</td>
+        <td id='tableTime3'>Time3</td>
+      </tr>
+        <th id='tableClassment4'>4</th>
+        <td id='tablePseudo4'>Pseudo4</td>
+        <td id='tableTime4'>Time4</td>
+      </tr>
+        <th id='tableClassment5'>5</th>
+        <td id='tablePseudo5'>Pseudo5</td>
+        <td id='tableTime5'>Time5</td>
+      </tr>
+      <tr>
+        <th id='tableClassment6'>6</th>
+        <td id='tablePseudo6'>Pseudo6</td>
+        <td id='tableTime6'>Time6</td>
+      </tr>
+        <th id='tableClassment7'>7</th>
+        <td id='tablePseudo7'>Pseudo7</td>
+        <td id='tableTime7'>Time7</td>
+      </tr>
+        <th id='tableClassment8'>8</th>
+        <td id='tablePseudo8'>Pseudo8</td>
+        <td id='tableTime8'>Time8</td>
+      </tr>
+        <th id='tableClassment9'>9</th>
+        <td id='tablePseudo9'>Pseudo9</td>
+        <td id='tableTime9'>Time9</td>
+      </tr>
+        <th id='tableClassment10'>10</th>
+        <td id='tablePseudo10'>Pseudo10</td>
+        <td id='tableTime10'>Time10</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+
 </body>
 
 
