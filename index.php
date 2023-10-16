@@ -20,7 +20,32 @@ if(isset($_SESSION['user']) == true){
   echo "<script>var sessionPseudo = '$sessionPseudo';</script>";
 }
 
+
+
+try {
+    $conn = new PDO("mysql:host=localhost;dbname=minesweeper", 'root', 'root');
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 10";
+    $stmt = $conn->query($sql);
+
+    $tablePseudo = array();
+    $tableTime = array();
+
+    // Fetch all rows and store them in arrays
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tablePseudo[] = $row["pseudo"];
+        $tableTime[] = $row["time"];
+    }
+
+    $conn = null;
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -123,45 +148,45 @@ if(isset($_SESSION['user']) == true){
     <tbody>
       <tr>
         <th id='tableClassment1'>1</th>
-        <td id='tablePseudo1'>Pseudo1</td>
-        <td id='tableTime1'>Time1</td>
+        <td id='tablePseudo1'><?= $tablePseudo[0]?></td>
+        <td id='tableTime1'><?= $tableTime[0]/1000?></td>
       </tr>
         <th id='tableClassment2'>2</th>
-        <td id='tablePseudo2'>Pseudo2</td>
-        <td id='tableTime2'>Time2</td>
+        <td id='tablePseudo2'><?= $tablePseudo[1]?></td>
+        <td id='tableTime2'><?= $tableTime[1]/1000?></td>
       </tr>
         <th id='tableClassment3'>3</th>
-        <td id='tablePseudo3'>Pseudo3</td>
-        <td id='tableTime3'>Time3</td>
+        <td id='tablePseudo3'><?= $tablePseudo[2]?></td>
+        <td id='tableTime3'><?= $tableTime[2]/1000?></td>
       </tr>
         <th id='tableClassment4'>4</th>
-        <td id='tablePseudo4'>Pseudo4</td>
-        <td id='tableTime4'>Time4</td>
+        <td id='tablePseudo4'><?= $tablePseudo[3]?></td>
+        <td id='tableTime4'><?= $tableTime[3]/1000?></td>
       </tr>
         <th id='tableClassment5'>5</th>
-        <td id='tablePseudo5'>Pseudo5</td>
-        <td id='tableTime5'>Time5</td>
+        <td id='tablePseudo5'><?= $tablePseudo[4]?></td>
+        <td id='tableTime5'><?= $tableTime[4]/1000?></td>
       </tr>
       <tr>
         <th id='tableClassment6'>6</th>
-        <td id='tablePseudo6'>Pseudo6</td>
-        <td id='tableTime6'>Time6</td>
+        <td id='tablePseudo6'><?= $tablePseudo[5]?></td>
+        <td id='tableTime6'><?= $tableTime[5]/1000?></td>
       </tr>
         <th id='tableClassment7'>7</th>
-        <td id='tablePseudo7'>Pseudo7</td>
-        <td id='tableTime7'>Time7</td>
+        <td id='tablePseudo7'><?= $tablePseudo[6]?></td>
+        <td id='tableTime7'><?= $tableTime[6]/1000?></td>
       </tr>
         <th id='tableClassment8'>8</th>
-        <td id='tablePseudo8'>Pseudo8</td>
-        <td id='tableTime8'>Time8</td>
+        <td id='tablePseudo8'><?= $tablePseudo[7]?></td>
+        <td id='tableTime8'><?= $tableTime[7]/1000?></td>
       </tr>
         <th id='tableClassment9'>9</th>
-        <td id='tablePseudo9'>Pseudo9</td>
-        <td id='tableTime9'>Time9</td>
+        <td id='tablePseudo9'><?= $tablePseudo[8]?></td>
+        <td id='tableTime9'><?= $tableTime[8]/1000?></td>
       </tr>
         <th id='tableClassment10'>10</th>
-        <td id='tablePseudo10'>Pseudo10</td>
-        <td id='tableTime10'>Time10</td>
+        <td id='tablePseudo10'><?= $tablePseudo[9]?></td>
+        <td id='tableTime10'><?= $tableTime[9]/1000?></td>
       </tr>
     </tbody>
 
