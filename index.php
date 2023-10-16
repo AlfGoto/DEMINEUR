@@ -38,6 +38,18 @@ try {
         $tableTime[] = $row["time"];
     }
 
+    $sql = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 10";
+    $stmt = $conn->query($sql);
+
+    $playerClassment = array();
+
+    // Fetch data and store them in an associative array
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $playerClassment[] = array(
+            'pseudo' => $row["pseudo"],
+            'bestTime' => $row["best_time"]
+        );
+      }
     $conn = null;
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -187,6 +199,63 @@ try {
         <th id='tableClassment10'>10</th>
         <td id='tablePseudo10'><?= $tablePseudo[9]?></td>
         <td id='tableTime10'><?= $tableTime[9]/1000?></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<div id='tablePlayersDiv'>
+  <table id='table' border='1'>
+    <thead>
+      <tr>
+        <th id='tablePlayersTitreClassment'>Classment</th>
+        <td id='tablePlayersTitrePseudo'>Pseudo</td>
+        <td id='tablePlayersTitreTime'>Time</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th id='tablePlayersClassment1'>1</th>
+        <td id='tablePlayersPseudo1'><?= $playerClassment[0]['pseudo']?></td>
+        <td id='tablePlayersTime1'><?= $playerClassment[0]['bestTime']/1000?></td>
+      </tr>
+        <th id='tablePlayersClassment2'>2</th>
+        <td id='tablePlayersPseudo2'><?= $playerClassment[1]['pseudo']?></td>
+        <td id='tablePlayersTime2'><?= $playerClassment[1]['bestTime']/1000?></td>
+      </tr>
+        <th id='tablePlayersClassment3'>3</th>
+        <td id='tablePlayersPseudo3'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime3'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment4'>4</th>
+        <td id='tablePlayersPseudo4'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime4'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment5'>5</th>
+        <td id='tablePlayersPseudo5'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime5'>pas encore assez de joueurs</td>
+      </tr>
+      <tr>
+        <th id='tablePlayersClassment6'>6</th>
+        <td id='tablePlayersPseudo6'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime6'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment7'>7</th>
+        <td id='tablePlayersPseudo7'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime7'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment8'>8</th>
+        <td id='tablePlayersPseudo8'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime8'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment9'>9</th>
+        <td id='tablePlayersPseudo9'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime9'>pas encore assez de joueurs</td>
+      </tr>
+        <th id='tablePlayersClassment10'>10</th>
+        <td id='tablePlayersPseudo10'>pas encore assez de joueurs</td>
+        <td id='tablePlayersTime10'>pas encore assez de joueurs</td>
       </tr>
     </tbody>
 
