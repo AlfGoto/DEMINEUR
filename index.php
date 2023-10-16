@@ -55,6 +55,14 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
+#Get the classment of the Session player
+for($i = 0; $i < count($playerClassment); $i++){
+  if($playerClassment[$i]['pseudo'] == $_SESSION['user']){
+    $_SESSION['rank'] = $i+1;
+    break;
+  }
+}
+
 
 ?>
 
@@ -143,7 +151,11 @@ try {
 </div>
 
 <div id='loggedInterface'>
-  <p>Logged as <? echo $_SESSION['user'] ?></p>
+  <p>Logged as <? echo $_SESSION['user'];
+  if(isset($_SESSION['rank'])){
+    echo ', rank #'.$_SESSION['rank'];
+  }
+  ?></p>
 </div>
 
 
@@ -225,37 +237,37 @@ try {
         <td id='tablePlayersTime2'><?= $playerClassment[1]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment3'>3</th>
-        <td id='tablePlayersPseudo3'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime3'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo3'><?= $playerClassment[2]['pseudo']?></td>
+        <td id='tablePlayersTime3'><?= $playerClassment[2]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment4'>4</th>
-        <td id='tablePlayersPseudo4'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime4'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo4'><?= $playerClassment[3]['pseudo']?></td>
+        <td id='tablePlayersTime4'><?= $playerClassment[3]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment5'>5</th>
-        <td id='tablePlayersPseudo5'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime5'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo5'><?= $playerClassment[4]['pseudo']?></td>
+        <td id='tablePlayersTime5'><?= $playerClassment[4]['bestTime']/1000?></td>
       </tr>
       <tr>
         <th id='tablePlayersClassment6'>6</th>
-        <td id='tablePlayersPseudo6'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime6'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo6'><?= $playerClassment[5]['pseudo']?></td>
+        <td id='tablePlayersTime6'><?= $playerClassment[5]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment7'>7</th>
-        <td id='tablePlayersPseudo7'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime7'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo7'><?= $playerClassment[6]['pseudo']?></td>
+        <td id='tablePlayersTime7'><?= $playerClassment[6]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment8'>8</th>
-        <td id='tablePlayersPseudo8'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime8'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo8'><?= $playerClassment[7]['pseudo']?></td>
+        <td id='tablePlayersTime8'><?= $playerClassment[7]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment9'>9</th>
-        <td id='tablePlayersPseudo9'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime9'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo9'><?= $playerClassment[8]['pseudo']?></td>
+        <td id='tablePlayersTime9'><?= $playerClassment[8]['bestTime']/1000?></td>
       </tr>
         <th id='tablePlayersClassment10'>10</th>
-        <td id='tablePlayersPseudo10'>pas encore assez de joueurs</td>
-        <td id='tablePlayersTime10'>pas encore assez de joueurs</td>
+        <td id='tablePlayersPseudo10'><?= $playerClassment[9]['pseudo']?></td>
+        <td id='tablePlayersTime10'><?= $playerClassment[9]['bestTime']/1000?></td>
       </tr>
     </tbody>
 
