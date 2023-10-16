@@ -219,24 +219,6 @@
   padding: 10px;
   width: 400px;
 }
-#goToLogin{
-  position: absolute;
-  bottom: 1px;
-  border: black solid 2px;
-  width: 60px;
-  text-align: center;
-  padding: 5px;
-  user-select: none;
-}
-#goToRegister{
-  position: absolute;
-  bottom: 1px;
-  border: solid black 2px;
-  width: 100px;
-  text-align: center;
-  padding: 5px;
-  user-select: none;
-}
 .registerDivOpen{
   position: relative;
   height: 280px;

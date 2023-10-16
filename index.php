@@ -28,6 +28,7 @@ if(isset($_SESSION['user']) == true){
 <script src='loginInterface.js'></script>
 
 <head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="./style.css" rel="stylesheet"></link>
   <script src="./scriptDemineur.js" id="demineurScript"></script>
 </head>
@@ -76,7 +77,6 @@ if(isset($_SESSION['user']) == true){
     <input type="submit" value="Register" class='submitButton'>
   </form>
 </div>
-  <!-- <p id='goToLogin'>Login</p> -->
  </div>
 
  <div id='loginDiv' class='loginAndRegisterDiv loginDivOpen'>
@@ -98,7 +98,6 @@ if(isset($_SESSION['user']) == true){
     <input type="submit" value="Login" class='submitButton'>
   </form>
 </div>
-  <!-- <p id='goToRegister'>Create your account</p> -->
  </div>
 
  <?php

@@ -56,27 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/*
-
-    let loginGoToRegister = document.getElementById('goToRegister')
-    let registerGoToLogin = document.getElementById('goToLogin')
-    let loginInterface = document.getElementById('loginDiv')
-    let registerInterface = document.getElementById('registerDiv')
-    loginInterface.classList.add('hidden')
-    loginGoToRegister.addEventListener('mousedown', function(e) {
-        registerInterface.classList.remove('hidden')
-        registerInterface.classList.add('visible')
-        loginInterface.classList.remove('visible')
-        loginInterface.classList.add('hidden')
-        
-    })
-    registerGoToLogin.addEventListener('mousedown', function(e) {
-        loginInterface.classList.remove('hidden')
-        loginInterface.classList.add('visible')
-        registerInterface.classList.remove('visible')
-        registerInterface.classList.add('hidden')
-    })
-
-*/    
-
 })

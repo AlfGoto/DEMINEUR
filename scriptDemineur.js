@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let width = 20
-    let bombAmount = 90
+    let bombAmount = 70
     let squares = []
     let isGameOver = false
     let flags = 0
@@ -255,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //click on square action
     function click(square){
-        console.log(click)
         let currentId = square.id
         let total = square.getAttribute('data')
         if (firstSquare === true) {
@@ -415,6 +414,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;
                 timerVictory.innerHTML = seconds + '.' + milliseconds
+
+                //send elapsedTime to PHP
+                $.ajax({
+                    type: "POST", 
+                    url: "timeToMySQL.php",
+                    data: { elapsedTime: elapsedTime },
+                    success: function(response) {
+                        console.log("Data sent successfully!");
+                        console.log("Response from server: " + response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error occurred: " + error);
+                    }
+                });
             }
         }
         
