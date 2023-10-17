@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let elapsedTime = 0;
     let isRunning = false;
     let timerHTML = document.getElementById('timerDemineur')
-    timerHTML.innerHTML = '0'
+    timerHTML.innerHTML = 'Timer'
     let now;
 
     //create board
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isRunning) {
             isRunning = false;
             clearInterval(timer);
-            timerHTML.innerHTML = '0'
+            timerHTML.innerHTML = 'Timer'
         }
     }
     function resetTimer() {

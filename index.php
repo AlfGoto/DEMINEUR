@@ -1,10 +1,11 @@
 <?php
 
-session_start();
-
-
 header("Cache-control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
+
+
+session_start();
+
 
 
 $is_logged = false;
@@ -22,7 +23,6 @@ if(isset($_SESSION['user']) == true){
   $is_logged = true;
   echo "<script>var isLogged = '$is_logged';</script>";
 }
-
 
 #Transfer the variables to JS
 echo "<script>var isLogged = '$is_logged';</script>";

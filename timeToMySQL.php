@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+
 $elapsedTime = 5;
 
 if($elapsedTime != $_POST ['elapsedTime']){

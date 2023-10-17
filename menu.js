@@ -7,18 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     restartButton.addEventListener('pointerdown', () => {restart = 'yes'})
-    restartButton.addEventListener('pointerup', () => delay(10).then(() => {restart = 'no'}))
+    restartButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
 
     menuPetitDiv.addEventListener('pointerdown', () => {
-        console.log('menuPetitDiv click')
         if(open == 1 && restart == 'no'){
-            console.log('open = 1')
-            menu.style['right'] =  '-20vw'
-            open = 0
-        }else if(open == 0 && restart == 'no'){
-            console.log('open = 0')
-            menu.style['right'] =  '0vw'
-            open = 1
+            menu.style.transition = 'right 0.3s ease';
+            menu.style.right = '-20vw';
+            open = 0;
+        } else if(open == 0 && restart == 'no'){
+            menu.style.transition = 'right 0.3s ease';
+            menu.style.right = '0vw';
+            open = 1;
         }
-    })
+    });
 })
