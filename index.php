@@ -3,15 +3,21 @@
 session_start();
 
 
+header("Cache-control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+
+
 $is_logged = false;
 
 if(isset($_COOKIE['pseudo']) == true){
   $_SESSION['isLogged'] = true;
   $_SESSION['user'] = $_COOKIE['pseudo'];
   $is_logged = true;
+}else{
+  if(isset($_SESSION['user']) == true){
+    $is_logged = true;
+  }
 }
-
-
 
 #Transfer the variables to JS
 echo "<script>var isLogged = '$is_logged';</script>";
@@ -23,31 +29,37 @@ if(isset($_SESSION['user']) == true){
 
 
 try {
-    $conn = new PDO("mysql:host=localhost;dbname=minesweeper", 'root', 'root');
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conn = new PDO("mysql:host=localhost;dbname=minesweeper", 'root', 'root');
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 10";
-    $stmt = $conn->query($sql);
+  $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 10";
+  $stmtA = $conn->query($sqlA);
 
-    $tablePseudo = array();
-    $tableTime = array();
+  $seenTimes = array(); 
+  $tablePseudo = array();
+  $tableTime = array();
 
-    // Fetch all rows and store them in arrays
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $tablePseudo[] = $row["pseudo"];
-        $tableTime[] = $row["time"];
+  while ($rowa = $stmtA->fetch(PDO::FETCH_ASSOC)) {
+    $pseudo = $rowa["pseudo"];
+    $time = $rowa["time"];
+    
+    if (!isset($seenTimes[$time])) {
+        $tablePseudo[] = $pseudo;
+        $tableTime[] = $time;
+        $seenTimes[$time] = true; 
     }
+}
 
-    $sql = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 10";
-    $stmt = $conn->query($sql);
+    $sqlB = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 10";
+    $stmtB = $conn->query($sqlB);
 
     $playerClassment = array();
 
     // Fetch data and store them in an associative array
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    while ($rowb = $stmtB->fetch(PDO::FETCH_ASSOC)) {
         $playerClassment[] = array(
-            'pseudo' => $row["pseudo"],
-            'bestTime' => $row["best_time"]
+            'pseudo' => $rowb["pseudo"],
+            'bestTime' => $rowb["best_time"]
         );
       }
     $conn = null;
@@ -56,12 +68,15 @@ try {
 }
 
 #Get the classment of the Session player
-for($i = 0; $i < count($playerClassment); $i++){
-  if($playerClassment[$i]['pseudo'] == $_SESSION['user']){
-    $_SESSION['rank'] = $i+1;
-    break;
+if($is_logged = true){
+  for($i = 0; $i < count($playerClassment); $i++){
+    if($playerClassment[$i]['pseudo'] == $_SESSION['user']){
+      $_SESSION['rank'] = $i+1;
+      break;
+    }
   }
 }
+
 
 
 ?>
@@ -107,16 +122,16 @@ for($i = 0; $i < count($playerClassment); $i++){
   <div id='registerContent'>
     <form id='registerForm' method='post'>
     <div id='registerPseudoDiv'>
-      <label class='notSelectable' id='registerPseudoLabel'>Pseudo : </label>
+      <label id='registerPseudoLabel'>Pseudo : </label>
       <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='10' class='textInput'></input>
     </div>
     <div id='registerPasswordDiv'>
-      <label class='notSelectable' id='registerPasswordLabel'>Password : </label>
+      <label id='registerPasswordLabel'>Password : </label>
       <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='10' class='textInput'></input>
       <p class='notSelectable'>don't put your usual password, <br/> i'm still working on making this site ultra safe</p>
     </div>
     <div id='registerCookieDiv'>
-      <label class='notSelectable' id='registerCookieLabel'>Remember this computer for a year ?</label>
+      <label id='registerCookieLabel'>Remember this computer for a year ?</label>
       <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
     </div>
     <input type="submit" value="Register" class='submitButton'>
@@ -129,15 +144,15 @@ for($i = 0; $i < count($playerClassment); $i++){
   <div id='loginContent'>
     <form id='loginForm' method='post'>
     <div id='loginPseudoDiv'>
-      <label class='notSelectable' id='loginPseudoLabel'>Pseudo : </label>
+      <label id='loginPseudoLabel'>Pseudo : </label>
       <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10' class='textInput'></input>
     </div>
     <div id='loginPasswordDiv'>
-      <label class='notSelectable' id='loginPasswordLabel'>Password : </label>
+      <label id='loginPasswordLabel'>Password : </label>
       <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10' class='textInput'></input>
     </div>
     <div id='loginCookieDiv'>
-      <label class='notSelectable' id='loginCookieLabel'>Remember this computer for a year?</label>
+      <label id='loginCookieLabel'>Remember this computer for a year?</label>
       <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
     </div>
     <input type="submit" value="Login" class='submitButton'>
@@ -151,7 +166,7 @@ for($i = 0; $i < count($playerClassment); $i++){
 </div>
 
 <div id='loggedInterface'>
-  <p>Logged as <? echo $_SESSION['user'];
+  <p>Logged as <?php echo $_SESSION['user'];
   if(isset($_SESSION['rank'])){
     echo ', rank #'.$_SESSION['rank'];
   }
@@ -161,7 +176,7 @@ for($i = 0; $i < count($playerClassment); $i++){
 
 
 <div id='tableDiv'>
-  <table id='table' border='1'>
+  <table id='table'>
     <thead>
       <tr>
         <th id='tableTitreClassment'>Classment</th>
@@ -218,7 +233,7 @@ for($i = 0; $i < count($playerClassment); $i++){
 </div>
 
 <div id='tablePlayersDiv'>
-  <table id='table' border='1'>
+  <table id='table'>
     <thead>
       <tr>
         <th id='tablePlayersTitreClassment'>Classment</th>
