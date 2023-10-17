@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let elapsedTime = 0;
     let isRunning = false;
     let timerHTML = document.getElementById('timerDemineur')
+    timerHTML.innerHTML = '0'
     let now;
 
     //create board
@@ -413,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elapsedTime = now - startTime;
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;
-                timerVictory.innerHTML = seconds + '.' + milliseconds
+                timerVictory.innerHTML = seconds + '.' + milliseconds/10
 
                 //send elapsedTime to PHP
                 if(bombAmount > 69){
@@ -452,14 +453,9 @@ document.addEventListener('DOMContentLoaded', () => {
         loseInterface.classList.remove('visible')
         loseInterface.classList.add('hidden')
     }
-    const theBigOne = document.getElementById('theBigOne')
-    theBigOne.addEventListener("click", ()=>{restart()})
-
-    const victoryButton = document.getElementById('victoryButton')
-    victoryButton.addEventListener("click", ()=>{restart()})
-
-    const loseButton = document.getElementById('loseButton')
-    loseButton.addEventListener("click", ()=>{restart()})
+    
+    const restartButton = document.getElementById('restartButton')
+    restartButton.addEventListener("click", ()=>{restart()})
 
         //timer
     function startTimer() {
@@ -471,8 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 elapsedTime = now - startTime;
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;
-                timerHTML.classList.remove('hidden')
-                timerHTML.classList.add('visible')
                 timerHTML.innerHTML = seconds + '.' + milliseconds
             })
         }
@@ -482,8 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isRunning) {
             isRunning = false;
             clearInterval(timer);
-            timerHTML.classList.remove('visible')
-            timerHTML.classList.add('hidden')
+            timerHTML.innerHTML = '0'
         }
     }
     function resetTimer() {

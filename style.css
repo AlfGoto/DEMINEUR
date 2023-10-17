@@ -9,6 +9,7 @@
 .bodyMain{
   background: url("./image/forest.jpeg") fixed center;
   background-size: 105%;
+  overflow: hidden;
 }
 
 .notSelectable{
@@ -43,19 +44,6 @@
 .button{
   background-color: transparent;
   text-decoration: none;
-}
-#theBigOne{
-  height: auto;
-  width: auto;
-  font-size: 400%;
-  text-align: center;
-  backdrop-filter: blur(3px);
-  background-color: rgba(255,250,250, 0.2);
-  border: solid black 2px;
-  border-radius: 3%;
-  position: absolute;
-  bottom: 1vh;
-  right: 1vh;
 }
 .imageFlag{
   height: 4vh;
@@ -101,19 +89,6 @@
   animation: animChecked 0.1s;
 }
 
-#timerDemineur{
-  color: white;
-  position: absolute;
-  right: 15%;
-  top: 50%;
-  font-size: 60px;
-  border: solid gray 2px;
-  border-radius: 5%;
-  backdrop-filter: blur(3px);
-  height: auto;
-}
-
-
 #interfaceVictory{
   user-select: none;
   margin: 0 auto;
@@ -150,7 +125,7 @@
   left: 39.5%;
   border: solid gray 2px;
   border-radius: 5%;
-  height: 15vw;
+  height: auto;
   width: 20vw;
   padding: 10px;
   text-align: center;
@@ -251,29 +226,96 @@
 
 
 #loggedInterface{
-  position: absolute;
+  position: relative;
   top: 10px;
+  left: 0.5vw;
   border: solid black 2px;
   font-family: Arial, Helvetica, sans-serif;
   backdrop-filter: blur(3px);
   background-color: rgba(255,250,250, 0.2);
   padding: 10px;
+  width: 19vw;
 }
 
 
 #tableDiv{
-  position: absolute;
-  top: 100px;
+  position: relative;
 }
 #tablePlayersDiv{
-  position: absolute;
-  top: 400px;
+  position: relative;
 }
 table{
+  position: relative;
+  top: 10px;
+  left: 0.5vw;
+  border: solid black 2px;
+  font-family: Arial, Helvetica, sans-serif;
+  backdrop-filter: blur(3px);
   background-color: rgba(255,250,250, 0.2);
-  border: black solid 2px;
+  padding: 10px;
+  width: 19vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 th,
 td{
   padding: 2px;
 }
+
+
+#restartButton{
+  position: relative;
+  top: 0.3vw;
+  left: 0.3vw;
+  background: url('./image/logoRestart.png') center;
+  background-size: 4.4vw;
+  border: solid black 2px;
+  width: 4.4vw;
+  height: 4.4vw;
+  border-radius: 5%;
+}
+#timerDemineur{
+  color: white;
+  position: relative;
+  left: 0.3vw;
+  top: 0.3vw;
+  font-size: 3vh;
+  border: solid black 2px;
+  border-radius: 5%;
+  backdrop-filter: blur(3px);
+  height: 4vh;
+  width: 4.4vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  padding: 0.01vh;
+  text-align: center;
+}
+#menuDiv{
+  box-sizing: border-box;
+  position: absolute;
+  right: -20vw;
+  top: 0vh;
+  width: 25vw;
+  height: 100%;
+  background-color: rgb(107, 107, 107);
+  gap: 0px 0px;
+}
+#menuPetitDiv{
+  position: absolute;
+  background-color: gray;
+  display: inline-block;
+  width: 5vw;
+  height: 90%;
+  top: 5%;
+  left: 0px;
+}
+#menuLargeDiv{
+  position: absolute;
+  background-color: rgb(155, 154, 154);
+  display: inline-block;
+  width: 20vw;
+  height: 90%;
+  top: 5%;
+  right: 0px;
+}
+

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let loggedInterface = document.getElementById('loggedInterface')
 
 
-    if(isLogged){
+    if(isLogged == true){
             loginRegisterInterface.classList.remove('visible')
             loginRegisterInterface.classList.add('hidden')
             loggedInterface.classList.remove('hidden')

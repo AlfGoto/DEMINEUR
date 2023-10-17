@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_COOKIE['pseudo']) == false){
           setcookie('pseudo', $registerPseudo, time() + (365*24*60*60));
           echo 'Cookie set';
+          Header('Location: '.$_SERVER['PHP_SELF']);
         }
       }
     }
@@ -61,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $result = $sql->fetch(PDO::FETCH_ASSOC);
       if($loginPassword == $result['password']){
         $is_logged = true;
-        $_SESSION['pseudo'] = $loginPseudo;
+        $_SESSION['user'] = $loginPseudo;
         echo "welcome $loginPseudo";
         if(isset($_POST['loginCookie'])){
           if(isset($_COOKIE['pseudo']) == false){
@@ -69,6 +70,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Cookie set';
           }
         }
+        echo "<script>document.addEventListener('DOMContentLoaded', () => {
+          //Only show login and register Interface if not Logged
+          let loginRegisterInterface = document.getElementById('loginRegisterInterface')
+          let loggedInterface = document.getElementById('loggedInterface')
+          loginRegisterInterface.classList.remove('visible')
+          loginRegisterInterface.classList.add('hidden')
+          loggedInterface.classList.remove('hidden')
+          loggedInterface.classList.add('visible')
+        })</script>";
       }else{
         echo 'Wrong password';
       }
