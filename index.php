@@ -101,6 +101,7 @@ if(isset($_SESSION['user'])){
   <meta name="description" content="This is the ULTIMATE minesweeper game, lets see if you can be the best out of all players !">
   <meta name="author" content="AlfGoto">
   <meta name="title" content="Minesweeper">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 
