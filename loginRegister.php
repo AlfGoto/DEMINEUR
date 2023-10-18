@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           setcookie('pseudo', $registerPseudo, time() + (365*24*60*60));
           echo 'Cookie set';
           Header('Location: '.$_SERVER['PHP_SELF']);
+          header("Refresh:0");
         }
       }
     }
@@ -79,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           loggedInterface.classList.remove('hidden')
           loggedInterface.classList.add('visible')
         })</script>";
+        header("Refresh:0");
       }else{
         echo 'Wrong password';
       }
@@ -88,9 +90,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   //Unlogin
+  if(isset($_POST['unlogButton'])){
+    $is_logged = false;
+    session_unset();
+    setcookie('pseudo', 'pseudoDeleted', time() - (365*24*60*60));
+    header("Refresh:0");
+  }
 
 
-  
 };
 
 

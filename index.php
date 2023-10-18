@@ -240,7 +240,6 @@ if(isset($_SESSION['user'])){
 
   </table>
 </div>
-
 <div id='tablePlayersDiv'>
   <table id='table'>
     <thead>
@@ -304,6 +303,11 @@ if(isset($_SESSION['user'])){
     </tbody>
 
   </table>
+</div>
+<div id='unlogButtonDiv' class='visible'>
+<form action="index.php" method="post">
+<button class='button' name='unlogButton' type="submit" value='Unlog' id="unlogButton">Unlog</button>
+</form>
 </div>
     </div>
   </div>
