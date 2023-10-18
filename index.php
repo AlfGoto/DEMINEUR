@@ -309,6 +309,7 @@ if(isset($_SESSION['user'])){
 <button class='button' name='unlogButton' type="submit" value='Unlog' id="unlogButton">Unlog</button>
 </form>
 </div>
+<a href="https://discord.gg/xGMJFVaHUR"><img id='discord' src='./image/discord logo.png' target='_blanck' alt='le logo de discord, clickable pour acceder a mon serveur'></a>
     </div>
   </div>
 </div>
