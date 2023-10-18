@@ -94,7 +94,9 @@ if(isset($_SESSION['user'])){
   <script src="./scriptDemineur.js" id="demineurScript"></script>
   <script src='loginInterface.js'></script>
   <script src='menu.js'></script>
+
   <title>MineSweeper ULTIMATE</title>
+  <link rel="icon" href="image\flag.png" alt='icon of the website, its a redflag'/>
 </head>
 
 
