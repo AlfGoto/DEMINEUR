@@ -11,7 +11,11 @@
   background-size: 105%;
   overflow: hidden;
 }
-
+#h1SEO{
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+}
 .notSelectable{
   user-select: none;
 }
