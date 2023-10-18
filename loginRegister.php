@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   #LOGIN
   if(isset($_POST['loginPseudo'])){
-    $loginPseudo = htmlspecialchars(strip_tags($_POST['loginPseudo']));
-    $loginPassword = htmlspecialchars(strip_tags($_POST['loginPassword']));
+    $loginPseudo = htmlspecialchars($_POST['loginPseudo']);
+    $loginPassword = htmlspecialchars($_POST['loginPassword']);
     #check if there is not already this pseudo in the data base
     $request = "SELECT * FROM login WHERE pseudo = :pseudo";
     $sql = $db->prepare($request);
@@ -84,6 +84,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
     }else{echo ('le compte n\'existe pas');}
   }
+
+
+
+  //Unlogin
+
+
+  
 };
 
 

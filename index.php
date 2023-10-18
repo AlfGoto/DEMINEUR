@@ -2,7 +2,7 @@
 
 header("Cache-control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
-
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
 
 session_start();
 
@@ -123,11 +123,11 @@ if(isset($_SESSION['user'])){
     <form id='registerForm' method='post'>
     <div id='registerPseudoDiv'>
       <label id='registerPseudoLabel'>Pseudo : </label>
-      <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='10' class='textInput'></input>
+      <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5' maxlength='15' class='textInput'></input>
     </div>
     <div id='registerPasswordDiv'>
       <label id='registerPasswordLabel'>Password : </label>
-      <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='10' class='textInput'></input>
+      <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5' maxlength='15' class='textInput'></input>
       <p class='notSelectable'>don't put your usual password, <br/> i'm still working on making this site ultra safe</p>
     </div>
     <div id='registerCookieDiv'>
@@ -145,11 +145,11 @@ if(isset($_SESSION['user'])){
     <form id='loginForm' method='post'>
     <div id='loginPseudoDiv'>
       <label id='loginPseudoLabel'>Pseudo : </label>
-      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='10' class='textInput'></input>
+      <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='15' class='textInput'></input>
     </div>
     <div id='loginPasswordDiv'>
       <label id='loginPasswordLabel'>Password : </label>
-      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='10' class='textInput'></input>
+      <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5' maxlength='15' class='textInput'></input>
     </div>
     <div id='loginCookieDiv'>
       <label id='loginCookieLabel'>Remember this computer for a year?</label>
