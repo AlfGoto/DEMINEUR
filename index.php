@@ -165,10 +165,13 @@ if(isset($_SESSION['user'])){
  ?>
 </div>
 
-<div id='menuDiv'><div id='menuPetitDiv'>
-<button class="button" type="button" id="restartButton"></button>
-<div id="timerDemineur"><p></p></div>
-  </div><div id='menuLargeDiv'>
+<div id='menuDiv'><div id='menuPetitDiv' class='closed'>
+  <img alt='arrow left' id='arrowLeft' src='./image/arrow left.png'></img>
+  <img alt='arrow right' id='arrowRight' src='./image/arrow right.png'></img>
+  <button class="button" type="button" id="restartButton"></button>
+  <div id="timerDemineur"><p></p></div>
+  </div>
+  <div id='menuLargeDiv'>
     <div>
       <div id='loggedInterface'>
         <p>Logged as <?php echo $_SESSION['user']; if(isset($_SESSION['rank'])){echo ', rank #'.$_SESSION['rank'];}?></p>
