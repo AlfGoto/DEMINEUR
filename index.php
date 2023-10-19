@@ -180,6 +180,7 @@ if(isset($_SESSION['user'])){
   <img alt='arrow right' id='arrowRight' src='./image/arrow right.png'></img>
   <button class="button" type="button" id="restartButton"></button>
   <div id="timerDemineur"><p></p></div>
+  <button class="button" type="button" id="fullscreenButton"><img src ='./image/fullscreenLogo.png' alt='button to set fullscreen on and off' id='fullscreenImg'></img></button>
   </div>
   <div id='menuLargeDiv'>
     <div>
@@ -323,9 +324,9 @@ if(isset($_SESSION['user'])){
 <button class='button' name='unlogButton' type="submit" value='Unlog' id="unlogButton">Unlog</button>
 </form>
 </div>
-<a href="https://discord.gg/xGMJFVaHUR"><img id='discord' src='./image/discord logo.png' target='_blanck' alt='le logo de discord, clickable pour acceder a mon serveur'></a>
     </div>
   </div>
+  <a href="https://discord.gg/xGMJFVaHUR"><img id='discord' src='./image/discord logo.png' target='_blanck' alt='le logo de discord, clickable pour acceder a mon serveur'></a>
 </div>
 
 
