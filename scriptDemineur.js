@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstSquare = true
     let total = 0
 
+
+    //Sound setup
+    
+    function flagSound() {
+        let flagsoundvar = new Audio('./son/flag.mp3')
+        flagsoundvar.play();
+    }
+
+
     //timmer declaration
     let timer;
     let startTime;
@@ -182,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.classList.add('flag')
                 square.innerHTML = `<img class='imageFlag' src='image/flag.png'></img>`
                 flags++
+                flagSound()
             } else {
                 square.classList.remove('flag')
                 square.innerHTML = ' '

@@ -9,12 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let myDocument = document.documentElement
 
 
+
+    //Menu oppening, closing and animation
     restartButton.addEventListener('pointerdown', () => {restart = 'yes'})
     restartButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
     fullscreenButton.addEventListener('pointerdown', () => {restart = 'yes'})
     fullscreenButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
 
-    //Menu oppening, closing and animation
     menuPetitDiv.addEventListener('pointerdown', () => {
         if(open == 1 && restart == 'no'){
             menu.style.transition = 'right 0.3s ease';
