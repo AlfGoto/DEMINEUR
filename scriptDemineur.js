@@ -10,11 +10,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //Sound setup
-    
     function flagSound() {
         let flagsoundvar = new Audio('./son/flag.mp3')
         flagsoundvar.play();
     }
+    let dirt = 0
+    function checkedSound(){
+        if(dirt == 0){
+            let dirts = new Audio('./son/dirt0.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 1){
+            let dirts = new Audio('./son/dirt1.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 2){
+            let dirts = new Audio('./son/dirt2.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 3){
+            let dirts = new Audio('./son/dirt3.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 4){
+            let dirts = new Audio('./son/dirt4.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 5){
+            let dirts = new Audio('./son/dirt5.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 6){
+            let dirts = new Audio('./son/dirt6.mp3')
+            dirts.play()
+            dirt++
+            return
+        }
+        if(dirt == 7){
+            let dirts = new Audio('./son/dirt7.mp3')
+            dirts.play()
+            dirt = 0
+            return
+        }
+    }
+
 
 
     //timmer declaration
@@ -79,6 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
             //normal click
             square.addEventListener('mousedown', function(e) {
                 if (e.button === 0 ){
+                    if(!(square.classList.contains('checked'))){
+                        checkedSound()
+                    }
                     click(square)
                 }
                 
@@ -203,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //left and right Click
     function leftRightClick(i, square){
+        checkedSound()
         let bombAround = square.getAttribute('data')
         let totalFlags = 0
         const isLeftEdge = (i % width === 0)
