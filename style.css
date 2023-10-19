@@ -231,6 +231,8 @@
 
 
 
+
+/*   MENU   */
 #tableDiv{
   position: relative;
 }
@@ -303,6 +305,7 @@ td{
   margin-bottom: 1vh;
   padding: 0.01vh;
   text-align: center;
+  user-select: none;
 }
 #menuDiv{
   box-sizing: border-box;
@@ -328,16 +331,16 @@ td{
 }
 #arrowLeft{
   position: absolute;
-  height: 10vh;
+  height: 5vh;
   top: 45%;
-  left: -3vw;
+  left: -2vw;
   visibility: hidden;
 }
 #arrowRight{
   position: absolute;
-  height: 10vh;
+  height: 5vh;
   top: 45%;
-  right: -3vw;
+  right: -2vw;
   z-index: 11;
   visibility: hidden;
 }

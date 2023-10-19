@@ -37,7 +37,7 @@ try {
   $conn = new PDO("mysql:host=localhost;dbname=minesweeper", 'root', 'root');
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 10";
+  $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 20";
   $stmtA = $conn->query($sqlA);
 
   $seenTimes = array(); 
@@ -55,7 +55,7 @@ try {
     }
 }
 
-    $sqlB = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 10";
+    $sqlB = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 20";
     $stmtB = $conn->query($sqlB);
 
     $playerClassment = array();
@@ -71,15 +71,18 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-#Get the classment of the Session player
+#Get the classment and Bestscore of the Session player
 if(isset($_SESSION['user'])){
   for($i = 0; $i < count($playerClassment); $i++){
     if($playerClassment[$i]['pseudo'] == $_SESSION['user']){
       $_SESSION['rank'] = $i+1;
+      $_SESSION['bestTime'] = $playerClassment[$i]['bestTime'];
       break;
     }
   }
 }
+
+
 
 ?>
 
@@ -181,7 +184,11 @@ if(isset($_SESSION['user'])){
   <div id='menuLargeDiv'>
     <div>
       <div id='loggedInterface'>
-        <p>Logged as <?php echo $_SESSION['user']; if(isset($_SESSION['rank'])){echo ', rank #'.$_SESSION['rank'];}?></p>
+        <p>
+          Logged as <?php echo $_SESSION['user']; 
+          if(isset($_SESSION['rank'])){echo ', rank #'.$_SESSION['rank']; 
+          if(isset($_SESSION['rank'])){echo '<br/>Best score : '.$_SESSION['bestTime']/1000 ."s";}}?>
+        </p>
       </div>
       <div id='tableDiv'>
   <table id='table'>

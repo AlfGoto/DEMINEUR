@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elapsedTime = now - startTime;
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;
-                timerHTML.innerHTML = seconds + '.' + milliseconds
+                timerHTML.innerHTML = seconds + '.' + Math.floor(milliseconds/10)
             })
         }
     }
