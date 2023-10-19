@@ -92,6 +92,9 @@ if(isset($_SESSION['user'])){
 
 
 <head>
+  <script>
+    window.mute = false
+  </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="./style.css" rel="stylesheet"></link>
   <script src='loginInterface.js'></script>
@@ -181,7 +184,10 @@ if(isset($_SESSION['user'])){
   <button class="button" type="button" id="restartButton"></button>
   <div id="timerDemineur"><p></p></div>
   <button class="button" type="button" id="fullscreenButton"><img src ='./image/fullscreenLogo.png' alt='button to set fullscreen on and off' id='fullscreenImg'></img></button>
+
+  <button class="button" type="button" id="muteButton"><img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img></button>
   </div>
+
   <div id='menuLargeDiv'>
     <div>
       <div id='loggedInterface'>

@@ -379,6 +379,22 @@ td{
   top: 0.1vw;
   left: 0.1vw;
 }
+#muteButton{
+  position: absolute;
+  bottom: 0.5vw;
+  left: 0.3vw;
+  background-size: 4.4vw;
+  border: solid black 2px;
+  width: 4.4vw;
+  height: 4.4vw;
+  border-radius: 5%;
+  padding: 0vh;
+}
+#muteImg{
+  height: 3.8vw;
+  top: 0.3vw;
+  left: 0.3vw;
+}
 #timerDemineur{
   color: black;
   position: relative;
@@ -417,6 +433,9 @@ td{
 }
 #menuPetitDiv:hover{
   background-color: rgb(168, 167, 167);
+}
+.button:hover > #menuPetitDiv{
+  background-color: gray !important;
 }
 #arrowLeft{
   position: absolute;

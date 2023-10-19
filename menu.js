@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let fullscreenButton = document.getElementById('fullscreenButton')
     let fullscreen = false
     let myDocument = document.documentElement
+    let muteButton = document.getElementById('muteButton')
 
 
 
@@ -15,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     restartButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
     fullscreenButton.addEventListener('pointerdown', () => {restart = 'yes'})
     fullscreenButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
+    muteButton.addEventListener('pointerdown', () => {restart = 'yes'})
+    muteButton.addEventListener('pointerup', () => setTimeout(() => {restart = 'no'},'100'))
 
     menuPetitDiv.addEventListener('pointerdown', () => {
         if(open == 1 && restart == 'no'){
@@ -69,5 +72,18 @@ document.addEventListener('DOMContentLoaded', () => {
             fullscreen = false
         }
     })
+
+
+    //mute button
+    muteButton.addEventListener('pointerdown', () => {
+        mute = !mute
+        if(mute == true){
+            muteButton.innerHTML = "<img src ='./image/mute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+        } else if(mute == false){
+            muteButton.innerHTML = "<img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+        }
+        console.log(mute)
+    })
+
 })
 
