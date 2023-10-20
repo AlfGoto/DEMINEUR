@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let flags = 0
     let firstSquare = true
     let total = 0
+    let flagless = true
 
 
     //Sound setup
@@ -103,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledArray = shuffle(gameArray)
 
         firstSquare = true
+        flagless = false
 
 
         //create squares
@@ -247,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //add flags with right click
     function addFlag(square) {
+        if(flagless == true){flagless = false}
         if (isGameOver) return
         if (!square.classList.contains('checked') && (flags < bombAmount)) {
             if (!square.classList.contains('flag')) {
@@ -355,8 +358,24 @@ document.addEventListener('DOMContentLoaded', () => {
             let loseInterface = document.getElementById('interfaceLose')
             loseInterface.classList.remove('hidden')
             loseInterface.classList.add('visible')
-            stopTimer()
             isGameOver = true
+            $.ajax({
+                type: "POST", 
+                url: "JStoPHP.php",
+                data: { 
+                    elapsedTime: elapsedTime,
+                    bomb: true
+                },
+                success: function(response) {
+                    console.log("Data sent successfully!");
+                    console.log("Response from server: " + response);
+                    console.log(elapsedTime)
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error occurred: " + error);
+                }
+            })
+            stopTimer()
         }else {
             if (total !=0) {
                 square.classList.add('checked')
@@ -496,7 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         url: "JStoPHP.php",
                         data: { 
                             elapsedTime: elapsedTime,
-                            victory: true
+                            victory: true,
+                            flagless: flagless
                         },
                         success: function(response) {
                             console.log("Data sent successfully!");
