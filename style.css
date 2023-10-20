@@ -329,6 +329,14 @@ th,
 td{
   padding: 2px;
 }
+#statsTable th,
+#statsTable td{
+  position: relative;
+  left: -3vw;
+}
+.tableStatsStatsNames{
+  text-align: right;
+}
 #loggedInterface{
   position: relative;
   top: 10px;
@@ -458,10 +466,10 @@ td{
   visibility: hidden;
   user-select: none;
 }
-#menuPetitDiv.closed:hover > #arrowLeft{
+#menuPetitDiv.closed.hover:hover > #arrowLeft{
   visibility: visible;
 }
-#menuPetitDiv.open:hover > #arrowRight{
+#menuPetitDiv.open.hover:hover > #arrowRight{
   visibility: visible;
 }
 #menuLargeDiv{

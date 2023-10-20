@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let fullscreen = false
     let myDocument = document.documentElement
     let muteButton = document.getElementById('muteButton')
+    let buttons = document.querySelectorAll('.button')
 
 
 
@@ -34,6 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
             menuPetitDiv.classList.remove('closed')
         }
     });
+    buttons.forEach((buttons) => {
+        buttons.addEventListener('pointerover', () => {
+            menuPetitDiv.classList.remove('hover')
+        })
+        buttons.addEventListener('pointerout', () => {
+            menuPetitDiv.classList.add('hover')
+        })
+    })
+    
 
 
     
