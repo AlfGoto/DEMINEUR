@@ -70,37 +70,41 @@ try {
 
 
   //Average win times in stats
-  $currentUser = $_SESSION['user'];
+  if(isset($_SESSION['user']) == true){
+    $currentUser = $_SESSION['user'];
 
-  $sqlC = "SELECT AVG(time) as average_time FROM times WHERE pseudo = :currentUser";
-  $stmtC = $conn->prepare($sqlC);
-  $stmtC->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-  $stmtC->execute();
-  $rowc = $stmtC->fetch(PDO::FETCH_ASSOC);
-  $averageTime = $rowc["average_time"];
+    $sqlC = "SELECT AVG(time) as average_time FROM times WHERE pseudo = :currentUser";
+    $stmtC = $conn->prepare($sqlC);
+    $stmtC->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+    $stmtC->execute();
+    $rowc = $stmtC->fetch(PDO::FETCH_ASSOC);
+    $averageTime = $rowc["average_time"];
 
-  $updateSql = "UPDATE stats SET victoriesaverages = :averageTime WHERE pseudo = :currentUser";
-  $updateStmt = $conn->prepare($updateSql);
-  $updateStmt->bindParam(':averageTime', $averageTime, PDO::PARAM_INT);
-  $updateStmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-  $updateStmt->execute();
+    $updateSql = "UPDATE stats SET victoriesaverages = :averageTime WHERE pseudo = :currentUser";
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bindParam(':averageTime', $averageTime, PDO::PARAM_INT);
+    $updateStmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+    $updateStmt->execute();
 
 
-  //get the STATS in an array
-  $sql = "SELECT * FROM stats WHERE pseudo = :currentUser";
-  $stmt = $conn->prepare($sql);
-  $stmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-  $stmt->execute();
+    //get the STATS in an array
+    $sql = "SELECT * FROM stats WHERE pseudo = :currentUser";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+    $stmt->execute();
 
-  $stats = array();
+    $stats = array();
 
-  if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $stats['victories'] = $row['victories'];
-    $stats['victoriesaverages'] = $row['victoriesaverages'];
-    $stats['victoriesflagless'] = $row['victoriesflagless'];
-    $stats['games'] = $row['games'];
-    $stats['bombsExploded'] = $row['bombsExploded'];
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $stats['victories'] = $row['victories'];
+      $stats['victoriesaverages'] = $row['victoriesaverages'];
+      $stats['victoriesflagless'] = $row['victoriesflagless'];
+      $stats['games'] = $row['games'];
+      $stats['bombsExploded'] = $row['bombsExploded'];
+    }
+
   }
+  
 
 
 

@@ -30,6 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'pseudo'=>$registerPseudo,
         'password'=>$registerPassword
       ]);
+
+      $zero = 0;
+      $sqlc = "INSERT INTO stats (`pseudo`, `victories`, `bombsExploded`, `games`, `victoriesflagless` ,`victoriesaverages`) VALUES (:pseudo, 0, 0, 0, 0, 0)";
+      $stmt = $db->prepare($sqlc);
+      $stmt->bindParam(':pseudo', $registerPseudo, PDO::PARAM_STR);
+      $stmt->execute();
+
       echo 'your account has been created';
       $is_logged = true;
       $_SESSION['user'] = $registerPseudo;

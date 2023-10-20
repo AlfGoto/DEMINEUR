@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let loginRegisterInterface = document.getElementById('loginRegisterInterface')
     let loggedInterface = document.getElementById('loggedInterface')
     let unlogButton = document.getElementById('unlogButtonDiv')
+    let statsDiv = document.getElementById('statsDiv')
 
 
     if(isLogged == true){
@@ -12,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loggedInterface.classList.add('visible')
             unlogButton.classList.remove('hidden')
             unlogButton.classList.add('visible')
+            statsDiv.classList.remove('hidden')
+            statsDiv.classList.add('visible')
         }else{
             loginRegisterInterface.classList.remove('hidden')
             loginRegisterInterface.classList.add('visible')
@@ -19,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loggedInterface.classList.add('hidden')
             unlogButton.classList.remove('visible')
             unlogButton.classList.add('hidden')
+            statsDiv.classList.remove('visible')
+            statsDiv.classList.add('hidden')
         }
 
 
