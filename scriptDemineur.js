@@ -487,14 +487,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 elapsedTime = now - startTime;
                 const seconds = Math.floor(elapsedTime / 1000);
                 const milliseconds = elapsedTime % 1000;
-                timerVictory.innerHTML = seconds + '.' + milliseconds/10
+                timerVictory.innerHTML = seconds + '.' + milliseconds
 
                 //send elapsedTime to PHP
                 if(bombAmount > 69){
                     $.ajax({
                         type: "POST", 
-                        url: "timeToMySQL.php",
-                        data: { elapsedTime: elapsedTime },
+                        url: "JStoPHP.php",
+                        data: { 
+                            elapsedTime: elapsedTime,
+                            victory: true
+                        },
                         success: function(response) {
                             console.log("Data sent successfully!");
                             console.log("Response from server: " + response);

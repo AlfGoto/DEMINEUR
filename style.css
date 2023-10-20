@@ -362,6 +362,7 @@ td{
   width: 4.4vw;
   height: 4.4vw;
   border-radius: 5%;
+  background-color: gray;
 }
 #fullscreenButton{
   position: relative;
@@ -373,6 +374,7 @@ td{
   height: 4.4vw;
   border-radius: 5%;
   padding: 0vh;
+  background-color: gray;
 }
 #fullscreenImg{
   height: 4.2vw;
@@ -389,6 +391,7 @@ td{
   height: 4.4vw;
   border-radius: 5%;
   padding: 0vh;
+  background-color: gray;
 }
 #muteImg{
   height: 3.8vw;
@@ -411,6 +414,7 @@ td{
   padding: 0.01vh;
   text-align: center;
   user-select: none;
+  background-color: gray;
 }
 #menuDiv{
   box-sizing: border-box;
@@ -431,8 +435,8 @@ td{
   top: 5%;
   left: 0px;
 }
-#menuPetitDiv:hover{
-  background-color: rgb(168, 167, 167);
+#menuPetitDiv .button:hover{
+  background-color: rgb(143, 142, 142);
 }
 .button:hover > #menuPetitDiv{
   background-color: gray !important;
@@ -443,6 +447,7 @@ td{
   top: 45%;
   left: -2vw;
   visibility: hidden;
+  user-select: none;
 }
 #arrowRight{
   position: absolute;
@@ -451,6 +456,7 @@ td{
   right: -2vw;
   z-index: 11;
   visibility: hidden;
+  user-select: none;
 }
 #menuPetitDiv.closed:hover > #arrowLeft{
   visibility: visible;

@@ -66,10 +66,23 @@ try {
             'bestTime' => $rowb["best_time"]
         );
       }
+
+
+
+
+
+
+
     $conn = null;
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
+
+
+
+
+
 
 #Get the classment and Bestscore of the Session player
 if(isset($_SESSION['user'])){

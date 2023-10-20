@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    
+
+
+
+
     //fullscreen button
     fullscreenButton.addEventListener('pointerdown', () => {
         if(fullscreen == false){

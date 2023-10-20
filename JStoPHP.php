@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-
+$victory = $_POST['victory'];
 
 $elapsedTime = 5;
 
@@ -28,6 +28,17 @@ if($elapsedTime != $_POST ['elapsedTime']){
         'pseudo'=>$_SESSION['user'],
         'time'=>$elapsedTime
     ]);
+    $sqlNBvictory = 'UPDATE stats SET victories = victories + 1 WHERE pseudo = :pseudo';
+    $NBvictory = $db->prepare($sqlNBvictory);
+    $NBvictory->execute([
+        'pseudo'=>$_SESSION['user']
+    ]);
+    $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
+    $NBgames = $db->prepare($sqlNBgames);
+    $NBgames->execute([
+        'pseudo'=>$_SESSION['user']
+    ]);
+    $victory = false;
 }
 
 
