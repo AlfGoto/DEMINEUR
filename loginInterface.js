@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let statsDiv = document.getElementById('statsDiv')
 
 
-    if(isLogged == true){
+        if(isLogged == true){
             loginRegisterInterface.classList.remove('visible')
             loginRegisterInterface.classList.add('hidden')
             loggedInterface.classList.remove('hidden')
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             statsDiv.classList.remove('visible')
             statsDiv.classList.add('hidden')
         }
+    
+    
 
 
 

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let flags = 0
     let firstSquare = true
     let total = 0
-    let flagless = true
+
 
 
     //Sound setup
@@ -104,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledArray = shuffle(gameArray)
 
         firstSquare = true
-        flagless = false
 
 
         //create squares
@@ -249,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //add flags with right click
     function addFlag(square) {
-        if(flagless == true){flagless = false}
         if (isGameOver) return
         if (!square.classList.contains('checked') && (flags < bombAmount)) {
             if (!square.classList.contains('flag')) {
@@ -257,6 +255,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.innerHTML = `<img class='imageFlag' src='image/flag.png'></img>`
                 flags++
                 flagSound()
+                if(flags < 2){
+                    console.log('this is not a flagless run anymore')
+                    $.ajax({
+                        type: "POST", 
+                        url: "JStoPHP.php",
+                        data: { 
+                            flagused: true
+                        },
+                    })
+                }
             } else {
                 square.classList.remove('flag')
                 square.innerHTML = ' '
@@ -273,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalFlags = 0
         const isLeftEdge = (i % width === 0)
         const isRightEdge = (i % width === width -1)
-        if (bombAround > 0) { console.log('total plus grand que zero')
+        if (bombAround > 0) {
             if (i > 0 && !isLeftEdge && squares[i -1].classList.contains('flag')) totalFlags++
             if (i > 19 && !isRightEdge && squares[i +1 -width].classList.contains('flag')) totalFlags++
             if (i > 20 && squares[i - width].classList.contains('flag')) totalFlags++
@@ -287,42 +295,104 @@ document.addEventListener('DOMContentLoaded', () => {
             if (i === 378 && squares[i  +21].classList.contains('flag')) totalFlags++
             if (totalFlags == bombAround){
                 if(isLeftEdge){
-                    click(squares[i +1 -width])
-                    click(squares[i - width])
-                    click(squares[i  +1])
-                    click(squares[i  +1 +width])
-                    click(squares[i  +width])
+                    if(isGameOver == false){
+                        click(squares[i +1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width])
+                    }
                 }else if(isRightEdge){
-                    click(squares[i -1])
-                    click(squares[i - width])
-                    click(squares[i  -1 -width])
-                    click(squares[i  -1 +width])
-                    click(squares[i  +width])
+                    if(isGameOver == false){
+                        click(squares[i -1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width])
+                    }
                 }else if(i<20){
-                    click(squares[i -1])
-                    click(squares[i  +1])
-                    click(squares[i  -1 +width])
-                    click(squares[i  +1 +width])
-                    click(squares[i  +width])
+                    if(isGameOver == false){
+                        click(squares[i -1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width])
+                    }
                 }else if(i<400 && i>379){
-                    click(squares[i -1])
-                    click(squares[i +1 -width])
-                    click(squares[i - width])
-                    click(squares[i  -1 -width])
-                    click(squares[i  +1])
+                    if(isGameOver == false){
+                        click(squares[i -1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i +1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1])
+                    }   
                 }else if(i == 0){
-                    click(squares[i  +1])
-                    click(squares[i  +1 +width])
-                    click(squares[i  +width])
+                    if(isGameOver == false){
+                        click(squares[i  +1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width])
+                    }   
                 }else{
-                    click(squares[i -1])
-                    click(squares[i +1 -width])
-                    click(squares[i - width])
-                    click(squares[i  -1 -width])
-                    click(squares[i  +1])
-                    click(squares[i  -1 +width])
-                    click(squares[i  +1 +width])
-                    click(squares[i  +width])
+                    if(isGameOver == false){
+                        click(squares[i -1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i +1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width])
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width])
+                    }                    
                 }
                 
             }
@@ -367,9 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bomb: true
                 },
                 success: function(response) {
-                    console.log("Data sent successfully!");
-                    console.log("Response from server: " + response);
-                    console.log(elapsedTime)
+                    console.log("Data sent successfully!" + "Response from server: " + response);
                 },
                 error: function(xhr, status, error) {
                     console.error("Error occurred: " + error);
@@ -387,9 +455,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     square.classList.add('silver')
                 }
                 square.innerHTML = total
-                checkForWin()
+                if(isGameOver == false){checkForWin()}
+                
                 return
-            }
+            }else{if(isGameOver == false){checkForWin()}}
             checkSquare(square, currentId) 
             if(square.classList.contains('green')){
                 square.classList.remove('green')
@@ -403,10 +472,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(firstSquare === true){
             startTimer()
         }
-        checkForWin()
+        
     }
 
-  
+
 
     //check neighbourg squares
     function checkSquare(square, currentId) {
@@ -479,13 +548,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newSquare = document.getElementById(newId)
                 click(newSquare)
             }
- 
- 
-            
-            
 
         }, 10)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //check for win
     function checkForWin() {
         let matches = 0
@@ -494,12 +573,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (squares[i].classList.contains('checked')) {
                 matches++
             }
-            if (matches === (width*width-bombAmount)) {
+            if (matches === (width*width-bombAmount) && isGameOver == false) {
+                isGameOver = true
                 stopTimer()
                 let victoryInterface = document.getElementById('interfaceVictory')
                 victoryInterface.classList.remove('hidden')
                 victoryInterface.classList.add('visible')
-                isGameOver = true
 
                 //timer in victory interface
                 let timerVictory = document.getElementById('timerVictory')
@@ -515,12 +594,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         url: "JStoPHP.php",
                         data: { 
                             elapsedTime: elapsedTime,
-                            victory: true,
-                            flagless: flagless
+                            victory: true
                         },
                         success: function(response) {
-                            console.log("Data sent successfully!");
-                            console.log("Response from server: " + response);
+                            console.log("Data sent successfully!" + "Response from server: " + response);
                         },
                         error: function(xhr, status, error) {
                             console.error("Error occurred: " + error);
@@ -531,6 +608,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
     }
+
+
+
+
+
+
 
 
     //restart

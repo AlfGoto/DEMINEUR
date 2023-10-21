@@ -1,42 +1,28 @@
 <?php
 session_start();
 
+if(isset($_POST['flagused'])){
+    $_SESSION['flagused'] = $_POST['flagused'];
+}
+
+try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8', 'root', 'root',
+    [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+}
+catch(Exception $e){
+    die('erreur : '. $e->getMessage());
+}
 
 
 
-$elapsedTime = 5;
 
-//To not have any duplicate (it doesnt work too well)
-if($elapsedTime != $_POST ['elapsedTime']){
-    $elapsedTime = $_POST['elapsedTime'];
-
-    if(isset($_POST['victory'])){
-        $victory = $_POST['victory'];
-    }
-    if(isset($_POST['bomb'])){
-        $bomb = $_POST['bomb'];
-    }
-    if(isset($_POST['flagless'])){
-        $flagless = $_POST['flagless'];
-    }
-
-    try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8',
-        'root',
-        'root',
-        [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
-    }
-    catch(Exception $e){
-        die('erreur : '. $e->getMessage());
-    }
-
-
-    //if victory
-    if($victory == true){
+//if victory
+if(isset($_POST['victory'])){
+    if($_POST['victory'] == true){
         $sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
         $insertTimes = $db->prepare($sqlQuery);
         $insertTimes->execute([
             'pseudo'=>$_SESSION['user'],
-            'time'=>$elapsedTime
+            'time'=>$_POST['elapsedTime'],
         ]);
         $sqlNBvictory = 'UPDATE stats SET victories = victories + 1 WHERE pseudo = :pseudo';
         $NBvictory = $db->prepare($sqlNBvictory);
@@ -48,20 +34,25 @@ if($elapsedTime != $_POST ['elapsedTime']){
         $NBgames->execute([
             'pseudo'=>$_SESSION['user']
         ]);
-        if($flagless == true){
+        if($_SESSION['flagused'] == false){
             $sqlNBflagless = 'UPDATE stats SET victoriesflagless = victoriesflagless + 1 WHERE pseudo = :pseudo';
-            $NBflagless = $db->prepare($sqlNBflagless);
-            $NBflagless->execute([
-                'pseudo'=>$_SESSION['user']
-            ]);
-        }
+                $NBflagless = $db->prepare($sqlNBflagless);
+                $NBflagless->execute([
+                    'pseudo'=>$_SESSION['user']
+                ]);
+        }else{
+            $_SESSION['flagused'] == false;
+        } 
+    }
+    
+        unset($_POST['victory']);
+}
 
-        $flagless = false;
-        $victory = false;
-        };
+    
 
-    //if bomb
-    if($bomb == true){
+//if bomb
+if(isset($_POST['bomb'])){
+    if($_POST['bomb'] == true){
         $sqlNBbomb = 'UPDATE stats SET bombsExploded = bombsExploded + 1 WHERE pseudo = :pseudo';
         $NBbomb = $db->prepare($sqlNBbomb);
         $NBbomb->execute([
@@ -74,7 +65,10 @@ if($elapsedTime != $_POST ['elapsedTime']){
         ]);
         $victory = false;
         };
-    }
+    unset($_POST['bomb']);
+}
+    
+    
     
     
     

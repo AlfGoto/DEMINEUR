@@ -1,9 +1,7 @@
 <?php
 
 #Connecting to the database
-try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8',
-  'root',
-  'root',
+try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8', 'root', 'root',
   [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}
 catch(Exception $e){
   die('erreur : '. $e->getMessage());
@@ -38,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $stmt->execute();
 
       echo 'your account has been created';
-      $is_logged = true;
+      $_SESSION['isLogged'] = true;
       $_SESSION['user'] = $registerPseudo;
       echo "welcome $registerPseudo";
       if(isset($_POST['registerCookie'])){
@@ -69,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $sql->execute();
       $result = $sql->fetch(PDO::FETCH_ASSOC);
       if($loginPassword == $result['password']){
-        $is_logged = true;
+        $_SESSION['isLogged'] = true;
         $_SESSION['user'] = $loginPseudo;
         echo "welcome $loginPseudo";
         if(isset($_POST['loginCookie'])){
@@ -98,7 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   //Unlogin
   if(isset($_POST['unlogButton'])){
-    $is_logged = false;
     session_unset();
     setcookie('pseudo', 'pseudoDeleted', time() - (365*24*60*60));
     header("Refresh:0");

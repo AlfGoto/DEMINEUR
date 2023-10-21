@@ -7,28 +7,25 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 session_start();
 
 
+$_SESSION['flagused'] = false;
 
-$is_logged = false;
-$_SESSION['isLogged'] = false;
 
-if (isset($_COOKIE['pseudo']) == true) {
+if (isset($_COOKIE['pseudo'])) {
   $_SESSION['isLogged'] = true;
   $_SESSION['user'] = $_COOKIE['pseudo'];
-  $is_logged = true;
-  echo "<script>var isLogged = '$is_logged';</script>";
 }
 
-if (isset($_SESSION['user']) == true) {
-  $_SESSION['isLogged'] = true;
-  $is_logged = true;
-  echo "<script>var isLogged = '$is_logged';</script>";
-}
 
 #Transfer the variables to JS
-echo "<script>var isLogged = '$is_logged';</script>";
-if (isset($_SESSION['user']) == true) {
-  $sessionPseudo = $_SESSION['user'];
-  echo "<script>var sessionPseudo = '$sessionPseudo';</script>";
+
+if (isset($_SESSION['isLogged'])) {
+    if($_SESSION['isLogged']){
+        echo '<script>var isLogged = ' . json_encode($_SESSION['isLogged']) . ';</script>';
+        $sessionPseudo = $_SESSION['user'];
+        echo "<script>var sessionPseudo = " . $sessionPseudo . ";</script>";
+    }
+}else{
+    echo '<script>var isLogged = false;</script>';
 }
 
 
@@ -160,6 +157,9 @@ if (isset($_SESSION['user'])) {
     <meta name="author" content="AlfGoto">
     <meta name="title" content="Minesweeper">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="pragma" content="no-cache">
 </head>
 
 
@@ -275,13 +275,13 @@ if (isset($_SESSION['user'])) {
                         </thead>
                         <tbody>
                             <tr>
-                                <td class='tableStatsStatsNames'>Victories : </td>
+                                <td class='tableStatsStatsNames'>Wins : </td>
                                 <td>
                                     <?= $stats['victories'] ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td class='tableStatsStatsNames'>Average victory time : </td>
+                                <td class='tableStatsStatsNames'>Average win time : </td>
                                 <td>
                                     <?= $stats['victoriesaverages'] ?>
                                 </td>
@@ -299,7 +299,7 @@ if (isset($_SESSION['user'])) {
                                 </td>
                             </tr>
                             <tr>
-                                <td class='tableStatsStatsNames'>Victories Flagless : </td>
+                                <td class='tableStatsStatsNames'>Wins Flagless : </td>
                                 <td>
                                     <?= $stats['victoriesflagless'] ?>
                                 </td>
@@ -373,8 +373,8 @@ if (isset($_SESSION['user'])) {
                             </tr>
                             <tr>
                                 <th id='tableClassment7'>7</th>
-                                <td id='tableTime7'><?= $tableTime[6] / 1000 ?>
-                                </td>
+                                <td id='tablePseudo7'><?= $tablePseudo[6] ?></td>
+                                <td id='tableTime7'><?= $tableTime[6] / 1000 ?></td>
                             </tr>
                             <tr>
                                 <th id='tableClassment8'>8</th>
