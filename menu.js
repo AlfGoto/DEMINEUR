@@ -94,10 +94,23 @@ document.addEventListener('DOMContentLoaded', () => {
         mute = !mute
         if(mute == true){
             muteButton.innerHTML = "<img src ='./image/mute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+            $.ajax({
+                type: "POST", 
+                url: "JStoCookies.php",
+                data: { 
+                    mute: true
+                },
+            })
         } else if(mute == false){
             muteButton.innerHTML = "<img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+            $.ajax({
+                type: "POST", 
+                url: "JStoCookies.php",
+                data: { 
+                    mute: false
+                },
+            })
         }
-        console.log(mute)
     })
 
 })

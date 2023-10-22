@@ -98,6 +98,12 @@ try {
       $stats['victoriesflagless'] = $row['victoriesflagless'];
       $stats['games'] = $row['games'];
       $stats['bombsExploded'] = $row['bombsExploded'];
+      if($stats['games']>0){
+        $statsWinrate = round(($stats['victories'] / $stats['games']) * 100) . '%';
+      }else{
+        $statsWinrate = 0;
+      }
+      
     }
 
   }
@@ -284,6 +290,12 @@ if (isset($_SESSION['user'])) {
                                 <td class='tableStatsStatsNames'>Average win time : </td>
                                 <td>
                                     <?= $stats['victoriesaverages'] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='tableStatsStatsNames'>Winrate : </td>
+                                <td>
+                                    <?= $statsWinrate ?>
                                 </td>
                             </tr>
                             <tr>
