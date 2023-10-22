@@ -1,13 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let width = 20
-    let bombAmount = 70
+    let bombAmount = 10
     let squares = []
     let isGameOver = false
     let flags = 0
     let firstSquare = true
     let total = 0
     let secondSquare = false
+    let currentIndex = 0
+    
+    
+    
+    
+    let squaresArray = []
+    
 
 
 
@@ -104,9 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         const shuffledArray = shuffle(gameArray)
 
+
+        //this is for the cool animations
+        for (let i = 0; i < width*width; i++) {
+            squaresArray.push(i);
+        }
+        shuffle(squaresArray)
+        console.log(squaresArray)
+
+
         firstSquare = true
         secondSquare = false
-
+        currentIndex = 0
 
         //create squares
         for(let i = 0; i < width*width; i++) {
@@ -594,9 +610,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (matches === (width*width-bombAmount) && isGameOver == false) {
                 isGameOver = true
                 stopTimer()
-                let victoryInterface = document.getElementById('interfaceVictory')
-                victoryInterface.classList.remove('hidden')
-                victoryInterface.classList.add('visible')
 
                 //timer in victory interface
                 let timerVictory = document.getElementById('timerVictory')
@@ -622,6 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     })
                 }
+                animVictory()
             }
         }
         
@@ -682,4 +696,43 @@ document.addEventListener('DOMContentLoaded', () => {
         elapsedTime = 0;
         console.log("Timer reset");
     }
+
+
+
+    
+
+    function animVictoryLoop() {
+        let square = document.getElementById(squaresArray[currentIndex]);
+        console.log('victory LOOP ' + currentIndex + '  square nb-'+square.id)
+        square.innerHTML =' '
+        square.style.animation = 'fadeIn 2s';
+        if (square.classList.contains('gray')) {
+            square.classList.remove('gray');
+            square.classList.add('green');
+        } 
+        else if(square.classList.contains('green')){
+        } 
+        else if(square.classList.contains('lightGreen')){
+        }
+        else if(square.classList.contains('silver')){
+            square.classList.remove('silver');
+            square.classList.add('lightGreen');
+        }
+        currentIndex++;
+        if (currentIndex < width*width) {
+            setTimeout(animVictoryLoop, 25); 
+        } else {
+            let victoryInterface = document.getElementById('interfaceVictory')
+            victoryInterface.style.animation = 'fadeIn 2s';
+            victoryInterface.classList.remove('hidden')
+            victoryInterface.classList.add('visible')
+        }
+    }
+
+
+    function animVictory(){
+        console.log('anim victory en cours')
+        animVictoryLoop()
+    }
+    
 })
