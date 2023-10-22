@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let flags = 0
     let firstSquare = true
     let total = 0
+    let secondSquare = false
 
 
 
@@ -104,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledArray = shuffle(gameArray)
 
         firstSquare = true
+        secondSquare = false
 
 
         //create squares
@@ -418,9 +420,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if(firstSquare === true){
             firstSquare = false
+            secondSquare = true
             startTimer()
         }
-        
+        if(secondSquare == true){
+            secondSquare = false
+            $.ajax({
+                type: "POST", 
+                url: "JStoPHP.php",
+                data: { 
+                    game: true
+                },
+                success: function(response) {
+                    console.log("Data sent successfully!" + "Response from server: " + response);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error occurred: " + error);
+                }
+            })
+        }
         if (isGameOver) return
         if (square.classList.contains('checked') || square.classList.contains('flag')) return
         if (square.classList.contains('bomb')) {

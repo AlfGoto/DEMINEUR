@@ -29,11 +29,6 @@ if(isset($_POST['victory'])){
         $NBvictory->execute([
             'pseudo'=>$_SESSION['user']
         ]);
-        $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
-        $NBgames = $db->prepare($sqlNBgames);
-        $NBgames->execute([
-            'pseudo'=>$_SESSION['user']
-        ]);
         if($_SESSION['flagused'] == false){
             $sqlNBflagless = 'UPDATE stats SET victoriesflagless = victoriesflagless + 1 WHERE pseudo = :pseudo';
                 $NBflagless = $db->prepare($sqlNBflagless);
@@ -58,15 +53,21 @@ if(isset($_POST['bomb'])){
         $NBbomb->execute([
             'pseudo'=>$_SESSION['user']
         ]);
-        $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
-        $NBgames = $db->prepare($sqlNBgames);
-        $NBgames->execute([
-            'pseudo'=>$_SESSION['user']
-        ]);
         $victory = false;
         };
     unset($_POST['bomb']);
 }
+
+//if games
+if(isset($_POST['game'])){
+    $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
+        $NBgames = $db->prepare($sqlNBgames);
+        $NBgames->execute([
+            'pseudo'=>$_SESSION['user']
+        ]);
+    }
+
+
     
     
     
