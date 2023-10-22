@@ -54,6 +54,12 @@
   position: relative;
   animation: fall 0.2s forwards;
 }
+.bombimg{
+  height: 4vh;
+  position: relative;
+  animation: bombEXPLODE 0.5s;
+  z-index: 13;
+}
 @keyframes fall {
   from {
     transform: translateY(-20px);
@@ -62,7 +68,17 @@
     transform:translateY(0);
   }
 }
-
+@keyframes bombEXPLODE{
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
 
 
 

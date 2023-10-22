@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let width = 20
-    let bombAmount = 10
+    let bombAmount = 70
     let squares = []
     let isGameOver = false
     let flags = 0
@@ -117,12 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
             squaresArray.push(i);
         }
         shuffle(squaresArray)
-        console.log(squaresArray)
 
 
         firstSquare = true
         secondSquare = false
         currentIndex = 0
+        bombIndex = 0
 
         //create squares
         for(let i = 0; i < width*width; i++) {
@@ -459,9 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (square.classList.contains('checked') || square.classList.contains('flag')) return
         if (square.classList.contains('bomb')) {
             console.log('UNE BOMBE A EXPLOSE')
-            let loseInterface = document.getElementById('interfaceLose')
-            loseInterface.classList.remove('hidden')
-            loseInterface.classList.add('visible')
+            square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
             isGameOver = true
             $.ajax({
                 type: "POST", 
@@ -477,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error("Error occurred: " + error);
                 }
             })
+            animLose()
             stopTimer()
         }else {
             if (total !=0) {
@@ -703,7 +702,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animVictoryLoop() {
         let square = document.getElementById(squaresArray[currentIndex]);
-        console.log('victory LOOP ' + currentIndex + '  square nb-'+square.id)
         square.innerHTML =' '
         square.style.animation = 'fadeIn 2s';
         if (square.classList.contains('gray')) {
@@ -720,7 +718,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         currentIndex++;
         if (currentIndex < width*width) {
-            setTimeout(animVictoryLoop, 25); 
+            if(isGameOver == false){
+                return
+            }else{
+                setTimeout(animVictoryLoop, 25)
+            }
         } else {
             let victoryInterface = document.getElementById('interfaceVictory')
             victoryInterface.style.animation = 'fadeIn 2s';
@@ -735,4 +737,44 @@ document.addEventListener('DOMContentLoaded', () => {
         animVictoryLoop()
     }
     
+
+    function animLose(){
+        let bombIndex = 0
+        let bombstemp = document.querySelectorAll('.bomb')
+        let bombs = Array.from(bombstemp)
+        const shuffle = array => {
+            for (let k = array.length - 1; k > 0; k--) {
+              const l = Math.floor(Math.random() * (k + 1));
+              const temp = array[k];
+              array[k] = array[l];
+              array[l] = temp;
+            }
+            return array
+          }
+        let shuffledbombs = shuffle(bombs)
+        console.log(shuffledbombs)
+        shuffledbombs.forEach((element)=>{
+            setTimeout(()=>{
+                if(element.classList.contains('flag')){
+                    element.innerHTML =' '
+                }
+                element.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+            }, Math.floor(Math.random()*20000)/2.5)
+        })
+        setTimeout(()=>{
+            if(isGameOver == true){
+                let loseInterface = document.getElementById('interfaceLose')
+            loseInterface.style.animation = 'fadeIn 2s';
+            loseInterface.classList.remove('hidden')
+            loseInterface.classList.add('visible')
+            }else{return}   
+        },8000)
+        
+    }
+
+    
+
+    
+
+
 })
