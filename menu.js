@@ -112,6 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
     })
+    //mute Cookie
+    if(muteCookie == true){
+        muteButton.innerHTML = "<img src ='./image/mute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+    } else if(muteCookie == false){
+        muteButton.innerHTML = "<img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+    }
 
 })
 

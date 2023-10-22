@@ -16,8 +16,12 @@ if (isset($_COOKIE['pseudo'])) {
 }
 
 
-#Transfer the variables to JS
+#mute cookie
+if (isset($_COOKIE['mute'])){
+    echo "<script>var muteCookie = " . $_COOKIE['mute'] . ";</script>";
+}
 
+#Transfer the variables to JS
 if (isset($_SESSION['isLogged'])) {
     if($_SESSION['isLogged']){
         echo '<script>var isLogged = ' . json_encode($_SESSION['isLogged']) . ';</script>';
@@ -144,7 +148,10 @@ if (isset($_SESSION['user'])) {
 
 <head>
     <script>
+        //mute globalisation
     window.mute = false
+    if(muteCookie == true){window.mute = true}
+    if(muteCookie == false){window.mute = false}
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="./style.css" rel="stylesheet">

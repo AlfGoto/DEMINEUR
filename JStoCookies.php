@@ -2,5 +2,5 @@
 session_start();
 
 if(isset($_POST['mute'])){
-    if($_POST['mute']){}else{}
+        setcookie('mute', $_POST['mute'], time() + (365*24*60*60));
 }
