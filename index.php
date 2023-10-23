@@ -10,6 +10,31 @@ session_start();
 $_SESSION['flagused'] = false;
 
 
+
+#Detect mobile device and redirect them
+function isMobileDevice() {
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $mobileKeywords = array('Android', 'iPhone', 'iPad', 'Windows Phone', 'BlackBerry', 'BB10', 'Symbian', 'Opera Mini', 'Mobile', 'Mobile Safari', 'Tablet', 'IEMobile');
+
+    foreach ($mobileKeywords as $keyword) {
+        if (stripos($userAgent, $keyword) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+
+if (isMobileDevice()) {
+    header('Location: ./welcomeDearMobileUser.html');
+} 
+
+
+
+
+
+
+
+
 if (isset($_COOKIE['pseudo'])) {
   $_SESSION['isLogged'] = true;
   $_SESSION['user'] = $_COOKIE['pseudo'];
@@ -183,12 +208,12 @@ if (isset($_SESSION['user'])) {
     </div>
     <div id="InterfaceEndGame">
         <div class="hidden" id="interfaceVictory">
-            <p>Victoire !</p>
+            <p>Well done !</p>
             <p id='timerVictory'></p>
             <!-- <button class="button" type="button" id="victoryButton">Restart</button> -->
         </div>
         <div class="hidden" id="interfaceLose" class="visible">
-            <p>Tu as fait sauter une bombe</p>
+            <p>The bombs exploded, better luck next time !</p>
             <!-- <button class="button" type="button" id="loseButton">Restart</button> -->
         </div>
     </div>

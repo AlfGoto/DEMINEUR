@@ -55,7 +55,8 @@
   animation: fall 0.2s forwards;
 }
 .bombimg{
-  height: 4vh;
+  height: 3.6vh;
+  top: 0.2vh;
   position: relative;
   animation: bombEXPLODE 0.5s;
   z-index: 13;
