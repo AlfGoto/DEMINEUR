@@ -83,6 +83,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function bombSound(){
+        if(mute == true){return}
+        if(isGameOver == false){return}
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+          }
+        let bombSoun;
+        switch(getRandomInt(6)){
+            case 0:
+                bombSoun = new Audio('./son/bomb0.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+            case 1:
+                bombSoun = new Audio('./son/bomb1.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+            case 2:
+                bombSoun = new Audio('./son/bomb2.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+            case 3:
+                bombSoun = new Audio('./son/bomb3.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+            case 4:
+                bombSoun = new Audio('./son/bomb4.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+            case 5:
+                bombSoun = new Audio('./son/bomb5.mp3');
+                bombSoun.volume = 0.25;
+                bombSoun.play();
+                break;
+        }
+    }
 
 
     //timmer declaration
@@ -461,6 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (square.classList.contains('bomb')) {
             console.log('UNE BOMBE A EXPLOSE')
             square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+            bombSound()
             isGameOver = true
             $.ajax({
                 type: "POST", 
@@ -760,6 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(element.classList.contains('flag')){
                     element.innerHTML =' '
                 }
+                bombSound()
                 element.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
             }, Math.floor(Math.random()*20000)/2.5)
         })
