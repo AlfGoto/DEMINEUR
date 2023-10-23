@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledArray = shuffle(gameArray)
 
 
+        squaresArray = []
         //this is for the cool animations
         for (let i = 0; i < width*width; i++) {
             squaresArray.push(i);
@@ -734,6 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animVictory(){
         console.log('anim victory en cours')
+        console.log(squaresArray)
         animVictoryLoop()
     }
     
