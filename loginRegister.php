@@ -13,14 +13,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   #REGISTER
   if(isset($_POST['registerPseudo'])){
     $registerPseudo = htmlspecialchars(strip_tags($_POST['registerPseudo']));
+    if(strlen($registerPseudo)<5){
+      echo 'sorry but this name has some HTML chars, change it pls';
+      return;
+    }
     $registerPassword = htmlspecialchars(strip_tags($_POST['registerPassword']));
+    if(strlen($registerPassword)<5){
+      echo 'sorry but this password has some HTML chars, change it pls';
+      return;
+    }
     #check if there is not already this pseudo in the data base
     $request = "SELECT * FROM login WHERE pseudo = :pseudo";
     $sql = $db->prepare($request);
     $sql->bindParam(':pseudo', $registerPseudo, PDO::PARAM_STR);
     $sql->execute();
     if($sql->rowCount() > 0){
-      echo ('le nom est déjà prit déso');
+      echo ('this name is already taken sorry');
     }else{
       $request = 'INSERT INTO login(pseudo, password) VALUES(:pseudo, :password)';
       $sql = $db->prepare($request);

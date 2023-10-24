@@ -113,11 +113,62 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
     //mute Cookie
-    if(muteCookie == true){
-        muteButton.innerHTML = "<img src ='./image/mute.png' alt='button to set a mute on and off' id='muteImg'></img>"
-    } else if(muteCookie == false){
-        muteButton.innerHTML = "<img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+    if(typeof muteCookie !== 'undefined'){
+        if(muteCookie == true){
+            muteButton.innerHTML = "<img src ='./image/mute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+        } else if(muteCookie == false){
+            muteButton.innerHTML = "<img src ='./image/unMute.png' alt='button to set a mute on and off' id='muteImg'></img>"
+        }
     }
+    
+
+
+
+    //Table animation
+    let statsDiv = document.getElementById('statsDiv')
+    let tableStatsHaut = document.getElementById('tableStatsHaut')
+    let statsDivOpen = true
+    tableStatsHaut.addEventListener('click', () => {
+        if(statsDivOpen){
+            statsDivOpen = false
+            statsDiv.style.height = 'auto'
+        }else{
+            statsDivOpen = true
+            statsDiv.style.height = '7vh'
+        }
+        
+    })
+
+    let tableDiv = document.getElementById('tableDiv')
+    let tableHaut = document.getElementById('tableHaut')
+    let tableOpen = true
+    tableHaut.addEventListener('click', () => {
+        if(tableOpen){
+            tableOpen = false
+            tableDiv.style.height = 'auto'
+        }else{
+            tableOpen = true
+            tableDiv.style.height = '7vh'
+        }
+        
+    })
+
+    let tablePlayerDiv = document.getElementById('tablePlayersDiv')
+    let tablePlayerHaut = document.getElementById('tablePlayerHaut')
+    let tablePlayerOpen = true
+    tablePlayerHaut.addEventListener('click', () => {
+        if(tablePlayerOpen){
+            tablePlayerOpen = false
+            tablePlayerDiv.style.height = 'auto'
+        }else{
+            tablePlayerOpen = true
+            tablePlayerDiv.style.height = '7vh'
+        }
+        
+    })
+
+
+    
 
 })
 

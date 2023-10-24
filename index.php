@@ -175,8 +175,10 @@ if (isset($_SESSION['user'])) {
     <script>
         //mute globalisation
     window.mute = false
-    if(muteCookie == true){window.mute = true}
-    if(muteCookie == false){window.mute = false}
+    if(typeof muteCookie !== 'undefined'){
+        if(muteCookie == true){window.mute = true}
+        if(muteCookie == false){window.mute = false}
+    }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="./style.css" rel="stylesheet">
@@ -227,12 +229,12 @@ if (isset($_SESSION['user'])) {
                     <div id='registerPseudoDiv'>
                         <label id='registerPseudoLabel'>Pseudo : </label>
                         <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5'
-                            maxlength='15' class='textInput'></input>
+                            maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
                     </div>
                     <div id='registerPasswordDiv'>
                         <label id='registerPasswordLabel'>Password : </label>
                         <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5'
-                            maxlength='15' class='textInput'></input>
+                            maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
                         <p class='notSelectable'>don't put your usual password, <br /> i'm still working on making this
                             site ultra
                             safe</p>
@@ -303,7 +305,10 @@ if (isset($_SESSION['user'])) {
             } ?>
                     </p>
                 </div>
-                <div id='statsDiv'>
+                <div id='statsDiv' class='tableDiv'>
+                    <div id='tableStatsHaut'>
+                        <h2 id='tableStatsTitle'>Statistics</h2>
+                    </div>
                     <table id='statsTable'>
                         <thead>
                             <tr>
@@ -351,15 +356,11 @@ if (isset($_SESSION['user'])) {
                         </tbody>
                     </table>
                 </div>
-                <div id='tableDiv'>
+                <div id='tableDiv' class='tableDiv'>
+                    <div id='tableHaut'>
+                        <h2 id='tableTitle'>Best times</h2>
+                    </div>
                     <table id='table'>
-                        <thead>
-                            <tr>
-                                <th id='tableTitreClassment'><strong>Classment</strong></th>
-                                <td id='tableTitrePseudo'><strong>Players</strong></td>
-                                <td id='tableTitreTime'><strong>Time</strong></td>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
                                 <th id='tableClassment1'>1</th>
@@ -451,15 +452,11 @@ if (isset($_SESSION['user'])) {
 
                     </table>
                 </div>
-                <div id='tablePlayersDiv'>
+                <div id='tablePlayersDiv' class='tableDiv'>
+                    <div id='tablePlayerHaut'>
+                        <h2 id='tablePlayerTitle'>Best players</h2>
+                    </div>
                     <table id='table'>
-                        <thead>
-                            <tr>
-                                <th id='tablePlayersTitreClassment'>Classment</th>
-                                <td id='tablePlayersTitrePseudo'><strong>Players</strong></td>
-                                <td id='tablePlayersTitreTime'><strong>Time</strong></td>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
                                 <th id='tablePlayersClassment1'>1</th>
