@@ -363,18 +363,21 @@ td{
   margin: 2vh 0px;
   text-align: center;
   user-select: none;
+  font-weight: normal;
 }
 #tableStatsTitle{
   padding: 0px;
   margin: 2vh 0px;
   text-align: center;
   user-select: none;
+  font-weight: normal;
 }
 #tablePlayerTitle{
   padding: 0px;
   margin: 2vh 0px;
   text-align: center;
   user-select: none;
+  font-weight: normal;
 }
 
 .tableStatsStatsNames{

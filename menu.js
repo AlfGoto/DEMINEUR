@@ -126,12 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Table animation
     let statsDiv = document.getElementById('statsDiv')
-    let tableStatsHaut = document.getElementById('tableStatsHaut')
     let statsDivOpen = true
-    tableStatsHaut.addEventListener('click', () => {
+    statsDiv.style.transition = 'height 0.5s ease';
+    statsDiv.addEventListener('click', () => {
         if(statsDivOpen){
             statsDivOpen = false
-            statsDiv.style.height = 'auto'
+            statsDiv.style.height = '27.5vh'
         }else{
             statsDivOpen = true
             statsDiv.style.height = '7vh'
@@ -140,12 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     let tableDiv = document.getElementById('tableDiv')
-    let tableHaut = document.getElementById('tableHaut')
     let tableOpen = true
-    tableHaut.addEventListener('click', () => {
+    tableDiv.style.transition = 'height 0.5s ease';
+    tableDiv.addEventListener('click', () => {
         if(tableOpen){
             tableOpen = false
-            tableDiv.style.height = 'auto'
+            tableDiv.style.height = '35vh'
         }else{
             tableOpen = true
             tableDiv.style.height = '7vh'
@@ -154,12 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     let tablePlayerDiv = document.getElementById('tablePlayersDiv')
-    let tablePlayerHaut = document.getElementById('tablePlayerHaut')
     let tablePlayerOpen = true
-    tablePlayerHaut.addEventListener('click', () => {
+    tablePlayerDiv.style.transition = 'height 0.5s ease';
+    tablePlayerDiv.addEventListener('click', () => {
         if(tablePlayerOpen){
             tablePlayerOpen = false
-            tablePlayerDiv.style.height = 'auto'
+            tablePlayerDiv.style.height = '35vh'
         }else{
             tablePlayerOpen = true
             tablePlayerDiv.style.height = '7vh'
