@@ -8,7 +8,7 @@
 
 
 .bodyMain{
-  background: url("./image/forest.jpeg") fixed center;
+  background: url("./image/login Background.png") fixed center;
   background-size: 105%;
   overflow: hidden;
 }
@@ -35,8 +35,9 @@
   flex-wrap: wrap;
   margin: 0 auto;
   position: relative;
-  top: 50px;
+  top: 10vh;
   z-index: 10;
+  user-select: none;
 }
 
 .grid div {
@@ -49,6 +50,7 @@
   z-index: 11;
   user-select: none;
 }
+
 .bomb{
   background-color: orange;
 }
@@ -273,7 +275,7 @@ LLLLLLLL    LLLLLL      LLLLLL    LL  LL    LL
   background-color: tan;
   border-radius: 3%;
   width: 25vw;
-  height: 60vh;
+  height: 57vh;
   overflow: hidden;
   border: black 0.25vh solid;
 }
@@ -440,6 +442,7 @@ MM          MM  MMMMMMMMMM  MM          MM    MMMMMMMMM
   margin: 1vh 0.5vw;
   height: 7vh;
   overflow: hidden;
+  border-radius: 30px;
 }
 table{
   position: relative;
