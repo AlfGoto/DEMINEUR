@@ -157,24 +157,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
         </nav>
         <div id='registerDiv' class='loginAndRegisterDiv'>
-            <h2 class='notSelectable' id='registerTitle'>Create your account</h2>
             <div id='registerContent'>
                 <form id='registerForm' method='post'>
                     <div id='registerPseudoDiv'>
-                        <label id='registerPseudoLabel'>Pseudo : </label>
+                        <label  class='labelLOG'>Pseudo : </label>
                         <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5'
                             maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
                     </div>
                     <div id='registerPasswordDiv'>
-                        <label id='registerPasswordLabel'>Password : </label>
+                        <label class='labelLOG'>Password : </label>
                         <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5'
                             maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
-                        <p class='notSelectable'>don't put your usual password, <br /> i'm still working on making this
-                            site ultra
-                            safe</p>
                     </div>
                     <div id='registerCookieDiv'>
-                        <label id='registerCookieLabel'>Keep me sign in</label>
+                        <label class='labelCookie'>Remember me :</label>
                         <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
                     </div>
                     <input type="submit" value="Register" class='submitButton'>
@@ -183,21 +179,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div id='loginDiv' class='loginAndRegisterDiv'>
-            <h2 class='notSelectable' id='loginTitle'>Login</h2>
             <div id='loginContent'>
                 <form id='loginForm' method='post'>
                     <div id='loginPseudoDiv'>
-                        <label id='loginPseudoLabel'>Pseudo : </label>
+                        <label class='labelLOG'>Pseudo : </label>
                         <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='15'
                             class='textInput'></input>
                     </div>
                     <div id='loginPasswordDiv'>
-                        <label id='loginPasswordLabel'>Password : </label>
+                        <label class='labelLOG'>Password : </label>
                         <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5'
                             maxlength='15' class='textInput'></input>
                     </div>
                     <div id='loginCookieDiv'>
-                        <label id='loginCookieLabel'>Keep me sign in</label>
+                        <label class='labelCookie'>Remember me :</label>
                         <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
                     </div>
                     <input type="submit" value="Login" class='submitButton'>

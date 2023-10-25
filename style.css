@@ -252,15 +252,31 @@
 
 
 
-
-
-
-
-
-
-
-
-
+/*
+LL          LLLLLL      LLLLLL    LL  LL    LL
+LL        LL      LL  LL              LLL   LL
+LL        LL      LL  LL          LL  LLLL  LL
+LL        LL      LL  LL    LLLL  LL  LL LL LL
+LL        LL      LL  LL      LL  LL  LL  LLLL
+LL        LL      LL  LL      LL  LL  LL   LLL
+LLLLLLLL    LLLLLL      LLLLLL    LL  LL    LL
+*/
+#loginRegisterTitle{
+  text-align: center;
+  position: relative;
+  top: 5vh;
+}
+#loginRegisterInterface{
+  position: relative;
+  left: 37.5vw;
+  top: 10vh;
+  background-color: tan;
+  border-radius: 3%;
+  width: 25vw;
+  height: 60vh;
+  overflow: hidden;
+  border: black 0.25vh solid;
+}
 #navLoginRegister{
   position: relative;
   top: 2vh;
@@ -273,6 +289,8 @@
   display: inline-block;
   padding: 0px;
   background-color: wheat;
+  z-index : 22;
+  overflow: hidden;
 }
 #navLoginSelected{
   position: absolute;
@@ -282,6 +300,7 @@
   width: 8vw;
   height: 5.6vh;
   background-color: limegreen;
+  z-index: 21;
 }
 #pLogin{
   user-select: none;
@@ -291,6 +310,7 @@
   left: 2vw;
   margin: 0px;
   padding: 0px;
+  z-index: 23;
 }
 #loginClick{
   position: absolute;
@@ -308,8 +328,10 @@
   right: 1.25vw;
   margin: 0px;
   padding: 0px;
+  z-index:23;
 }
-#registerClick{position: absolute;
+#registerClick{
+  position: absolute;
   border-radius: 5px;
   left: 7.9vw;
   top: 0px;
@@ -317,46 +339,73 @@
   height: 5.6vh;
 }
 .textInput{
-  background-color: wheat;
-  border-radius: 3%;
+  font-size: 3vh;
+  position: relative;
+  display: block;
+  background-color: rgba(245, 222, 179, 0.712);
+  border-radius: 5px;
   border: none;
+  height: 5vh;
+  width: 21vw;
+}
+.textInput:focus{
+  background-color: wheat;
+  border: solid transparent;
+}
+.labelLOG{
+  position: relative;
+  display: block;
+  font-size: 3vh;
+  left: 1vw;
+  margin-top: 3vh;
+}
+.labelCookie{
+  position: relative;
+  font-size: 3vh;
+  left: 1vw;
+  margin-top: 3vh;
 }
 .submitButton{
-  background-color: transparent;
+  background-color: rgba(245, 222, 179, 0.712);
   border: solid black 2px;
+  border-radius: 5px;
   padding: 5px;
-  margin: 10px;
-  font-size: 16px;
-}
-#loginRegisterInterface{
   position: relative;
-  background-color: tan;
-  border-radius: 3%;
-  width: 25vw;
-  height: 60vh;
+  top: 3vh;
+  font-size: 3vh;
+  width: 21vw;
 }
 #loginDiv{
   position: absolute;
-  text-align: center;
   display: inline-block;
   z-index: 20;
   border-radius: 2%;
   padding: 10px;
-  width: 400px;
-  bottom: 2vh;
-  right: 3vw;
+  width: 20vw;
+  top: 12vh;
+  left: 1.5vw;
+  transition: left 0.3s ease;
 }
 #registerDiv{
   position: absolute;
-  text-align: center;
   display: inline-block;
   z-index: 20;
   border-radius: 2%;
   padding: 10px;
-  width: 400px;
-  bottom: 2vh;
-  right: -20vw;
+  width: 20vw;
+  top: 12vh;
+  left: 26vw;
+  transition: left 0.3s ease;
 }
+.bodyLogin input[type="checkbox"]{
+  height: 5vh;
+  width: 5vh;
+  position: relative;
+  left: 1vw;
+  top: 0.5vw;
+  border: black solid 2px;
+}
+
 
 
 
@@ -651,7 +700,4 @@ td{
 
 
 
-  #loginRegisterTitle{
-    text-align: center;
-
-  }
+ 
