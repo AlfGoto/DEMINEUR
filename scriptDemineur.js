@@ -728,7 +728,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isRunning) {
             isRunning = false;
             clearInterval(timer);
-            timerHTML.innerHTML = 'Timer'
         }
     }
     function resetTimer() {

@@ -51,8 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_COOKIE['pseudo']) == false){
           setcookie('pseudo', $registerPseudo, time() + (365*24*60*60));
           echo 'Cookie set';
-          Header('Location: '.$_SERVER['PHP_SELF']);
-          header("Refresh:0");
+          header('Location: ./index.php');
         }
       }
     }
@@ -93,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           loggedInterface.classList.remove('hidden')
           loggedInterface.classList.add('visible')
         })</script>";
-        header("Refresh:0");
+        header('Location: ./index.php');
       }else{
         echo 'Wrong password';
       }
@@ -102,15 +101,100 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-  //Unlogin
-  if(isset($_POST['unlogButton'])){
-    session_unset();
-    setcookie('pseudo', 'pseudoDeleted', time() - (365*24*60*60));
-    header("Refresh:0");
-  }
-
 
 };
 
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+        <link href="./style.css" rel="stylesheet">
+
+        <title>MineSweeper ULTIMATE</title>
+        <link rel="icon" href="image\flagIcon.png" alt='icon of the website, its a redflag' />
+        <h1 id='h1SEO'>Démineur Minesweeper</h1>
+        <meta name="description" content="This is the ULTIMATE minesweeper game, lets see if you can be the best out of all players !">
+        <meta name="author" content="AlfGoto">
+        <meta name="title" content="Minesweeper">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="pragma" content="no-cache">
+    </head>
+
+    <body>
+        <p>This Website need you to be logged in to work !</p>
+
+        <div id='loginRegisterInterface'>
+        <div id='registerDiv' class='loginAndRegisterDiv registerDivOpen'>
+            <h2 class='notSelectable' id='registerTitle'>Create your account</h2>
+            <div id='registerContent'>
+                <form id='registerForm' method='post'>
+                    <div id='registerPseudoDiv'>
+                        <label id='registerPseudoLabel'>Pseudo : </label>
+                        <input id='registerPseudoInput' type='texte' name='registerPseudo' required minlength='5'
+                            maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
+                    </div>
+                    <div id='registerPasswordDiv'>
+                        <label id='registerPasswordLabel'>Password : </label>
+                        <input id='registerPasswordInput' type='password' name='registerPassword' required minlength='5'
+                            maxlength='15' class='textInput' pattern='^[^\s]+$'></input>
+                        <p class='notSelectable'>don't put your usual password, <br /> i'm still working on making this
+                            site ultra
+                            safe</p>
+                    </div>
+                    <div id='registerCookieDiv'>
+                        <label id='registerCookieLabel'>Remember this computer for a year ?</label>
+                        <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
+                    </div>
+                    <input type="submit" value="Register" class='submitButton'>
+                </form>
+            </div>
+        </div>
+
+        <div id='loginDiv' class='loginAndRegisterDiv loginDivOpen'>
+            <h2 class='notSelectable' id='loginTitle'>Login</h2>
+            <div id='loginContent'>
+                <form id='loginForm' method='post'>
+                    <div id='loginPseudoDiv'>
+                        <label id='loginPseudoLabel'>Pseudo : </label>
+                        <input id='loginPseudoInput' type='texte' name='loginPseudo' required maxlength='15'
+                            class='textInput'></input>
+                    </div>
+                    <div id='loginPasswordDiv'>
+                        <label id='loginPasswordLabel'>Password : </label>
+                        <input id='loginPasswordInput' type='password' name='loginPassword' required minlength='5'
+                            maxlength='15' class='textInput'></input>
+                    </div>
+                    <div id='loginCookieDiv'>
+                        <label id='loginCookieLabel'>Remember this computer for a year?</label>
+                        <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
+                    </div>
+                    <input type="submit" value="Login" class='submitButton'>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
