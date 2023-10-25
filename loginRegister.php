@@ -55,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       }
     }
-
   }
 
   #LOGIN
@@ -130,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
         <link href="./style.css" rel="stylesheet">
+        <script src='loginRegister.js'></script>
 
         <title>MineSweeper ULTIMATE</title>
         <link rel="icon" href="image\flagIcon.png" alt='icon of the website, its a redflag' />
@@ -143,11 +143,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta http-equiv="pragma" content="no-cache">
     </head>
 
-    <body>
-        <p>This Website need you to be logged in to work !</p>
+    <body class="bodyLogin">
+        <h1 id='loginRegisterTitle'>This Website need you to be logged-in to work !</h1>
 
+        
         <div id='loginRegisterInterface'>
-        <div id='registerDiv' class='loginAndRegisterDiv registerDivOpen'>
+          
+        <nav id='navLoginRegister'>
+        <div id='navLoginSelected'></div>
+        <div id='loginClick'><p id='pLogin'>Login</p></div>
+        <div id='registerClick'><p id='pRegister'>Register</p></div>
+          
+          
+        </nav>
+        <div id='registerDiv' class='loginAndRegisterDiv'>
             <h2 class='notSelectable' id='registerTitle'>Create your account</h2>
             <div id='registerContent'>
                 <form id='registerForm' method='post'>
@@ -165,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             safe</p>
                     </div>
                     <div id='registerCookieDiv'>
-                        <label id='registerCookieLabel'>Remember this computer for a year ?</label>
+                        <label id='registerCookieLabel'>Keep me sign in</label>
                         <input id='registerCookieInput' type='checkbox' name='registerCookie'></input>
                     </div>
                     <input type="submit" value="Register" class='submitButton'>
@@ -173,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <div id='loginDiv' class='loginAndRegisterDiv loginDivOpen'>
+        <div id='loginDiv' class='loginAndRegisterDiv'>
             <h2 class='notSelectable' id='loginTitle'>Login</h2>
             <div id='loginContent'>
                 <form id='loginForm' method='post'>
@@ -188,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             maxlength='15' class='textInput'></input>
                     </div>
                     <div id='loginCookieDiv'>
-                        <label id='loginCookieLabel'>Remember this computer for a year?</label>
+                        <label id='loginCookieLabel'>Keep me sign in</label>
                         <input id='loginCookieInput' type='checkbox' name='loginCookie'></input>
                     </div>
                     <input type="submit" value="Login" class='submitButton'>

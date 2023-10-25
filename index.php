@@ -183,7 +183,7 @@ if (isset($_SESSION['user'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="./style.css" rel="stylesheet">
     </link>
-    <script src='loginInterface.js'></script>
+    <script src='isLogged.js'></script>
     <script src='menu.js'></script>
     <div id='demineurScriptDiv'>
         <script src="./scriptDemineur.js" id="demineurScript"></script>
