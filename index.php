@@ -286,7 +286,7 @@ if (isset($_SESSION['user'])) {
                                 </td>
                             </tr>
                             <tr>
-                                <td class='tableStatsStatsNames'>Games : </td>
+                                <td class='tableStatsStatsNames'>Number of games : </td>
                                 <td>
                                     <?= $stats['games'] ?>
                                 </td>

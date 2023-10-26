@@ -9,12 +9,12 @@
 
 .bodyMain{
   background: url("./image/login Background.png") fixed center;
-  background-size: 105%;
+  background-size: 205vh;
   overflow: hidden;
 }
 .bodyLogin{
   background: url("./image/login Background.png") fixed center;
-  background-size: 105%;
+  background-size: 205vh;
   overflow: hidden;
 }
 #h1SEO{
@@ -514,6 +514,7 @@ td{
   padding: 10px;
   width: 19vw;
   margin: 1vh 0.5vw;
+  user-select: none;
 }
 #restartButton{
   position: relative;
@@ -543,6 +544,7 @@ td{
   height: 4.2vw;
   top: 0.1vw;
   left: 0.1vw;
+  user-select: none;
 }
 #muteButton{
   position: absolute;
@@ -560,6 +562,7 @@ td{
   height: 3.8vw;
   top: 0.3vw;
   left: 0.3vw;
+  user-select: none;
 }
 #timerDemineur{
   color: black;

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 #Connecting to the database
 try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8', 'root', 'root',
   [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}
@@ -22,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo 'sorry but this password has some HTML chars, change it pls';
       return;
     }
+    $hashedRegisterPassword = password_hash($registerPassword, PASSWORD_DEFAULT);
     #check if there is not already this pseudo in the data base
     $request = "SELECT * FROM login WHERE pseudo = :pseudo";
     $sql = $db->prepare($request);
@@ -34,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $sql = $db->prepare($request);
       $sql->execute([
         'pseudo'=>$registerPseudo,
-        'password'=>$registerPassword
+        'password'=>$hashedRegisterPassword
       ]);
 
       $zero = 0;
@@ -54,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           header('Location: ./index.php');
         }
       }
+      header('Location: ./index.php');
     }
   }
 
@@ -72,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $sql->bindParam(":pseudo", $loginPseudo);
       $sql->execute();
       $result = $sql->fetch(PDO::FETCH_ASSOC);
-      if($loginPassword == $result['password']){
+      if(password_verify($loginPassword, $result['password'])){
         $_SESSION['isLogged'] = true;
         $_SESSION['user'] = $loginPseudo;
         echo "welcome $loginPseudo";
@@ -82,15 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Cookie set';
           }
         }
-        echo "<script>document.addEventListener('DOMContentLoaded', () => {
-          //Only show login and register Interface if not Logged
-          let loginRegisterInterface = document.getElementById('loginRegisterInterface')
-          let loggedInterface = document.getElementById('loggedInterface')
-          loginRegisterInterface.classList.remove('visible')
-          loginRegisterInterface.classList.add('hidden')
-          loggedInterface.classList.remove('hidden')
-          loggedInterface.classList.add('visible')
-        })</script>";
         header('Location: ./index.php');
       }else{
         echo 'Wrong password';
