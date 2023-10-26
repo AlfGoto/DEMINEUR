@@ -9,11 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let total = 0
     let secondSquare = false
     let currentIndex = 0
-    
+    let lightOn = false
     
     
     
     let squaresArray = []
+
     
 
 
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if ((leftClick == true) && (rightClick == true)){
                     leftRightClick(i, square)
+                    lightLeftRightClick(i, square)
                 }
             })
             square.addEventListener('mouseup', function(g){
@@ -235,6 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (g.button === 0){
                     leftClick = false
+                }
+                if ((leftClick == false) && (rightClick == false) && (lightOn == true)){
+                    lightLeftRightClickOFF()
                 }
             })
 
@@ -455,6 +460,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
             }
+        }
+    }
+
+
+    let iLight;
+
+    //light on adjacent square when leftRightClick
+    function lightLeftRightClick(i, square){
+        const isLeftEdge = (i % width === 0)
+        const isRightEdge = (i % width === width -1)
+        if(lightOn == false){
+            iLight = i
+            lightOn = true
+            console.log('function LIGHT ON')
+            if (iLight > 0 && !isLeftEdge && (squares[iLight -1].classList.contains('green') || squares[iLight -1].classList.contains('lightGreen'))) squares[iLight -1].style.filter = 'contrast(110%)'
+            if (iLight > 19 && !isRightEdge && (squares[iLight +1 -width].classList.contains('green') || squares[iLight +1 -width].classList.contains('lightGreen'))) squares[iLight +1 -width].style.filter = 'contrast(110%)'
+            if (iLight > 20 && (squares[iLight - width].classList.contains('green') || squares[iLight - width].classList.contains('lightGreen'))) squares[iLight - width].style.filter = 'contrast(110%)'
+            if (iLight > 21 && !isLeftEdge && (squares[iLight  -1 -width].classList.contains('green') || squares[iLight  -1 -width].classList.contains('lightGreen'))) squares[iLight  -1 -width].style.filter = 'contrast(110%)'
+            if (iLight < 398 && !isRightEdge && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(110%)'
+            if (iLight < 380 && !isLeftEdge && (squares[iLight  -1 +width].classList.contains('green') || squares[iLight  -1 +width].classList.contains('lightGreen'))) squares[iLight  -1 +width].style.filter = 'contrast(110%)'
+            if (iLight < 378 && !isRightEdge && (squares[iLight  +1 +width].classList.contains('green') || squares[iLight  +1 +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(110%)'
+            if (iLight < 379 && (squares[iLight  +width].classList.contains('green') || squares[iLight  +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(110%)'
+            if (iLight === 398 && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(110%)'
+            if (iLight === 379 && (squares[iLight  +20].classList.contains('green') || squares[iLight  +20].classList.contains('lightGreen'))) squares[iLight  +20].style.filter = 'contrast(110%)'
+            if (iLight === 378 && (squares[iLight  +21].classList.contains('green') || squares[iLight  +21].classList.contains('lightGreen'))) squares[iLight  +21].style.filter = 'contrast(110%)'
+        }
+    }
+
+    function lightLeftRightClickOFF(){
+        const isLeftEdge = (iLight % width === 0)
+        const isRightEdge = (iLight % width === width -1)
+        if(lightOn == true){
+            lightOn = false
+            console.log('function LIGHT OFF')
+            if (iLight > 0 && !isLeftEdge && (squares[iLight -1].classList.contains('green') || squares[iLight -1].classList.contains('lightGreen'))) squares[iLight -1].style.filter = 'contrast(80%)'
+            if (iLight > 19 && !isRightEdge && (squares[iLight +1 -width].classList.contains('green') || squares[iLight +1 -width].classList.contains('lightGreen'))) squares[iLight +1 -width].style.filter = 'contrast(80%)'
+            if (iLight > 20 && (squares[iLight - width].classList.contains('green') || squares[iLight - width].classList.contains('lightGreen'))) squares[iLight - width].style.filter = 'contrast(80%)'
+            if (iLight > 21 && !isLeftEdge && (squares[iLight  -1 -width].classList.contains('green') || squares[iLight  -1 -width].classList.contains('lightGreen'))) squares[iLight  -1 -width].style.filter = 'contrast(80%)'
+            if (iLight < 398 && !isRightEdge && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(80%)'
+            if (iLight < 380 && !isLeftEdge && (squares[iLight  -1 +width].classList.contains('green') || squares[iLight  -1 +width].classList.contains('lightGreen'))) squares[iLight  -1 +width].style.filter = 'contrast(80%)'
+            if (iLight < 378 && !isRightEdge && (squares[iLight  +1 +width].classList.contains('green') || squares[iLight  +1 +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(80%)'
+            if (iLight < 379 && (squares[iLight  +width].classList.contains('green') || squares[iLight  +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(80%)'
+            if (iLight === 398 && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(80%)'
+            if (iLight === 379 && (squares[iLight  +20].classList.contains('green') || squares[iLight  +20].classList.contains('lightGreen'))) squares[iLight  +20].style.filter = 'contrast(80%)'
+            if (iLight === 378 && (squares[iLight  +21].classList.contains('green') || squares[iLight  +21].classList.contains('lightGreen'))) squares[iLight  +21].style.filter = 'contrast(80%)'
+
         }
     }
     
