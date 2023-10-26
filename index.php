@@ -6,6 +6,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
 session_start();
 
+include 'GlobalsVars.php';
 
 $_SESSION['flagused'] = false;
 
@@ -60,7 +61,7 @@ if (isset($_SESSION['isLogged'])) {
 
 #Tables
 try {
-  $conn = new PDO("mysql:host=localhost;dbname=minesweeper", 'root', 'root');
+  $conn = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 20";

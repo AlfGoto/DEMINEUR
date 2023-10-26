@@ -2,8 +2,10 @@
 
 session_start();
 
+include 'GlobalsVars.php';
+
 #Connecting to the database
-try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8', 'root', 'root',
+try{$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE,
   [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}
 catch(Exception $e){
   die('erreur : '. $e->getMessage());

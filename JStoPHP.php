@@ -1,11 +1,13 @@
 <?php
 session_start();
 
+include 'GlobalsVars.php';
+
 if(isset($_POST['flagused'])){
     $_SESSION['flagused'] = $_POST['flagused'];
 }
 
-try{$db = new PDO('mysql:host=localhost;dbname=minesweeper;charset=utf8', 'root', 'root',
+try{$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE,
     [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 }
 catch(Exception $e){
