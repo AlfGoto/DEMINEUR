@@ -9,12 +9,12 @@
 
 .bodyMain{
   background: url("./image/login Background.png") fixed center;
-  background-size: 205vh;
+  background-size: 605vh;
   overflow: hidden;
 }
 .bodyLogin{
   background: url("./image/login Background.png") fixed center;
-  background-size: 205vh;
+  background-size: 605vh;
   overflow: hidden;
 }
 #h1SEO{
@@ -38,7 +38,6 @@
   top: 10vh;
   z-index: 10;
   user-select: none;
-  background-color: red;
 }
 
 .grid div {
@@ -50,7 +49,6 @@
   user-select: none;
   z-index: 11;
   user-select: none;
-  background-color: blue;
 }
 
 .bomb{

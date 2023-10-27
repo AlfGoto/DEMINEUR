@@ -4,9 +4,9 @@ header("Cache-control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-session_start();
+session_start(); 
 
-include 'GlobalsVars.php';
+include('GlobalsVars.php');
 
 $_SESSION['flagused'] = false;
 
@@ -170,21 +170,26 @@ if (isset($_SESSION['user'])) {
 
 <head>
     <script>
-        //mute globalisation
+    //mute globalisation
     window.mute = false
     if(typeof muteCookie !== 'undefined'){
         if(muteCookie == true){window.mute = true}
         if(muteCookie == false){window.mute = false}
     }
     </script>
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="./style.css" rel="stylesheet">
     </link>
     <script src='isLogged.js'></script>
     <script src='menu.js'></script>
     <div id='demineurScriptDiv'>
-        <?php include './Minesweeper easy mode/scriptMinesweeper.php' ?>
-        <script src='./Minesweeper easy mode/scriptMinesweeper.js'></script>
+        <?php 
+        include '.\MinesweeperEasy\scriptMinesweeper.php'; 
+        ?>
+        <script src='.\MinesweeperEasy\scriptMinesweeper.js'></script>
     </div>
 
     <title>MineSweeper ULTIMATE</title>
