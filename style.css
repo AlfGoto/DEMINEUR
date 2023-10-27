@@ -38,6 +38,7 @@
   top: 10vh;
   z-index: 10;
   user-select: none;
+  background-color: red;
 }
 
 .grid div {
@@ -49,6 +50,7 @@
   user-select: none;
   z-index: 11;
   user-select: none;
+  background-color: blue;
 }
 
 .bomb{

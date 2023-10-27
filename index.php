@@ -148,10 +148,6 @@ try {
 
 
 
-
-
-
-
 #Get the classment and Bestscore of the Session player
 if (isset($_SESSION['user'])) {
   for ($i = 0; $i < count($playerClassment); $i++) {
@@ -187,7 +183,8 @@ if (isset($_SESSION['user'])) {
     <script src='isLogged.js'></script>
     <script src='menu.js'></script>
     <div id='demineurScriptDiv'>
-        <script src="./scriptDemineur.js" id="demineurScript"></script>
+        <?php include './Minesweeper easy mode/scriptMinesweeper.php' ?>
+        <script src='./Minesweeper easy mode/scriptMinesweeper.js'></script>
     </div>
 
     <title>MineSweeper ULTIMATE</title>
@@ -307,102 +304,7 @@ if (isset($_SESSION['user'])) {
                         </tbody>
                     </table>
                 </div>
-                <div id='tableDiv' class='tableDiv'>
-                    <div id='tableHaut'>
-                        <h2 id='tableTitle'>Best times</h2>
-                    </div>
-                    <table id='table'>
-                        <tbody>
-                            <tr>
-                                <th id='tableClassment1'>1</th>
-                                <td id='tablePseudo1'>
-                                    <?= $tablePseudo[0] ?>
-                                </td>
-                                <td id='tableTime1'>
-                                    <?= $tableTime[0] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment2'>2</th>
-                                <td id='tablePseudo2'>
-                                    <?= $tablePseudo[1] ?>
-                                </td>
-                                <td id='tableTime2'>
-                                    <?= $tableTime[1] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment3'>3</th>
-                                <td id='tablePseudo3'>
-                                    <?= $tablePseudo[2] ?>
-                                </td>
-                                <td id='tableTime3'>
-                                    <?= $tableTime[2] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment4'>4</th>
-                                <td id='tablePseudo4'>
-                                    <?= $tablePseudo[3] ?>
-                                </td>
-                                <td id='tableTime4'>
-                                    <?= $tableTime[3] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment5'>5</th>
-                                <td id='tablePseudo5'>
-                                    <?= $tablePseudo[4] ?>
-                                </td>
-                                <td id='tableTime5'>
-                                    <?= $tableTime[4] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment6'>6</th>
-                                <td id='tablePseudo6'>
-                                    <?= $tablePseudo[5] ?>
-                                </td>
-                                <td id='tableTime6'>
-                                    <?= $tableTime[5] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment7'>7</th>
-                                <td id='tablePseudo7'><?= $tablePseudo[6] ?></td>
-                                <td id='tableTime7'><?= $tableTime[6] / 1000 ?></td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment8'>8</th>
-                                <td id='tablePseudo8'><?= $tablePseudo[7] ?>
-                                </td>
-                                <td id='tableTime8'>
-                                    <?= $tableTime[7] / 1000 ?>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <th id='tableClassment9'>9</th>
-                                <td id='tablePseudo9'>
-                                    <?= $tablePseudo[8] ?>
-                                </td>
-                                <td id='tableTime9'>
-                                    <?= $tableTime[8] / 1000 ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th id='tableClassment10'>10</th>
-                                <td id='tablePseudo10'>
-                                    <?= $tablePseudo[9] ?>
-                                </td>
-                                <td id='tableTime10'>
-                                    <?= $tableTime[9] / 1000 ?>
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-                </div>
+                
                 <div id='tablePlayersDiv' class='tableDiv'>
                     <div id='tablePlayerHaut'>
                         <h2 id='tablePlayerTitle'>Best players</h2>
@@ -503,6 +405,104 @@ if (isset($_SESSION['user'])) {
 
                     </table>
                 </div>
+
+                <div id='tableDiv' class='tableDiv'>
+                    <div id='tableHaut'>
+                        <h2 id='tableTitle'>Best times</h2>
+                    </div>
+                    <table id='table'>
+                        <tbody>
+                            <tr>
+                                <th id='tableClassment1'>1</th>
+                                <td id='tablePseudo1'>
+                                    <?= $tablePseudo[0] ?>
+                                </td>
+                                <td id='tableTime1'>
+                                    <?= $tableTime[0] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment2'>2</th>
+                                <td id='tablePseudo2'>
+                                    <?= $tablePseudo[1] ?>
+                                </td>
+                                <td id='tableTime2'>
+                                    <?= $tableTime[1] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment3'>3</th>
+                                <td id='tablePseudo3'>
+                                    <?= $tablePseudo[2] ?>
+                                </td>
+                                <td id='tableTime3'>
+                                    <?= $tableTime[2] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment4'>4</th>
+                                <td id='tablePseudo4'>
+                                    <?= $tablePseudo[3] ?>
+                                </td>
+                                <td id='tableTime4'>
+                                    <?= $tableTime[3] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment5'>5</th>
+                                <td id='tablePseudo5'>
+                                    <?= $tablePseudo[4] ?>
+                                </td>
+                                <td id='tableTime5'>
+                                    <?= $tableTime[4] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment6'>6</th>
+                                <td id='tablePseudo6'>
+                                    <?= $tablePseudo[5] ?>
+                                </td>
+                                <td id='tableTime6'>
+                                    <?= $tableTime[5] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment7'>7</th>
+                                <td id='tablePseudo7'><?= $tablePseudo[6] ?></td>
+                                <td id='tableTime7'><?= $tableTime[6] / 1000 ?></td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment8'>8</th>
+                                <td id='tablePseudo8'><?= $tablePseudo[7] ?>
+                                </td>
+                                <td id='tableTime8'>
+                                    <?= $tableTime[7] / 1000 ?>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th id='tableClassment9'>9</th>
+                                <td id='tablePseudo9'>
+                                    <?= $tablePseudo[8] ?>
+                                </td>
+                                <td id='tableTime9'>
+                                    <?= $tableTime[8] / 1000 ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th id='tableClassment10'>10</th>
+                                <td id='tablePseudo10'>
+                                    <?= $tablePseudo[9] ?>
+                                </td>
+                                <td id='tableTime10'>
+                                    <?= $tableTime[9] / 1000 ?>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                
                 <div id='unlogButtonDiv' class='visible'>
                     <form action="index.php" method="post">
                         <button class='button' name='unlogButton' type="submit" value='Unlog'
