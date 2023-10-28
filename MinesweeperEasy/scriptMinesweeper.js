@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let secondSquare = false
     let nbcheck = 0;
     let restarting = false
-    
+    let shuffledbombs = []
 
 
     //PHP Vars
@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         firstSquare = true
         secondSquare = false
         nbcheck = 0
+        shuffledbombs = []
 
         for(let i = 0; i < width*width; i++) {
             const square = document.createElement('div');
@@ -166,6 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
             //normal click
             square.addEventListener('mousedown', function(e) {
                 if (e.button === 0 ){
+                    if(!(square.classList.contains('checked'))){
+                        checkedSound()
+                    }
                     click(square, i)
                 }
             
@@ -252,8 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         restart()
                         let squareRestart = document.getElementById(i)
                         click(squareRestart, i)
+                    } else if(!firstSquare && !secondSquare) {
+                        square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+                        animLose()
                     }
-                    console.log('bomb')
+                    isGameOver = true
+                    
                     return;
                 } else {
                     if(square.classList.contains('green')){
@@ -300,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 break;
 
                         }
-                    } 
+                    }
                     if (!square.hasAttribute('data')){
                         if (firstSquare === true) {
                             firstSquare = false
@@ -609,6 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restartButton')
     restartButton.addEventListener("click", ()=>{restart()})
 
+
     function restart(){
         restarting = true
         console.log('RESTART')
@@ -624,10 +633,60 @@ document.addEventListener('DOMContentLoaded', () => {
             success: build()
         })
         nbcheck = 0
+        let victoryInterface = document.getElementById('interfaceVictory')
+        victoryInterface.classList.remove('visible')
+        victoryInterface.classList.add('hidden')
+        let loseInterface = document.getElementById('interfaceLose')
+        loseInterface.classList.remove('visible')
+        loseInterface.classList.add('hidden')
         restarting = false
     }
 
 
+
+
+    function animLose(){
+        $.ajax({
+            type: "POST", 
+            url: "./MinesweeperEasy/returnAllBombs.php",
+            data: { 
+                request: 'allBomb'
+            },
+            success: function(response){
+                var result = JSON.parse(response);
+                const shuffle = array => {
+                    for (let k = array.length - 1; k > 0; k--) {
+                      const l = Math.floor(Math.random() * (k + 1));
+                      const temp = array[k];
+                      array[k] = array[l];
+                      array[l] = temp;
+                    }
+                    return array
+                  }
+                shuffledbombs = shuffle(result)
+                shuffledbombs.forEach((i)=>{
+                    setTimeout(()=>{
+                        if(isGameOver == true){
+                            let element = document.getElementById(i)
+                        if(element.classList.contains('flag')){
+                            element.innerHTML =' '
+                        }
+                        bombSound()
+                        element.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+                        }
+                    }, Math.floor(Math.random()*20000)/2.5)
+                })
+                setTimeout(()=>{
+                    if(isGameOver == true){
+                        let loseInterface = document.getElementById('interfaceLose')
+                        loseInterface.style.animation = 'fadeIn 2s';
+                        loseInterface.classList.remove('hidden')
+                        loseInterface.classList.add('visible')
+                    }else{return}   
+                },8000)    
+            }
+        })
+    }
 
 })
 

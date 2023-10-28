@@ -46,11 +46,11 @@ function click($square){
     } else {
         if ($data == 0) {
             $_SESSION['squares'][$currentId]['checked'] = true;
-            echo json_encode(['isBomb' => false, 'data' => 0]);
+            echo json_encode(['isBomb' => false, 'data' => 0, 'victory' => false]);
             return;
         } else {
             $_SESSION['squares'][$currentId]['checked'] = true;
-            echo json_encode(['isBomb' => false, 'data' => $data]);
+            echo json_encode(['isBomb' => false, 'data' => $data, 'victory' => false]);
             return;
         }
     }
