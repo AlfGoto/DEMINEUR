@@ -187,7 +187,7 @@ if (isset($_SESSION['user'])) {
     <script src='menu.js'></script>
     <div id='demineurScriptDiv'>
         <?php 
-        include '.\MinesweeperEasy\scriptMinesweeper.php'; 
+        include '.\MinesweeperEasy\buildMinesweeper.php'; 
         ?>
         <script src='.\MinesweeperEasy\scriptMinesweeper.js'></script>
     </div>

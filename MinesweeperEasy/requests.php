@@ -15,6 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($_POST['request'] == 'click') {
         click($_SESSION['squares'][$_POST['idSquare']]);
     }
+
+    //restart ?
+    if ($_POST['request'] == 'restart'){
+        include('./MinesweeperEasy/buildMinesweeper.php');
+    }
 }
 
 
