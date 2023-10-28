@@ -10,7 +10,8 @@ $total = 0;
 
 #BUILD
 function build(){
-    global $width, $bombAmount, $squares;
+    global $width, $bombAmount, $squares, $firstSquare;
+    $firstSquare = true;
     $_SESSION['bombsArray'] = [];
     $_SESSION['validsArray'] = [];
     $_SESSION['squares'] = [];

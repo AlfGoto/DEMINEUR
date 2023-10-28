@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             secondSquare = false
             $.ajax({
                 type: "POST", 
-                url: "./MinesweeperEasy/requests.php",
+                url: "./MinesweeperEasy/statsGames.php",
                 data: { 
                     request: 'game'
                 }

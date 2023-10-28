@@ -75,11 +75,6 @@ if(isset($_POST['game'])){
 
 
     
-    
-    
-    
-    
-    
 
 
 

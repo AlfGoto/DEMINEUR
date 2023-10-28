@@ -4,6 +4,9 @@ session_start();
 #if(!isset($_SESSION)){session_start();}
 
 
+include('../GlobalsVars.php');
+$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+
 
 #REQUESTS
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -20,33 +23,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if ($_POST['request'] == 'restart'){
         exec('MinesweeperEasy\buildMinesweeper.php');
     }
-
-    //games
-    if ($_POST['request'] == 'games'){
-        try{$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE,
-            [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
-            $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
-            $NBgames = $db->prepare($sqlNBgames);
-            $NBgames->execute([
-                'pseudo'=>$_SESSION['user']
-                ]);
-            }
-        catch(Exception $e){
-            die('erreur : '. $e->getMessage());
-        }
-    }  
 }
 
 
 
 function click($square){
-    global $currentId, $neighbours;
+    global $currentId, $neighbours, $db, $firstSquare;
     $isBomb = $square['isBomb'];
     if(isset($square['data'])){
         $data = $square['data'];
     }
     if ($isBomb) {
         echo json_encode(['isBomb' => true]);
+        if($firstSquare == false){
+            $sqlNBbomb = 'UPDATE stats SET bombsExploded = bombsExploded + 1 WHERE pseudo = :pseudo';
+            $NBbomb = $db->prepare($sqlNBbomb);
+            $NBbomb->execute([
+               'pseudo'=>$_SESSION['user']
+            ]);
+        }
         return;
     } else {
         if ($data == 0) {
