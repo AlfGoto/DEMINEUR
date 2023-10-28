@@ -762,6 +762,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restartButton')
     restartButton.addEventListener("click", ()=>{restart()})
 
+
+
+
+
+
+
+
+
+    
         //timer
     function startTimer() {
         if (!isRunning) {

@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares = []
     let isGameOver = false
     let flags = 0
+    let firstSquare = true
+    let secondSquare = false
+    let nbcheck = 0;
+    let restarting = false
     
 
 
@@ -129,12 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
     //BUILD
     //create squares
     function build(){
+
+        firstSquare = true
+        secondSquare = false
+        nbcheck = 0
+
         for(let i = 0; i < width*width; i++) {
             const square = document.createElement('div');
             square.setAttribute('id', i)
             grid.appendChild(square);
             squares.push(square)
     
+            
     
             //squares grid
             if(i<20 || (i>39 && i<60) || (i>39 && i<60) || (i>79 && i<100) || (i>119 && i<140) || (i>159 && i<180) || (i>199 && i<220) || (i>239 && i<260) || (i>279 && i<300)|| (i>319 && i<340) || (i>359 && i<380)){
@@ -215,6 +225,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //left click
     function click(square, i){
+        if(secondSquare == true){
+            secondSquare = false
+            $.ajax({
+                type: "POST", 
+                url: "./MinesweeperEasy/requests.php",
+                data: { 
+                    request: 'game'
+                }
+            })
+        }
         if(square.classList.contains('checked')){return}
         if(square.classList.contains('flag')){return}
         $.ajax({
@@ -225,9 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 idSquare: square.getAttribute('id')
             },
             success: function(response) {
+                console.log(response)
                 var result = JSON.parse(response);
                 if (result.isBomb) {
-                    alert('BOMB')
+                    if (firstSquare === true){
+                        restart()
+                        let squareRestart = document.getElementById(i)
+                        click(squareRestart, i)
+                    }
+                    console.log('bomb')
                     return;
                 } else {
                     if(square.classList.contains('green')){
@@ -237,48 +263,54 @@ document.addEventListener('DOMContentLoaded', () => {
                         square.classList.remove('lightGreen')
                         square.classList.add('silver')
                     }
-                }
-                square.classList.add('checked')
-                if (result.data != 0){
-                    square.innerHTML = result.data
-                    square.setAttribute('data', result.data)
+                    if (result.data != 0){
+                        if (firstSquare === true){
+                            restart()
+                            let squareRestart = document.getElementById(i)
+                            click(squareRestart, i)
+                        }
+                        square.innerHTML = result.data
+                        square.setAttribute('data', result.data)
                     
-                    //differents colors for the numbers
-                    switch(result.data){
-                        case 1:
-                            square.classList.add('data1')
-                            break;
-                        case 2:
-                            square.classList.add('data2')
-                            break;
-                        case 3:
-                            square.classList.add('data3')
-                            break;
-                        case 4:
-                            square.classList.add('data4')
-                            break;
-                        case 5:
-                            square.classList.add('data5')
-                            break;
-                        case 6:
-                            square.classList.add('data6')
-                            break;
-                        case 7:
-                            square.classList.add('data7')
-                            break;
-                        case 8:
-                            square.classList.add('data8')
-                            break;
+                        //differents colors for the numbers
+                        switch(result.data){
+                            case 1:
+                                square.classList.add('data1')
+                                break;
+                            case 2:
+                                square.classList.add('data2')
+                                break;
+                            case 3:
+                                square.classList.add('data3')
+                                break;
+                            case 4:
+                                square.classList.add('data4')
+                                break;
+                            case 5:
+                                square.classList.add('data5')
+                                break;
+                            case 6:
+                                square.classList.add('data6')
+                                break;
+                            case 7:
+                                square.classList.add('data7')
+                                break;
+                            case 8:
+                                square.classList.add('data8')
+                                break;
 
+                        }
+                    } 
+                    if (!square.hasAttribute('data')){
+                        if (firstSquare === true) {
+                            firstSquare = false
+                            secondSquare = true
+                        }
+                        checkSquare(square, i)
                     }
-                    return
-                } 
-                if (result.data == 0){
-                    checkSquare(square, i)
+                    square.classList.add('checked')
                 }
-
-
-
+                
 
 
             },
@@ -294,11 +326,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
     //check neighbourg squares
     function checkSquare(square, currentId) {
+        if(square.classList.contains('checked')){return}
+        if(square.classList.contains('flag')){return}
+        nbcheck++
+        console.log('nb check -> ' + nbcheck)
+
+        if(restarting == true){return}
+
         const isLeftEdge = (currentId % width === 0)
         const isRightEdge = (currentId % width === width -1)
 
@@ -574,19 +610,24 @@ document.addEventListener('DOMContentLoaded', () => {
     restartButton.addEventListener("click", ()=>{restart()})
 
     function restart(){
+        restarting = true
         console.log('RESTART')
+        firstSquare = true
+        secondSquare = false
         grid.innerHTML = ''
         squares.length = 0
         isGameOver = false
         flags = 0
-        build()
         $.ajax({
             type: "POST", 
-            url: "./MinesweeperEasy/requests.php",
-            data: {
-                request: 'restart',
-            }
+            url: "./MinesweeperEasy/buildMinesweeper.php",
+            success: build()
         })
+        nbcheck = 0
+        restarting = false
     }
+
+
+
 })
 

@@ -1,6 +1,6 @@
 <?php
 
-
+if(!isset($_SESSION)){session_start();}
 
 $width = 20;
 $_SESSION['width'] = $width;
@@ -11,6 +11,9 @@ $total = 0;
 #BUILD
 function build(){
     global $width, $bombAmount, $squares;
+    $_SESSION['bombsArray'] = [];
+    $_SESSION['validsArray'] = [];
+    $_SESSION['squares'] = [];
     $_SESSION['bombsArray'] = array_fill(0, $bombAmount, ['isBomb' => true, 'checked' => false]);
     $_SESSION['validsArray'] = array_fill(0, $width*$width - $bombAmount, ['isBomb' => false, 'checked' => false]);
     $_SESSION['squares'] = array_merge($_SESSION['bombsArray'], $_SESSION['validsArray']);
@@ -47,5 +50,5 @@ build();
 
 
 
-
+session_write_close();
 ?>
