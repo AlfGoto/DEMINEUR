@@ -177,13 +177,47 @@ document.addEventListener('DOMContentLoaded', () => {
         square.oncontextmenu = function(e) {
             e.preventDefault()
         }
+
+        //left and right click
+        let rightClick = false
+        let leftClick = false
+        square.addEventListener('mousedown', function(f) {
+            if (f.button === 2){
+                rightClick = true
+            }
+            if (f.button === 0){
+                leftClick = true
+            }
+            if ((leftClick == true) && (rightClick == true)){
+                leftRightClick(i, square)
+                lightLeftRightClick(i, square)
+            }
+        })
+        square.addEventListener('mouseup', function(g){
+            if (g.button === 2){
+                rightClick = false
+            }
+            if (g.button === 0){
+                leftClick = false
+            }
+            if ((leftClick == false) && (rightClick == false) && (lightOn == true)){
+                lightLeftRightClickOFF()
+            }
+        })
+
+
+
+
+
     }
 
+     
 
 
     //left click
     function click(square, i){
         if(square.classList.contains('checked')){return}
+        if(square.classList.contains('flag')){return}
         console.log(square.getAttribute('id'))
         $.ajax({
             type: "POST", 
@@ -211,32 +245,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.classList.add('checked')
                 if (result.data != 0){
                     square.innerHTML = result.data
+                    square.setAttribute('data', result.data)
                     
                     //differents colors for the numbers
                     switch(result.data){
                         case 1:
-                            squares[i].classList.add('data1')
+                            square.classList.add('data1')
                             break;
                         case 2:
-                            squares[i].classList.add('data2')
+                            square.classList.add('data2')
                             break;
                         case 3:
-                            squares[i].classList.add('data3')
+                            square.classList.add('data3')
                             break;
                         case 4:
-                            squares[i].classList.add('data4')
+                            square.classList.add('data4')
                             break;
                         case 5:
-                            squares[i].classList.add('data5')
+                            square.classList.add('data5')
                             break;
                         case 6:
-                            squares[i].classList.add('data6')
+                            square.classList.add('data6')
                             break;
                         case 7:
-                            squares[i].classList.add('data7')
+                            square.classList.add('data7')
                             break;
                         case 8:
-                            squares[i].classList.add('data8')
+                            square.classList.add('data8')
                             break;
 
                     }
@@ -245,6 +280,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.data == 0){
                     checkSquare(square, i)
                 }
+
+
+
+
 
             },
             error: function(xhr, status, error) {
@@ -365,6 +404,176 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //left and right Click
+    function leftRightClick(i, square){
+        checkedSound()
+        let bombAround = square.getAttribute('data')
+        let totalFlags = 0
+        const isLeftEdge = (i % width === 0)
+        const isRightEdge = (i % width === width -1)
+        if (bombAround > 0) {
+            if (i > 0 && !isLeftEdge && squares[i -1].classList.contains('flag')) totalFlags++
+            if (i > 19 && !isRightEdge && squares[i +1 -width].classList.contains('flag')) totalFlags++
+            if (i > 20 && squares[i - width].classList.contains('flag')) totalFlags++
+            if (i > 21 && !isLeftEdge && squares[i  -1 -width].classList.contains('flag')) totalFlags++
+            if (i < 398 && !isRightEdge && squares[i  +1].classList.contains('flag')) totalFlags++
+            if (i < 380 && !isLeftEdge && squares[i  -1 +width].classList.contains('flag')) totalFlags++
+            if (i < 378 && !isRightEdge && squares[i  +1 +width].classList.contains('flag')) totalFlags++
+            if (i < 379 && squares[i  +width].classList.contains('flag')) totalFlags++
+            if (i === 398 && squares[i  +1].classList.contains('flag')) totalFlags++
+            if (i === 379 && squares[i  +20].classList.contains('flag')) totalFlags++
+            if (i === 378 && squares[i  +21].classList.contains('flag')) totalFlags++
+            if (totalFlags == bombAround){
+                if(isLeftEdge){
+                    if(isGameOver == false){
+                        click(squares[i +1 -width], i +1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width],i - width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1],i  +1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width],i  +1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width],i  +width)
+                    }
+                }else if(isRightEdge){
+                    if(isGameOver == false){
+                        click(squares[i -1],i -1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width],i - width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width],i  -1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width],i  -1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width],i  +width)
+                    }
+                }else if(i<20){
+                    if(isGameOver == false){
+                        click(squares[i -1],i -1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1],i  +1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width],i  -1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width],i  +1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width],i  +width)
+                    }
+                }else if(i<400 && i>379){
+                    if(isGameOver == false){
+                        click(squares[i -1],i -1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i +1 -width],i +1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width],i - width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width],i  -1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1],i  +1)
+                    }   
+                }else if(i == 0){
+                    if(isGameOver == false){
+                        click(squares[i  +1],i  +1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width],i  +1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width],i  +width)
+                    }   
+                }else{
+                    if(isGameOver == false){
+                        click(squares[i -1],i -1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i +1 -width],i +1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i - width],i - width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 -width],i  -1 -width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1],i  +1)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  -1 +width],i  -1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +1 +width],i  +1 +width)
+                    }
+                    if(isGameOver == false){
+                        click(squares[i  +width],i  +width)
+                    }                    
+                }
+                
+            }
+        }
+    }
+
+
+    let iLight;
+    let lightOn = false
+    //light on adjacent square when leftRightClick
+    function lightLeftRightClick(i, square){
+        const isLeftEdge = (i % width === 0)
+        const isRightEdge = (i % width === width -1)
+        if(lightOn == false){
+            iLight = i
+            lightOn = true
+            console.log('function LIGHT ON')
+            if (iLight > 0 && !isLeftEdge && (squares[iLight -1].classList.contains('green') || squares[iLight -1].classList.contains('lightGreen'))) squares[iLight -1].style.filter = 'contrast(110%)'
+            if (iLight > 19 && !isRightEdge && (squares[iLight +1 -width].classList.contains('green') || squares[iLight +1 -width].classList.contains('lightGreen'))) squares[iLight +1 -width].style.filter = 'contrast(110%)'
+            if (iLight > 20 && (squares[iLight - width].classList.contains('green') || squares[iLight - width].classList.contains('lightGreen'))) squares[iLight - width].style.filter = 'contrast(110%)'
+            if (iLight > 21 && !isLeftEdge && (squares[iLight  -1 -width].classList.contains('green') || squares[iLight  -1 -width].classList.contains('lightGreen'))) squares[iLight  -1 -width].style.filter = 'contrast(110%)'
+            if (iLight < 398 && !isRightEdge && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(110%)'
+            if (iLight < 380 && !isLeftEdge && (squares[iLight  -1 +width].classList.contains('green') || squares[iLight  -1 +width].classList.contains('lightGreen'))) squares[iLight  -1 +width].style.filter = 'contrast(110%)'
+            if (iLight < 378 && !isRightEdge && (squares[iLight  +1 +width].classList.contains('green') || squares[iLight  +1 +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(110%)'
+            if (iLight < 379 && (squares[iLight  +width].classList.contains('green') || squares[iLight  +width].classList.contains('lightGreen'))) squares[iLight +width].style.filter = 'contrast(110%)'
+            if (iLight === 398 && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(110%)'
+            if (iLight === 379 && (squares[iLight  +20].classList.contains('green') || squares[iLight  +20].classList.contains('lightGreen'))) squares[iLight  +20].style.filter = 'contrast(110%)'
+            if (iLight === 378 && (squares[iLight  +21].classList.contains('green') || squares[iLight  +21].classList.contains('lightGreen'))) squares[iLight  +21].style.filter = 'contrast(110%)'
+        }
+    }
+
+    function lightLeftRightClickOFF(){
+        const isLeftEdge = (iLight % width === 0)
+        const isRightEdge = (iLight % width === width -1)
+        if(lightOn == true){
+            lightOn = false
+            console.log('function LIGHT OFF')
+            if (iLight > 0 && !isLeftEdge && (squares[iLight -1].classList.contains('green') || squares[iLight -1].classList.contains('lightGreen'))) squares[iLight -1].style.filter = 'contrast(80%)'
+            if (iLight > 19 && !isRightEdge && (squares[iLight +1 -width].classList.contains('green') || squares[iLight +1 -width].classList.contains('lightGreen'))) squares[iLight +1 -width].style.filter = 'contrast(80%)'
+            if (iLight > 20 && (squares[iLight - width].classList.contains('green') || squares[iLight - width].classList.contains('lightGreen'))) squares[iLight - width].style.filter = 'contrast(80%)'
+            if (iLight > 21 && !isLeftEdge && (squares[iLight  -1 -width].classList.contains('green') || squares[iLight  -1 -width].classList.contains('lightGreen'))) squares[iLight  -1 -width].style.filter = 'contrast(80%)'
+            if (iLight < 398 && !isRightEdge && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(80%)'
+            if (iLight < 380 && !isLeftEdge && (squares[iLight  -1 +width].classList.contains('green') || squares[iLight  -1 +width].classList.contains('lightGreen'))) squares[iLight  -1 +width].style.filter = 'contrast(80%)'
+            if (iLight < 378 && !isRightEdge && (squares[iLight  +1 +width].classList.contains('green') || squares[iLight  +1 +width].classList.contains('lightGreen'))) squares[iLight  +1 +width].style.filter = 'contrast(80%)'
+            if (iLight < 379 && (squares[iLight  +width].classList.contains('green') || squares[iLight  +width].classList.contains('lightGreen'))) squares[iLight +width].style.filter = 'contrast(80%)'
+            if (iLight === 398 && (squares[iLight  +1].classList.contains('green') || squares[iLight  +1].classList.contains('lightGreen'))) squares[iLight  +1].style.filter = 'contrast(80%)'
+            if (iLight === 379 && (squares[iLight  +20].classList.contains('green') || squares[iLight  +20].classList.contains('lightGreen'))) squares[iLight  +20].style.filter = 'contrast(80%)'
+            if (iLight === 378 && (squares[iLight  +21].classList.contains('green') || squares[iLight  +21].classList.contains('lightGreen'))) squares[iLight  +21].style.filter = 'contrast(80%)'
+
+        }
+    }
     
     
 })
