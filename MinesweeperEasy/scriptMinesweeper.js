@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //create squares
     function build(){
 
+        isGameOver = false
         neighbourgDone = []
         firstSquare = true
         secondSquare = false
@@ -332,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if(result.victory){
                     stopTimer()
-                    isGameOver == true
+                    isGameOver = true
                     animVictory()
                 }
 
@@ -640,8 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
         firstSquare = true
         secondSquare = false
         grid.innerHTML = ''
-        squares.length = 0
-        isGameOver = false
+        squares.length = 0        
         flags = 0
         $.ajax({
             type: "POST", 
@@ -739,10 +739,10 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         setTimeout(()=>{
             if(isGameOver == true){
-                let interface = document.getElementById('interfaceVictory')
-                interface.style.animation = 'fadeIn 2s';
-                interface.classList.remove('hidden')
-                interface.classList.add('visible')
+                let victoryInterface = document.getElementById('interfaceVictory')
+                victoryInterface.style.animation = 'fadeIn 2s';
+                victoryInterface.classList.remove('hidden')
+                victoryInterface.classList.add('visible')
             }else{return}   
         },8000)   
     }

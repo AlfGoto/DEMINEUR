@@ -4,7 +4,8 @@ if(!isset($_SESSION)){session_start();}
 
 $width = 20;
 $_SESSION['width'] = $width;
-$bombAmount = 10;
+$bombAmount = 70;
+$_SESSION['firstSquare'] = true;
 $_SESSION['bombAmount'] = $bombAmount;
 $_SESSION['squareLeft'] = $width*$width - $bombAmount;
 $squares = [];
@@ -13,8 +14,8 @@ $total = 0;
 
 #BUILD
 function build(){
-    global $width, $bombAmount, $squares, $firstSquare;
-    $firstSquare = true;
+    global $width, $bombAmount, $squares;
+    $_SESSION['firstSquare'] = true;
     $_SESSION['bombsArray'] = [];
     $_SESSION['validsArray'] = [];
     $_SESSION['squares'] = [];
