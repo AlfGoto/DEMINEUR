@@ -13,10 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let restarting = false
     let shuffledbombs = []
     let currentIndex = 0
+    let rebuilding = false
 
 
-
-
+    //timmer declaration
+    let timer;
+    let startTime;
+    let elapsedTime = 0;
+    let isRunning = false;
+    let timerHTML = document.getElementById('timerDemineur')
+    timerHTML.innerHTML = 'Timer'
+    let now;
 
 
 
@@ -137,6 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         secondSquare = false
         shuffledbombs = []
         currentIndex = 0
+        rebuilding = false
+        resetTimer()
 
 
         for(let i = 0; i < width*width; i++) {
@@ -225,11 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
     build()
 
      
-
-
     //left click
     function click(square, i){
         if(secondSquare == true){
+            startTimer() 
             secondSquare = false
             $.ajax({
                 type: "POST", 
@@ -240,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
         if(square.classList.contains('checked')){return}
+        if(rebuilding == true){return}
         if(square.classList.contains('flag')){return}
         if(isGameOver){return}
         $.ajax({
@@ -263,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         animLose()
                     }
                     isGameOver = true
-                    
+                    stopTimer()
                     return;
                 } else {
                     if(square.classList.contains('green')){
@@ -322,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 if(result.victory){
+                    stopTimer()
                     isGameOver == true
                     animVictory()
                 }
@@ -618,11 +628,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //restart button
     const restartButton = document.getElementById('restartButton')
-    restartButton.addEventListener("click", ()=>{restart()})
+    restartButton.addEventListener("click", ()=>{
+        if(restarting == true){return}
+        restart()
+    })
 
 
     function restart(){
         restarting = true
+        rebuilding = true
         firstSquare = true
         secondSquare = false
         grid.innerHTML = ''
@@ -632,7 +646,10 @@ document.addEventListener('DOMContentLoaded', () => {
         $.ajax({
             type: "POST", 
             url: "./MinesweeperEasy/buildMinesweeper.php",
-            success: build()
+            success: () => {
+                build() 
+                rebuilding = false
+            }
         })
         let victoryInterface = document.getElementById('interfaceVictory')
         victoryInterface.classList.remove('visible')
@@ -689,38 +706,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    function animVictoryLoop() {
-        let square = document.getElementById(currentIndex);
-        square.innerHTML =' '
-        square.style.animation = 'fadeIn 2s';
-        if (square.classList.contains('gray')) {
-            square.classList.remove('gray');
-            square.classList.add('green');
-        } 
-        else if(square.classList.contains('green')){
-        } 
-        else if(square.classList.contains('lightGreen')){
-        }
-        else if(square.classList.contains('silver')){
-            square.classList.remove('silver');
-            square.classList.add('lightGreen');
-        }
-        currentIndex++;
-        if (currentIndex < width*width) {
-            if(isGameOver == false){
-                return
-            }else{
-                setTimeout(animVictoryLoop, 25)
-            }
-        } else {
-            let victoryInterface = document.getElementById('interfaceVictory')
-            victoryInterface.style.animation = 'fadeIn 2s';
-            victoryInterface.classList.remove('hidden')
-            victoryInterface.classList.add('visible')
-        }
-    }
-
-
     function animVictory(){
         console.log('anim victory en cours')
         const shuffle = array => {
@@ -760,6 +745,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 interface.classList.add('visible')
             }else{return}   
         },8000)   
+    }
+
+    function startTimer() {
+        if (!isRunning) {
+            isRunning = true;
+            startTime = Date.now() - elapsedTime;
+            timer = setInterval(function() {
+                now = Date.now();
+                elapsedTime = now - startTime;
+                const seconds = Math.floor(elapsedTime / 1000);
+                const milliseconds = elapsedTime % 1000;
+                timerHTML.innerHTML = seconds + '.' + Math.floor(milliseconds/10)
+            })
+        }
+    }
+    
+    function stopTimer() {
+        if (isRunning) {
+            isRunning = false;
+            clearInterval(timer);
+        }
+    }
+    function resetTimer() {
+        clearInterval(timer);
+        isRunning = false;
+        elapsedTime = 0;
+        console.log("Timer reset");
     }
 
 
