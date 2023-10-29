@@ -27,15 +27,7 @@ function click($square){
 
     if ($isBomb) {
         echo json_encode(['isBomb' => true]);
-        if($_SESSION['firstSquare'] == false){
-            include('../GlobalsVars.php');
-            $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
-            $sqlNBbomb = 'UPDATE stats SET bombsExploded = bombsExploded + 1 WHERE pseudo = :pseudo';
-            $NBbomb = $db->prepare($sqlNBbomb);
-            $NBbomb->execute([
-               'pseudo'=>$_SESSION['user']
-            ]);
-        }
+        if($_SESSION['firstSquare'] == false)include('./statsBombExploded.php');
         return;
     } else {
         $_SESSION['squareLeft']--;
@@ -44,6 +36,7 @@ function click($square){
             if ($_SESSION['squareLeft']  == 0){
                 echo json_encode(['isBomb' => false, 'data' => 0, 'victory' => true]);
                 include('./winTimer.php');
+                include('./statsWin.php');
             }else {
                 echo json_encode(['isBomb' => false, 'data' => 0, 'victory' => false]);
             }
@@ -53,6 +46,7 @@ function click($square){
             if ($_SESSION['squareLeft']  == 0){
                 echo json_encode(['isBomb' => false, 'data' => $data, 'victory' => true]);
                 include('./winTimer.php');
+                include('./statsWin.php');
             }else{
                 echo json_encode(['isBomb' => false, 'data' => $data, 'victory' => false]);
             }

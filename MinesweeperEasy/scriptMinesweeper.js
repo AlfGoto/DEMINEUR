@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //create squares
     function build(){
 
+        rebuilding = false
         isGameOver = false
         neighbourgDone = []
         firstSquare = true
@@ -646,10 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $.ajax({
             type: "POST", 
             url: "./MinesweeperEasy/buildMinesweeper.php",
-            success: () => {
-                build() 
-                rebuilding = false
-            }
+            success: build() 
         })
         let victoryInterface = document.getElementById('interfaceVictory')
         victoryInterface.classList.remove('visible')
