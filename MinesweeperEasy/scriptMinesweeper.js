@@ -177,6 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
             //clicks
             //normal click
             square.addEventListener('mousedown', function(e) {
+                if(isGameOver == true){
+                    console.log('return sur le click parce que isGameOver')
+                    return
+                }
                 if (e.button === 0 ){
                     if(!(square.classList.contains('checked'))){
                         checkedSound()
@@ -249,10 +253,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
         }
-        if(square.classList.contains('checked')){return}
-        if(rebuilding == true){return}
-        if(square.classList.contains('flag')){return}
-        if(isGameOver){return}
+        if(square.classList.contains('checked')){
+            console.log('return checked')
+            return
+        }
+        if(rebuilding == true){
+            console.log('return rebuilding')
+            return
+        }
+        if(square.classList.contains('flag')){
+            console.log('return flag')
+            return
+        }
+
         $.ajax({
             type: "POST", 
             url: "./MinesweeperEasy/requests.php",
@@ -263,10 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
             success: function(response) {
                 console.log(response)
                 var result = JSON.parse(response);
-                if (result.return){return}
+                if (result.return){console.log('result.return')}
                 if (result.isBomb) {
                     if (firstSquare === true){
                         restart()
+                        isGameOver = false
                         let squareRestart = document.getElementById(i)
                         click(squareRestart, i)
                     } else if(!firstSquare && !secondSquare) {
@@ -639,6 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function restart(){
         restarting = true
         rebuilding = true
+        isGameOver = false
         firstSquare = true
         secondSquare = false
         grid.innerHTML = ''
@@ -646,9 +661,9 @@ document.addEventListener('DOMContentLoaded', () => {
         flags = 0
         $.ajax({
             type: "POST", 
-            url: "./MinesweeperEasy/buildMinesweeper.php",
-            success: build() 
+            url: "./MinesweeperEasy/buildMinesweeper.php", 
         })
+        build()
         let victoryInterface = document.getElementById('interfaceVictory')
         victoryInterface.classList.remove('visible')
         victoryInterface.classList.add('hidden')
