@@ -4,9 +4,12 @@ if(!isset($_SESSION)){session_start();}
 
 $width = 20;
 $_SESSION['width'] = $width;
-$bombAmount = 70;
+$bombAmount = 10;
+$_SESSION['bombAmount'] = $bombAmount;
+$_SESSION['squareLeft'] = $width*$width - $bombAmount;
 $squares = [];
 $total = 0;
+
 
 #BUILD
 function build(){

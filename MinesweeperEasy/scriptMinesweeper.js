@@ -10,12 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let flags = 0
     let firstSquare = true
     let secondSquare = false
-    let nbcheck = 0;
     let restarting = false
     let shuffledbombs = []
+    let currentIndex = 0
 
-
-    //PHP Vars
 
 
 
@@ -134,10 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //create squares
     function build(){
 
+        neighbourgDone = []
         firstSquare = true
         secondSquare = false
-        nbcheck = 0
         shuffledbombs = []
+        currentIndex = 0
+
 
         for(let i = 0; i < width*width; i++) {
             const square = document.createElement('div');
@@ -241,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if(square.classList.contains('checked')){return}
         if(square.classList.contains('flag')){return}
+        if(isGameOver){return}
         $.ajax({
             type: "POST", 
             url: "./MinesweeperEasy/requests.php",
@@ -251,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
             success: function(response) {
                 console.log(response)
                 var result = JSON.parse(response);
+                if (result.return){return}
                 if (result.isBomb) {
                     if (firstSquare === true){
                         restart()
@@ -319,6 +321,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     square.classList.add('checked')
                 }
                 
+                if(result.victory){
+                    isGameOver == true
+                    animVictory()
+                }
 
 
             },
@@ -338,9 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkSquare(square, currentId) {
         if(square.classList.contains('checked')){return}
         if(square.classList.contains('flag')){return}
-        nbcheck++
-        console.log('nb check -> ' + nbcheck)
-
         if(restarting == true){return}
 
         const isLeftEdge = (currentId % width === 0)
@@ -620,7 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function restart(){
         restarting = true
-        console.log('RESTART')
         firstSquare = true
         secondSquare = false
         grid.innerHTML = ''
@@ -632,7 +634,6 @@ document.addEventListener('DOMContentLoaded', () => {
             url: "./MinesweeperEasy/buildMinesweeper.php",
             success: build()
         })
-        nbcheck = 0
         let victoryInterface = document.getElementById('interfaceVictory')
         victoryInterface.classList.remove('visible')
         victoryInterface.classList.add('hidden')
@@ -687,6 +688,81 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
+
+    function animVictoryLoop() {
+        let square = document.getElementById(currentIndex);
+        square.innerHTML =' '
+        square.style.animation = 'fadeIn 2s';
+        if (square.classList.contains('gray')) {
+            square.classList.remove('gray');
+            square.classList.add('green');
+        } 
+        else if(square.classList.contains('green')){
+        } 
+        else if(square.classList.contains('lightGreen')){
+        }
+        else if(square.classList.contains('silver')){
+            square.classList.remove('silver');
+            square.classList.add('lightGreen');
+        }
+        currentIndex++;
+        if (currentIndex < width*width) {
+            if(isGameOver == false){
+                return
+            }else{
+                setTimeout(animVictoryLoop, 25)
+            }
+        } else {
+            let victoryInterface = document.getElementById('interfaceVictory')
+            victoryInterface.style.animation = 'fadeIn 2s';
+            victoryInterface.classList.remove('hidden')
+            victoryInterface.classList.add('visible')
+        }
+    }
+
+
+    function animVictory(){
+        console.log('anim victory en cours')
+        const shuffle = array => {
+            for (let k = array.length - 1; k > 0; k--) {
+              const l = Math.floor(Math.random() * (k + 1));
+              const temp = array[k];
+              array[k] = array[l];
+              array[l] = temp;
+            }
+            return array
+          }
+        let squaress = shuffle(squares)
+        squaress.forEach((element)=>{
+            setTimeout(()=>{
+                let square = element;
+                square.innerHTML =' '
+                square.style.animation = 'fadeIn 2s';
+                if (square.classList.contains('gray')) {
+                    square.classList.remove('gray');
+                    square.classList.add('green');
+                } 
+                else if(square.classList.contains('green')){
+                } 
+                else if(square.classList.contains('lightGreen')){
+                }
+                else if(square.classList.contains('silver')){
+                    square.classList.remove('silver');
+                    square.classList.add('lightGreen');
+                }
+            }, Math.floor(Math.random()*20000)/2.5)
+        })
+        setTimeout(()=>{
+            if(isGameOver == true){
+                let interface = document.getElementById('interfaceVictory')
+                interface.style.animation = 'fadeIn 2s';
+                interface.classList.remove('hidden')
+                interface.classList.add('visible')
+            }else{return}   
+        },8000)   
+    }
+
+
 
 })
 

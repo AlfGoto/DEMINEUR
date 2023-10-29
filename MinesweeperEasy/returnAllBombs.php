@@ -8,7 +8,7 @@ if ($_POST['request'] == 'allBomb') {
 
 function allBomb(){
     $bombsPosition = [];
-    for($i = 0; $i <count($_SESSION['squares']); $i++){
+    for($i = 0; $i < $_SESSION['width'] * $_SESSION['width']; $i++){
         if($_SESSION['squares'][$i]['isBomb']){
             array_push($bombsPosition, $i);
         }
