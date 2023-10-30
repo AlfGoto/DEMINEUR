@@ -10,7 +10,7 @@ $_SESSION['bombAmount'] = $bombAmount;
 $_SESSION['squareLeft'] = $width*$width - $bombAmount;
 $squares = [];
 $total = 0;
-
+$_SESSION['flagused'] = false;
 
 #BUILD
 function build(){

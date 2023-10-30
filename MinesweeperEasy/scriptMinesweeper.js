@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let shuffledbombs = []
     let currentIndex = 0
     let rebuilding = false
+    let flagused = false
 
 
     //timmer declaration
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function bombSound(){
         if(mute == true){return}
-        if(isGameOver == false){return}
+        if(isGameOver === false){return}
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
           }
@@ -148,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = 0
         rebuilding = false
         resetTimer()
+        flagused = false
 
 
         for(let i = 0; i < width*width; i++) {
@@ -177,10 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
             //clicks
             //normal click
             square.addEventListener('mousedown', function(e) {
-                if(isGameOver == true){
-                    console.log('return sur le click parce que isGameOver')
-                    return
-                }
                 if (e.button === 0 ){
                     if(!(square.classList.contains('checked'))){
                         checkedSound()
@@ -254,18 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
         if(square.classList.contains('checked')){
-            console.log('return checked')
             return
         }
         if(rebuilding == true){
-            console.log('return rebuilding')
             return
         }
         if(square.classList.contains('flag')){
-            console.log('return flag')
             return
         }
-
         $.ajax({
             type: "POST", 
             url: "./MinesweeperEasy/requests.php",
@@ -274,9 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 idSquare: square.getAttribute('id')
             },
             success: function(response) {
-                console.log(response)
                 var result = JSON.parse(response);
-                if (result.return){console.log('result.return')}
                 if (result.isBomb) {
                     if (firstSquare === true){
                         restart()
@@ -448,21 +440,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //add flags with right click
     function addFlag(square) {
-        if (isGameOver) return
+        if (isGameOver == true) {
+            return
+        }
         if (!square.classList.contains('checked')) {
             if (!square.classList.contains('flag')) {
                 square.classList.add('flag')
                 square.innerHTML = `<img class='imageFlag' src='image/flag.png'></img>`
                 flags++
                 flagSound()
-                if(flags < 2){
-                    console.log('this is not a flagless run anymore')
+                if(flagused == false){
+                    flagused = true
                     $.ajax({
                         type: "POST", 
-                        url: "JStoPHP.php",
-                        data: { 
-                            flagused: true
-                        },
+                        url: "./MinesweeperEasy/flagused.php",
                     })
                 }
             } else {
@@ -720,7 +711,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function animVictory(){
-        console.log('anim victory en cours')
         const shuffle = array => {
             for (let k = array.length - 1; k > 0; k--) {
               const l = Math.floor(Math.random() * (k + 1));
@@ -784,7 +774,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(timer);
         isRunning = false;
         elapsedTime = 0;
-        console.log("Timer reset");
     }
 
 

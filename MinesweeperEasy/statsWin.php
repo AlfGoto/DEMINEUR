@@ -9,3 +9,11 @@ $sqlNBvictory = 'UPDATE stats SET victories = victories + 1 WHERE pseudo = :pseu
     $NBvictory->execute([
         'pseudo'=>$_SESSION['user']
     ]);
+
+if ($_SESSION['flagused']){}else{
+    $sqlNBflagless = 'UPDATE stats SET victoriesflagless = victoriesflagless + 1 WHERE pseudo = :pseudo';
+                $NBflagless = $db->prepare($sqlNBflagless);
+                $NBflagless->execute([
+                    'pseudo'=>$_SESSION['user']
+                ]);
+}
