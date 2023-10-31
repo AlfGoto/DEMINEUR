@@ -268,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 idSquare: square.getAttribute('id')
             },
             success: function(response) {
+                console.log(response)
                 var result = JSON.parse(response);
                 if (result.isBomb) {
                     if (firstSquare === true){
@@ -440,9 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //add flags with right click
     function addFlag(square) {
-        if (isGameOver == true) {
-            return
-        }
         if (!square.classList.contains('checked')) {
             if (!square.classList.contains('flag')) {
                 square.classList.add('flag')

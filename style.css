@@ -8,13 +8,13 @@
 
 
 .bodyMain{
-  background: url("./image/login Background.png") fixed center;
-  background-size: 605vh;
+  background: url("./image/login Background.png") fixed center no-repeat;
+  background-size: cover;
   overflow: hidden;
 }
 .bodyLogin{
-  background: url("./image/login Background.png") fixed center;
-  background-size: 605vh;
+  background: url("./image/login Background.png") fixed center no-repeat;
+  background-size: cover;
   overflow: hidden;
 }
 #h1SEO{

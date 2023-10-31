@@ -129,9 +129,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-        <link href="./style.css" rel="stylesheet">
         <script src='loginRegister.js'></script>
+        <link href="./style.css" rel="stylesheet"></link>
 
+        <div>
         <title>MineSweeper ULTIMATE</title>
         <link rel="icon" href="image\flagIcon.png" alt='icon of the website, its a redflag' />
         <h1 id='h1SEO'>Démineur Minesweeper</h1>
@@ -142,6 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta http-equiv="cache-control" content="no-cache, must-revalidate, max-age=0">
         <meta http-equiv="expires" content="0">
         <meta http-equiv="pragma" content="no-cache">
+        </div>
+        
     </head>
 
     <body class="bodyLogin">

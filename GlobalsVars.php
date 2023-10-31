@@ -13,3 +13,4 @@ global $firstSquare;
 $firstSquare = true;
 
 
+?>

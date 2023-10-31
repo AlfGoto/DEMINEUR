@@ -181,10 +181,8 @@ if (isset($_SESSION['user'])) {
     </script>
 
 
-
+    <link href="./style.css" rel="stylesheet"></link>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="./style.css" rel="stylesheet">
-    </link>
     <script src='isLogged.js'></script>
     <script src='menu.js'></script>
     <div id='demineurScriptDiv'>
@@ -513,7 +511,7 @@ if (isset($_SESSION['user'])) {
                 <div id='unlogButtonDiv' class='visible'>
                     <form action="index.php" method="post">
                         <button class='button' name='unlogButton' type="submit" value='Unlog'
-                            id="unlogButton">Unlog</button>
+                            id="unlogButton">Log-Out</button>
                     </form>
                 </div>
             </div>
