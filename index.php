@@ -193,7 +193,7 @@ if (isset($_SESSION['user'])) {
     </div>
 
     <title>MineSweeper ULTIMATE</title>
-    <link rel="icon" href="image\flagIcon.png" alt='icon of the website, its a redflag' />
+    <link rel="icon" href="./image/flagIcon.png" alt='icon of the website, its a redflag' />
     <h1 id='h1SEO'>Démineur Minesweeper</h1>
     <meta name="description"
         content="This is the ULTIMATE minesweeper game, lets see if you can be the best out of all players !">

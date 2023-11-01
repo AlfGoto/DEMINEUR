@@ -41,7 +41,7 @@ function click($square){
         if ($_SESSION['squareLeft']  == 0){
             echo json_encode(['isBomb' => false, 'data' => 0, 'victory' => true]);
             include('./winTimer.php');
-             include('./statsWin.php');
+            include('./statsWin.php');
         }else {
             echo json_encode(['isBomb' => false, 'data' => 0, 'victory' => false]);
         }

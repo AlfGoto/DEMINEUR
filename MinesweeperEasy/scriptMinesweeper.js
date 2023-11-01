@@ -1,5 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    //WebSocket
+    // Créez une instance de WebSocket en spécifiant l'URL de votre serveur WebSocket
+    const socket = new WebSocket('ws://localhost:8080');
+
+    // Événement déclenché lorsque la connexion est établie
+    socket.addEventListener('open', (event) => {
+        console.log('Connexion établie avec le serveur WebSocket');
+    
+        // Envoyez un message au serveur WebSocket lorsque la connexion est établie
+        socket.send('Hello, serveur WebSocket!');
+    });
+
+    // Événement déclenché lorsque le serveur envoie un message
+    socket.addEventListener('message', (event) => {
+        console.log('Message du serveur WebSocket:', event.data);
+    });
+
+    // Événement déclenché lorsque la connexion est fermée
+    socket.addEventListener('close', (event) => {
+        if (event.wasClean) {
+            console.log('Connexion WebSocket fermée proprement, code:', event.code, 'raison:', event.reason);
+        } else {
+            console.error('Connexion WebSocket fermée de manière inattendue');
+        }
+    });
+
+    // Événement déclenché en cas d'erreur
+    socket.addEventListener('error', (error) => {
+        console.error('Erreur de connexion WebSocket:', error);
+    });
 
 
     //Vars
