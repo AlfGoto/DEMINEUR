@@ -1,21 +1,103 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     //WebSocket
-    // Créez une instance de WebSocket en spécifiant l'URL de votre serveur WebSocket
     const socket = new WebSocket('ws://localhost:8080');
 
-    // Événement déclenché lorsque la connexion est établie
     socket.addEventListener('open', (event) => {
         console.log('Connexion établie avec le serveur WebSocket');
     
     });
 
-    // Événement déclenché lorsque le serveur envoie un message
     socket.addEventListener('message', (event) => {
-        console.log('Message du serveur WebSocket:', event.data);
+        console.log(event.data)
+        var msg = JSON.parse(event.data)
+
+        //BOMB
+        if(msg['request'] == 'isBomb'){
+            let square = document.getElementById(msg['id'])
+            /*if (firstSquare === true){
+                restart()
+                isGameOver = false
+                let squareRestart = document.getElementById(i)
+                click(squareRestart, i)
+            } else if(!firstSquare && !secondSquare) {
+                */
+                square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+                animLose()
+            //}
+            isGameOver = true
+            stopTimer()
+            return;
+        } else {
+            let square = document.getElementById(msg['id'])
+            if(square.classList.contains('green')){
+                square.classList.remove('green')
+                square.classList.add('gray')
+            }else if(square.classList.contains('lightGreen')){
+                square.classList.remove('lightGreen')
+                square.classList.add('silver')
+            }
+        }
+
+        //DATA 0
+        if(msg['request'] == 'data0'){
+            let square = document.getElementById(msg['id'])
+            /*if (firstSquare === true) {
+                firstSquare = false
+                secondSquare = true 
+            }    */
+            checkSquare(square, msg['id'])
+            square.classList.add('checked')
+        }
+
+        //DATA > 0
+        if(msg['request'] == 'isData'){
+            let square = document.getElementById(msg['id'])
+            /*if (firstSquare === true){
+                restart()
+                let squareRestart = document.getElementById(i)
+                click(squareRestart, i)
+            }*/
+            square.innerHTML = msg['data']
+            square.setAttribute('data', msg['data'])
+        
+            //differents colors for the numbers
+            switch(msg['data']){
+                case 1:
+                    square.classList.add('data1')
+                    break;
+                case 2:
+                    square.classList.add('data2')
+                    break;
+                case 3:
+                    square.classList.add('data3')
+                    break;
+                case 4:
+                    square.classList.add('data4')
+                    break;
+                case 5:
+                    square.classList.add('data5')
+                    break;
+                case 6:
+                    square.classList.add('data6')
+                    break;
+                case 7:
+                    square.classList.add('data7')
+                    break;
+                case 8:
+                    square.classList.add('data8')
+                    break;
+
+            }
+        }
+
+
+
     });
 
-    // Événement déclenché lorsque la connexion est fermée
+
+
+
     socket.addEventListener('close', (event) => {
         if (event.wasClean) {
             console.log('Connexion WebSocket fermée proprement, code:', event.code, 'raison:', event.reason);
@@ -24,120 +106,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Événement déclenché en cas d'erreur
     socket.addEventListener('error', (error) => {
         console.error('Erreur de connexion WebSocket:', error);
     });
 
 
  /*
-                if (result.isBomb) {
-                    if (firstSquare === true){
-                        restart()
-                        isGameOver = false
-                        let squareRestart = document.getElementById(i)
-                        click(squareRestart, i)
-                    } else if(!firstSquare && !secondSquare) {
-                        square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
-                        animLose()
-                    }
-                    isGameOver = true
-                    stopTimer()
-                    return;
-                } else {
-                    if(square.classList.contains('green')){
-                        square.classList.remove('green')
-                        square.classList.add('gray')
-                    }else if(square.classList.contains('lightGreen')){
-                        square.classList.remove('lightGreen')
-                        square.classList.add('silver')
-                    }
-                    if (result.data != 0){
-                        if (firstSquare === true){
-                            restart()
-                            let squareRestart = document.getElementById(i)
-                            click(squareRestart, i)
-                        }
-                        square.innerHTML = result.data
-                        square.setAttribute('data', result.data)
-                    
-                        //differents colors for the numbers
-                        switch(result.data){
-                            case 1:
-                                square.classList.add('data1')
-                                break;
-                            case 2:
-                                square.classList.add('data2')
-                                break;
-                            case 3:
-                                square.classList.add('data3')
-                                break;
-                            case 4:
-                                square.classList.add('data4')
-                                break;
-                            case 5:
-                                square.classList.add('data5')
-                                break;
-                            case 6:
-                                square.classList.add('data6')
-                                break;
-                            case 7:
-                                square.classList.add('data7')
-                                break;
-                            case 8:
-                                square.classList.add('data8')
-                                break;
 
-                        }
-                    }
-                    if (!square.hasAttribute('data')){
-                        if (firstSquare === true) {
-                            firstSquare = false
-                            secondSquare = true
-                        }
-                        checkSquare(square, i)
-                    }
-                    square.classList.add('checked')
-                }
+                    
+ 
                 
                 if(result.victory){
                     stopTimer()
                     isGameOver = true
                     animVictory()
                 }
-
-
-            },
-            error: function(xhr, status, error) {
-                console.error("Erreur AJAX: " + error);
-            }
         }) */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

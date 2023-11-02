@@ -55,16 +55,32 @@ class WebSocketApp implements MessageComponentInterface {
 
 
             if($squares[$SESSID][$id]['isBomb'] == true){
-                $from->send("C'est une BOMBE");
+                $info = array(
+                    'request' => 'isBomb',
+                    'id' => $id
+                );
+                $clickResponse = json_encode($info);
+                $from->send($clickResponse);
                 return;
             }
             if($squares[$SESSID][$id]["data"] == 0){
-                $from->send("square " . $id . " data 0");
+                $info = array(
+                    'request' => 'data0',
+                    'id' => $id
+                );
+                $clickResponse = json_encode($info);
+                $from->send($clickResponse);
                 return;
             }
             if($squares[$SESSID][$id]["data"] > 0){
                 $data = $squares[$SESSID][$id]["data"];
-                $from->send("square " . $id . "| data :" . $data);
+                $info = array(
+                    'request' => 'isData',
+                    'id' => $id,
+                    'data' => $data
+                );
+                $clickResponse = json_encode($info);
+                $from->send($clickResponse);
                 return;
             }
         } 
