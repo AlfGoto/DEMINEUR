@@ -2,6 +2,10 @@
 
 if(!isset($_SESSION)){session_start();}
 
+$varGlobal = 'testOUAIS';
+global $varGlobal;
+$varGlobal = 'testOUAIS';
+
 $width = 20;
 $_SESSION['width'] = $width;
 $bombAmount = 70;

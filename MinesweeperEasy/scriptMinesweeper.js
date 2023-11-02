@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.addEventListener('open', (event) => {
         console.log('Connexion établie avec le serveur WebSocket');
     
-        // Envoyez un message au serveur WebSocket lorsque la connexion est établie
-        socket.send('Hello, serveur WebSocket!');
     });
 
     // Événement déclenché lorsque le serveur envoie un message
@@ -30,6 +28,154 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.addEventListener('error', (error) => {
         console.error('Erreur de connexion WebSocket:', error);
     });
+
+
+ /*
+                if (result.isBomb) {
+                    if (firstSquare === true){
+                        restart()
+                        isGameOver = false
+                        let squareRestart = document.getElementById(i)
+                        click(squareRestart, i)
+                    } else if(!firstSquare && !secondSquare) {
+                        square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+                        animLose()
+                    }
+                    isGameOver = true
+                    stopTimer()
+                    return;
+                } else {
+                    if(square.classList.contains('green')){
+                        square.classList.remove('green')
+                        square.classList.add('gray')
+                    }else if(square.classList.contains('lightGreen')){
+                        square.classList.remove('lightGreen')
+                        square.classList.add('silver')
+                    }
+                    if (result.data != 0){
+                        if (firstSquare === true){
+                            restart()
+                            let squareRestart = document.getElementById(i)
+                            click(squareRestart, i)
+                        }
+                        square.innerHTML = result.data
+                        square.setAttribute('data', result.data)
+                    
+                        //differents colors for the numbers
+                        switch(result.data){
+                            case 1:
+                                square.classList.add('data1')
+                                break;
+                            case 2:
+                                square.classList.add('data2')
+                                break;
+                            case 3:
+                                square.classList.add('data3')
+                                break;
+                            case 4:
+                                square.classList.add('data4')
+                                break;
+                            case 5:
+                                square.classList.add('data5')
+                                break;
+                            case 6:
+                                square.classList.add('data6')
+                                break;
+                            case 7:
+                                square.classList.add('data7')
+                                break;
+                            case 8:
+                                square.classList.add('data8')
+                                break;
+
+                        }
+                    }
+                    if (!square.hasAttribute('data')){
+                        if (firstSquare === true) {
+                            firstSquare = false
+                            secondSquare = true
+                        }
+                        checkSquare(square, i)
+                    }
+                    square.classList.add('checked')
+                }
+                
+                if(result.victory){
+                    stopTimer()
+                    isGameOver = true
+                    animVictory()
+                }
+
+
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur AJAX: " + error);
+            }
+        }) */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //Vars
@@ -170,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //create squares
     function build(){
 
+
         rebuilding = false
         isGameOver = false
         neighbourgDone = []
@@ -267,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     build()
 
-     
+
     //left click
     function click(square, i){
         if(secondSquare == true){
@@ -290,97 +437,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if(square.classList.contains('flag')){
             return
         }
-        $.ajax({
-            type: "POST", 
-            url: "./MinesweeperEasy/requests.php",
-            data: {
-                request: 'click',
-                idSquare: square.getAttribute('id')
-            },
-            success: function(response) {
-                console.log(response)
-                var result = JSON.parse(response);
-                if (result.isBomb) {
-                    if (firstSquare === true){
-                        restart()
-                        isGameOver = false
-                        let squareRestart = document.getElementById(i)
-                        click(squareRestart, i)
-                    } else if(!firstSquare && !secondSquare) {
-                        square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
-                        animLose()
-                    }
-                    isGameOver = true
-                    stopTimer()
-                    return;
-                } else {
-                    if(square.classList.contains('green')){
-                        square.classList.remove('green')
-                        square.classList.add('gray')
-                    }else if(square.classList.contains('lightGreen')){
-                        square.classList.remove('lightGreen')
-                        square.classList.add('silver')
-                    }
-                    if (result.data != 0){
-                        if (firstSquare === true){
-                            restart()
-                            let squareRestart = document.getElementById(i)
-                            click(squareRestart, i)
-                        }
-                        square.innerHTML = result.data
-                        square.setAttribute('data', result.data)
-                    
-                        //differents colors for the numbers
-                        switch(result.data){
-                            case 1:
-                                square.classList.add('data1')
-                                break;
-                            case 2:
-                                square.classList.add('data2')
-                                break;
-                            case 3:
-                                square.classList.add('data3')
-                                break;
-                            case 4:
-                                square.classList.add('data4')
-                                break;
-                            case 5:
-                                square.classList.add('data5')
-                                break;
-                            case 6:
-                                square.classList.add('data6')
-                                break;
-                            case 7:
-                                square.classList.add('data7')
-                                break;
-                            case 8:
-                                square.classList.add('data8')
-                                break;
 
-                        }
-                    }
-                    if (!square.hasAttribute('data')){
-                        if (firstSquare === true) {
-                            firstSquare = false
-                            secondSquare = true
-                        }
-                        checkSquare(square, i)
-                    }
-                    square.classList.add('checked')
-                }
-                
-                if(result.victory){
-                    stopTimer()
-                    isGameOver = true
-                    animVictory()
-                }
+        let clickRequest = {
+            request: 'click',
+            id: i
+        }
+        socket.send(JSON.stringify(clickRequest))
+        console.log(JSON.stringify(clickRequest))
 
 
-            },
-            error: function(xhr, status, error) {
-                console.error("Erreur AJAX: " + error);
-            }
-        })
     }
 
 
@@ -670,6 +735,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function restart(){
+        //restart websocket
+        let clickRequest = {
+            request: 'build'
+        }
+        socket.send(JSON.stringify(clickRequest))
+        console.log(JSON.stringify(clickRequest))
+
+
         restarting = true
         rebuilding = true
         isGameOver = false
@@ -678,10 +751,6 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = ''
         squares.length = 0        
         flags = 0
-        $.ajax({
-            type: "POST", 
-            url: "./MinesweeperEasy/buildMinesweeper.php", 
-        })
         build()
         let victoryInterface = document.getElementById('interfaceVictory')
         victoryInterface.classList.remove('visible')
