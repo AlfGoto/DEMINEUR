@@ -16,7 +16,6 @@ class WebSocketApp implements MessageComponentInterface {
         //StartingBuild
         $cookieArray = $conn->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
-            echo $SESSID . "\n";
 
             build($SESSID);
         
@@ -37,7 +36,6 @@ class WebSocketApp implements MessageComponentInterface {
         if($msg['request'] == 'build'){
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
-            echo $SESSID . "\n";
 
             build($SESSID);
             return;
@@ -48,9 +46,7 @@ class WebSocketApp implements MessageComponentInterface {
             global $squares;
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
-            echo $SESSID . "\n";
             $id = $msg['id'];
-            print_r($squares[$SESSID][$id]);
             
 
 
@@ -84,6 +80,14 @@ class WebSocketApp implements MessageComponentInterface {
                 return;
             }
         } 
+
+        //if ALLBOMB
+        if($msg['request'] == 'allBomb'){
+            $cookieArray = $from->httpRequest->getHeader('Cookie');
+            $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
+
+            allBomb($SESSID, $from);
+        }
         
     }
 
@@ -116,11 +120,12 @@ class WebSocketApp implements MessageComponentInterface {
 
 function build($SESSID){
 
+    global $width, $squares;
     $width = 20;
-    global $squares;
     $squares[$SESSID] = [];
-    $total = 0;
     $bombAmount = 70;
+    $squares['bombsArray'] = [];
+    $squares['validsArray'] = [];
 
 
     $squares['bombsArray'] = array_fill(0, $bombAmount, ['isBomb' => true, 'checked' => false]);
@@ -151,28 +156,23 @@ function build($SESSID){
             $squares[$SESSID][$i]['data'] = $total;
         }
     }
+}
 
-
-    print_r($squares[$SESSID]);
-
-
-
-    /*
-    $squares[$SESSID]
-    
-    
-    
-    
-    ;
-    $_SESSION['firstSquare'] = true;
-    $_SESSION['bombAmount'] = $bombAmount;
-    $_SESSION['squareLeft'] = $width*$width - $bombAmount;
-    $_SESSION['flagused'] = false;
-    $_SESSION['firstSquare'] = true;
-    $_SESSION['bombsArray'] = [];
-    $_SESSION['validsArray'] = [];
-    $_SESSION['squares'] = [];
-
-    */
-    
+function allBomb($SESSID, $from){
+    global $width, $squares;
+    if(isset($bombsPosition[$SESSID])){unset($bombsPosition[$SESSID]);}
+    $bombsPosition = [];
+    $bombsPosition[$SESSID] = [];
+    for($i = 0; $i < $width * $width; $i++){
+        if($squares[$SESSID][$i]['isBomb'] == true){
+            array_push($bombsPosition[$SESSID], $i);
+        }
+    }
+    $info = array(
+        'request' => 'allBombArray',
+        'array' => $bombsPosition[$SESSID]
+    );
+    $clickResponse = json_encode($info);
+    $from->send($clickResponse);
+    return;
 }

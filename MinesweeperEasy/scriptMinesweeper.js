@@ -1,5 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+
+
+
+
+
+    //Vars
+    const grid = document.querySelector('.grid');
+    let width = 20
+    let squares = []
+    let isGameOver = false
+    let flags = 0
+    let firstSquare = true
+    let secondSquare = false
+    let restarting = false
+    let shuffledbombs = []
+    let currentIndex = 0
+    let rebuilding = false
+    let flagused = false
+
+
+    //timmer declaration
+    let timer;
+    let startTime;
+    let elapsedTime = 0;
+    let isRunning = false;
+    let timerHTML = document.getElementById('timerDemineur')
+    timerHTML.innerHTML = 'Timer'
+    let now;
+
     //WebSocket
     const socket = new WebSocket('ws://localhost:8080');
 
@@ -14,21 +43,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //BOMB
         if(msg['request'] == 'isBomb'){
+            isGameOver = true
             let square = document.getElementById(msg['id'])
-            /*if (firstSquare === true){
+            if (firstSquare === true){
                 restart()
                 isGameOver = false
+                let i = msg['id']
                 let squareRestart = document.getElementById(i)
                 click(squareRestart, i)
+                return
             } else if(!firstSquare && !secondSquare) {
-                */
                 square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
                 animLose()
-            //}
+            }
             isGameOver = true
             stopTimer()
             return;
-        } else {
+        }
+
+        //DATA 0
+        if(msg['request'] == 'data0'){
             let square = document.getElementById(msg['id'])
             if(square.classList.contains('green')){
                 square.classList.remove('green')
@@ -37,15 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.classList.remove('lightGreen')
                 square.classList.add('silver')
             }
-        }
-
-        //DATA 0
-        if(msg['request'] == 'data0'){
-            let square = document.getElementById(msg['id'])
-            /*if (firstSquare === true) {
+            if (firstSquare === true) {
                 firstSquare = false
                 secondSquare = true 
-            }    */
+            }    
             checkSquare(square, msg['id'])
             square.classList.add('checked')
         }
@@ -53,11 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         //DATA > 0
         if(msg['request'] == 'isData'){
             let square = document.getElementById(msg['id'])
-            /*if (firstSquare === true){
+            square.classList.add('checked')
+            if(square.classList.contains('green')){
+                square.classList.remove('green')
+                square.classList.add('gray')
+            }else if(square.classList.contains('lightGreen')){
+                square.classList.remove('lightGreen')
+                square.classList.add('silver')
+            }
+            if (firstSquare === true){
                 restart()
+                let i = msg['id']
                 let squareRestart = document.getElementById(i)
                 click(squareRestart, i)
-            }*/
+                return
+            }
             square.innerHTML = msg['data']
             square.setAttribute('data', msg['data'])
         
@@ -91,6 +130,54 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        //allBombArray
+        if(msg['request'] == 'allBombArray'){
+            bombAroundAnim(msg['array'])
+
+        function bombAroundAnim(arrayB){
+            console.log('arrayB = '+ arrayB)
+            const shuffle = array => {
+                for (let k = array.length - 1; k > 0; k--) {
+                  const l = Math.floor(Math.random() * (k + 1));
+                  const temp = array[k];
+                  array[k] = array[l];
+                  array[l] = temp;
+                }
+                return array
+                }
+            shuffledbombs = shuffle(arrayB)
+            console.log('shuffle = '+ shuffledbombs)
+            shuffledbombs.forEach((i)=>{
+                setTimeout(()=>{
+                    if(isGameOver == true){
+                        let element = document.getElementById(i)
+                        bombSound()
+                        element.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
+                    }else{
+                        msg['array'].length = 0
+                        arrayB.length = 0
+                        shuffledbombs.length = 0
+                        return
+                    }
+                }, Math.floor(Math.random()*20000)/2.5)
+            })
+            setTimeout(()=>{
+                if(isGameOver == true){
+                    let loseInterface = document.getElementById('interfaceLose')
+                    loseInterface.style.animation = 'fadeIn 2s';
+                    loseInterface.classList.remove('hidden')
+                    loseInterface.classList.add('visible')
+                }else{
+                    msg['array'].length = 0
+                    arrayB.length = 0
+                    shuffledbombs.length = 0
+                    return
+                }   
+            },8000) 
+        }
+            
+        }
+
 
 
     });
@@ -113,9 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
  /*
 
-                    
- 
-                
+             
                 if(result.victory){
                     stopTimer()
                     isGameOver = true
@@ -149,42 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Vars
-    const grid = document.querySelector('.grid');
-    let width = 20
-    let squares = []
-    let isGameOver = false
-    let flags = 0
-    let firstSquare = true
-    let secondSquare = false
-    let restarting = false
-    let shuffledbombs = []
-    let currentIndex = 0
-    let rebuilding = false
-    let flagused = false
-
-
-    //timmer declaration
-    let timer;
-    let startTime;
-    let elapsedTime = 0;
-    let isRunning = false;
-    let timerHTML = document.getElementById('timerDemineur')
-    timerHTML.innerHTML = 'Timer'
-    let now;
 
 
 
@@ -311,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rebuilding = false
         resetTimer()
         flagused = false
+        shuffledbombs.length = 0
 
 
         for(let i = 0; i < width*width; i++) {
@@ -340,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //clicks
             //normal click
             square.addEventListener('mousedown', function(e) {
+                if(isGameOver == true){return}
                 if (e.button === 0 ){
                     if(!(square.classList.contains('checked'))){
                         checkedSound()
@@ -351,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             //right click
             square.addEventListener('mousedown', function(e) {
+                if(isGameOver == true){return}
                 if (e.button === 2 ){
                     e.preventDefault()
                     addFlag(square)
@@ -367,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let rightClick = false
             let leftClick = false
             square.addEventListener('mousedown', function(f) {
+                if(isGameOver == true){return}
                 if (f.button === 2){
                     rightClick = true
                 }
@@ -428,8 +481,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         socket.send(JSON.stringify(clickRequest))
         console.log(JSON.stringify(clickRequest))
-
-
     }
 
 
@@ -514,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 click(newSquare, newId)
             }
 
-        }, 1)
+        }, 10)
     }
 
 
@@ -749,47 +800,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function animLose(){
-        $.ajax({
-            type: "POST", 
-            url: "./MinesweeperEasy/returnAllBombs.php",
-            data: { 
-                request: 'allBomb'
-            },
-            success: function(response){
-                var result = JSON.parse(response);
-                const shuffle = array => {
-                    for (let k = array.length - 1; k > 0; k--) {
-                      const l = Math.floor(Math.random() * (k + 1));
-                      const temp = array[k];
-                      array[k] = array[l];
-                      array[l] = temp;
-                    }
-                    return array
-                  }
-                shuffledbombs = shuffle(result)
-                shuffledbombs.forEach((i)=>{
-                    setTimeout(()=>{
-                        if(isGameOver == true){
-                            let element = document.getElementById(i)
-                        if(element.classList.contains('flag')){
-                            element.innerHTML =' '
-                        }
-                        bombSound()
-                        element.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
-                        }
-                    }, Math.floor(Math.random()*20000)/2.5)
-                })
-                setTimeout(()=>{
-                    if(isGameOver == true){
-                        let loseInterface = document.getElementById('interfaceLose')
-                        loseInterface.style.animation = 'fadeIn 2s';
-                        loseInterface.classList.remove('hidden')
-                        loseInterface.classList.add('visible')
-                    }else{return}   
-                },8000)    
-            }
-        })
+        let clickRequest = {
+            request: 'allBomb'
+        }
+        socket.send(JSON.stringify(clickRequest))
+        console.log(JSON.stringify(clickRequest))
     }
+
 
     function animVictory(){
         const shuffle = array => {
