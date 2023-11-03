@@ -276,7 +276,7 @@ if (isset($_SESSION['user'])) {
                             <tr>
                                 <td class='tableStatsStatsNames'>Average win time : </td>
                                 <td>
-                                    <?= $stats['victoriesaverages'] ?>
+                                    <?= $stats['victoriesaverages']/1000 ?>
                                 </td>
                             </tr>
                             <tr>

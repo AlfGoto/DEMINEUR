@@ -17,3 +17,12 @@ if ($_SESSION['flagused']){}else{
                     'pseudo'=>$_SESSION['user']
                 ]);
 }
+
+$elapsedTime = $_POST['time'];
+
+$sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
+    $insertTimes = $db->prepare($sqlQuery);
+    $insertTimes->execute([
+        'pseudo'=>$_SESSION['user'],
+        'time'=>$elapsedTime,
+    ]);

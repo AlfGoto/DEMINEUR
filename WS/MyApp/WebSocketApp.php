@@ -43,10 +43,14 @@ class WebSocketApp implements MessageComponentInterface {
 
         //if CLICK
         if($msg['request'] == 'click'){
-            global $squares;
+            global $squares, $squaresLeft;
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
             $id = $msg['id'];
+            if($squares[$SESSID][$id]['checked'] == true){return;}
+            $squares[$SESSID][$id]['checked'] = true;
+            $squaresLeft[$SESSID]--;
+
             
 
 
@@ -60,6 +64,19 @@ class WebSocketApp implements MessageComponentInterface {
                 return;
             }
             if($squares[$SESSID][$id]["data"] == 0){
+                if($squaresLeft[$SESSID] == 0){
+                    global $timer;
+                    $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
+                    $info = array(
+                        'request' => 'data0',
+                        'id' => $id,
+                        'victory'=> true,
+                        'time' => $timer[$SESSID]['finish']
+                    );
+                    $clickResponse = json_encode($info);
+                    $from->send($clickResponse);
+                    return;
+                }
                 $info = array(
                     'request' => 'data0',
                     'id' => $id
@@ -69,7 +86,26 @@ class WebSocketApp implements MessageComponentInterface {
                 return;
             }
             if($squares[$SESSID][$id]["data"] > 0){
+                global $timer, $squares, $firstSquare;
+                if($firstSquare[$SESSID] == true){
+                    $firstSquare[$SESSID] = false;
+                    $timer[$SESSID]['start'] = round(microtime(true) * 1000);
+                }
                 $data = $squares[$SESSID][$id]["data"];
+                if($squaresLeft[$SESSID] == 0){
+                    global $timer;
+                    $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
+                    $info = array(
+                        'request' => 'data0',
+                        'id' => $id,
+                        'data' => $data,
+                        'victory'=> true,
+                        'time' => $timer[$SESSID]['finish']
+                    );
+                    $clickResponse = json_encode($info);
+                    $from->send($clickResponse);
+                    return;
+                }
                 $info = array(
                     'request' => 'isData',
                     'id' => $id,
@@ -96,9 +132,12 @@ class WebSocketApp implements MessageComponentInterface {
 
 
     public function onClose(ConnectionInterface $conn) {
+        global $squares, $timer, $squaresLeft;
         $cookieArray = $conn->httpRequest->getHeader('Cookie');
         $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
         unset($squares[$SESSID]);
+        unset($timer[$SESSID]);
+        unset($squaresLeft[$SESSID]);
         // Trouver et supprimer la connexion du tableau clients lorsqu'elle se déconnecte
         foreach ($this->clients as $connId => $client) {
             if ($conn === $client) {
@@ -120,12 +159,14 @@ class WebSocketApp implements MessageComponentInterface {
 
 function build($SESSID){
 
-    global $width, $squares;
+    global $width, $squares, $squaresLeft, $firstSquare;
     $width = 20;
     $squares[$SESSID] = [];
     $bombAmount = 70;
     $squares['bombsArray'] = [];
     $squares['validsArray'] = [];
+    $firstSquare[$SESSID] = true;
+    $squaresLeft[$SESSID] = $width*$width - $bombAmount;
 
 
     $squares['bombsArray'] = array_fill(0, $bombAmount, ['isBomb' => true, 'checked' => false]);

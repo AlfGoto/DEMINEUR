@@ -56,9 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
                 animLose()
             }
+            $.ajax({
+                type: "POST", 
+                url: "./MinesweeperEasy/statsBombExploded.php",
+            })
             isGameOver = true
             stopTimer()
-            return;
+            return
         }
 
         //DATA 0
@@ -77,6 +81,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }    
             checkSquare(square, msg['id'])
             square.classList.add('checked')
+            if (typeof msg['victory'] !== 'undefined' && isGameOver == false){
+                stopTimer()
+                isGameOver = true
+                animVictory()
+                $.ajax({
+                    type: "POST", 
+                    url: "./MinesweeperEasy/statsWin.php",
+                    data: {
+                        'time': msg['time']
+                    }
+                })
+            }
         }
 
         //DATA > 0
@@ -127,6 +143,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     square.classList.add('data8')
                     break;
 
+            }
+            if (typeof msg['victory'] !== 'undefined' && isGameOver == false){
+                stopTimer()
+                isGameOver = true
+                animVictory()
+                $.ajax({
+                    type: "POST", 
+                    url: "./MinesweeperEasy/statsWin.php",
+                })
             }
         }
 
@@ -807,7 +832,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(JSON.stringify(clickRequest))
     }
 
-
     function animVictory(){
         const shuffle = array => {
             for (let k = array.length - 1; k > 0; k--) {
@@ -868,6 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(timer);
         }
     }
+
     function resetTimer() {
         clearInterval(timer);
         isRunning = false;
