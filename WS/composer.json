@@ -1,6 +1,7 @@
 {
     "require": {
-        "cboden/ratchet": "^0.4.4"
+        "cboden/ratchet": "^0.4.4",
+        "doctrine/dbal": "^3.7"
     },
     "autoload": {
         "psr-4": {
@@ -8,4 +9,3 @@
         }
     }
 }
-

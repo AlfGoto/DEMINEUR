@@ -54,7 +54,7 @@ if (isset($_SESSION['isLogged'])) {
     if($_SESSION['isLogged']){
         echo '<script>var isLogged = ' . json_encode($_SESSION['isLogged']) . ';</script>';
         $sessionPseudo = $_SESSION['user'];
-        echo "<script>var sessionPseudo = " . $sessionPseudo . ";</script>";
+        echo "<script>let sessionPseudo = '" . $sessionPseudo . "';</script>";
     }
 }else{
     header('Location: ./loginRegister.php');

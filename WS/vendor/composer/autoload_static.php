@@ -35,7 +35,9 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Cache\\' => 10,
         ),
         'M' => 
         array (
@@ -48,6 +50,13 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         'E' => 
         array (
             'Evenement\\' => 10,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Deprecations\\' => 22,
+            'Doctrine\\DBAL\\' => 14,
+            'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\' => 16,
         ),
     );
 
@@ -100,10 +109,18 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         array (
             0 => __DIR__ . '/..' . '/cboden/ratchet/src/Ratchet',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
         'MyApp\\' => 
         array (
@@ -116,6 +133,22 @@ class ComposerStaticInitce559b9fbd0e097bccee77e6c3cc8be1
         'Evenement\\' => 
         array (
             0 => __DIR__ . '/..' . '/evenement/evenement/src',
+        ),
+        'Doctrine\\Deprecations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/deprecations/lib/Doctrine/Deprecations',
+        ),
+        'Doctrine\\DBAL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/dbal/src',
+        ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
+        'Doctrine\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
         ),
     );
 

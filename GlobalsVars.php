@@ -9,8 +9,4 @@ global $DBCODE;
 $DBCODE = 'root';
 
 
-global $firstSquare;
-$firstSquare = true;
-
-
 ?>

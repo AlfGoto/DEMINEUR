@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 
+    console.log(sessionPseudo)
 
 
 
@@ -34,7 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.addEventListener('open', (event) => {
         console.log('Connexion établie avec le serveur WebSocket');
-    
+
+        let clickRequest = {
+            request: 'bonjour',
+            pseudo: sessionPseudo
+        }
+        socket.send(JSON.stringify(clickRequest))
+        console.log(JSON.stringify(clickRequest))
     });
 
     socket.addEventListener('message', (event) => {
@@ -56,10 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.innerHTML = "<img src ='./image/bomb.png' class='bombimg' alt='image of a bomb'></img>"
                 animLose()
             }
-            $.ajax({
-                type: "POST", 
-                url: "./MinesweeperEasy/statsBombExploded.php",
-            })
             isGameOver = true
             stopTimer()
             return
@@ -85,14 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 stopTimer()
                 isGameOver = true
                 animVictory()
-                $.ajax({
-                    type: "POST", 
-                    url: "./MinesweeperEasy/statsWin.php",
-                    data: {
-                        'time': msg['time'],
-                        'hashed' : msg['hashed']
-                    }
-                })
             }
         }
 
@@ -149,14 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 stopTimer()
                 isGameOver = true
                 animVictory()
-                $.ajax({
-                    type: "POST", 
-                    url: "./MinesweeperEasy/statsWin.php",
-                    data: {
-                        'time': msg['time'],
-                        'hashed' : msg['hashed']
-                    }
-                })
             }
         }
 
@@ -454,13 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(secondSquare == true){
             startTimer() 
             secondSquare = false
-            $.ajax({
-                type: "POST", 
-                url: "./MinesweeperEasy/statsGames.php",
-                data: { 
-                    request: 'game'
-                }
-            })
         }
         if(square.classList.contains('checked')){
             return
@@ -576,10 +556,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 flagSound()
                 if(flagused == false){
                     flagused = true
-                    $.ajax({
-                        type: "POST", 
-                        url: "./MinesweeperEasy/flagused.php",
-                    })
+                    let clickRequest = {
+                        request: 'flagused'
+                    }
+                    socket.send(JSON.stringify(clickRequest))
+                    console.log(JSON.stringify(clickRequest))
                 }
             } else {
                 setTimeout(()=>{
