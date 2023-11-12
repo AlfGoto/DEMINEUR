@@ -223,39 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
- /*
-
-             
-                if(result.victory){
-                    stopTimer()
-                    isGameOver = true
-                    animVictory()
-                }
-        }) */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -610,9 +577,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                 }
             } else {
-                square.classList.remove('flag')
-                square.innerHTML = ' '
-                flags --
+                setTimeout(()=>{
+                    square.classList.remove('flag')
+                    square.innerHTML = ' '
+                    flags --
+                }, 100)
             }
         }
     }
