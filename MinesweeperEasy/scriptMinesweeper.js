@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     type: "POST", 
                     url: "./MinesweeperEasy/statsWin.php",
                     data: {
-                        'time': msg['time']
+                        'time': msg['time'],
+                        'hashed' : msg['hashed']
                     }
                 })
             }
@@ -151,6 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 $.ajax({
                     type: "POST", 
                     url: "./MinesweeperEasy/statsWin.php",
+                    data: {
+                        'time': msg['time'],
+                        'hashed' : msg['hashed']
+                    }
                 })
             }
         }

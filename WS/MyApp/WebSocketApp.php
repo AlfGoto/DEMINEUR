@@ -67,11 +67,13 @@ class WebSocketApp implements MessageComponentInterface {
                 if($squaresLeft[$SESSID] == 0){
                     global $timer;
                     $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
+                    $hashedTime = password_hash($timer[$SESSID]['finish'], PASSWORD_DEFAULT);
                     $info = array(
                         'request' => 'data0',
                         'id' => $id,
                         'victory'=> true,
-                        'time' => $timer[$SESSID]['finish']
+                        'time' => $timer[$SESSID]['finish'],
+                        'hashed' => $hashedTime
                     );
                     $clickResponse = json_encode($info);
                     $from->send($clickResponse);
@@ -95,12 +97,14 @@ class WebSocketApp implements MessageComponentInterface {
                 if($squaresLeft[$SESSID] == 0){
                     global $timer;
                     $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
+                    $hashedTime = password_hash($timer[$SESSID]['finish'], PASSWORD_DEFAULT);
                     $info = array(
                         'request' => 'data0',
                         'id' => $id,
                         'data' => $data,
                         'victory'=> true,
-                        'time' => $timer[$SESSID]['finish']
+                        'time' => $timer[$SESSID]['finish'],
+                        'hashed' => $hashedTime
                     );
                     $clickResponse = json_encode($info);
                     $from->send($clickResponse);
