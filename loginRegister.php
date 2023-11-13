@@ -8,6 +8,28 @@ session_start();
 
 include 'GlobalsVars.php';
 
+
+
+#Detect mobile device and redirect them
+function isMobileDevice() {
+  $userAgent = $_SERVER['HTTP_USER_AGENT'];
+  $mobileKeywords = array('Android', 'iPhone', 'iPad', 'Windows Phone', 'BlackBerry', 'BB10', 'Symbian', 'Opera Mini', 'Mobile', 'Mobile Safari', 'Tablet', 'IEMobile');
+
+  foreach ($mobileKeywords as $keyword) {
+      if (stripos($userAgent, $keyword) !== false) {
+          return true;
+      }
+  }
+  return false;
+}
+
+if (isMobileDevice()) {
+  header('Location: ./welcomeDearMobileUser.html');
+} 
+
+
+
+
 #Connecting to the database
 try{$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE,
   [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}

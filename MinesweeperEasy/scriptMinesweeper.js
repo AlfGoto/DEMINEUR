@@ -41,11 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             pseudo: sessionPseudo
         }
         socket.send(JSON.stringify(clickRequest))
-        console.log(JSON.stringify(clickRequest))
     });
 
     socket.addEventListener('message', (event) => {
-        console.log(event.data)
         var msg = JSON.parse(event.data)
 
         //BOMB
@@ -152,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
             bombAroundAnim(msg['array'])
 
         function bombAroundAnim(arrayB){
-            console.log('arrayB = '+ arrayB)
             const shuffle = array => {
                 for (let k = array.length - 1; k > 0; k--) {
                   const l = Math.floor(Math.random() * (k + 1));
@@ -163,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return array
                 }
             shuffledbombs = shuffle(arrayB)
-            console.log('shuffle = '+ shuffledbombs)
             shuffledbombs.forEach((i)=>{
                 setTimeout(()=>{
                     if(isGameOver == true){
@@ -457,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
             id: i
         }
         socket.send(JSON.stringify(clickRequest))
-        console.log(JSON.stringify(clickRequest))
     }
 
 
@@ -560,7 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         request: 'flagused'
                     }
                     socket.send(JSON.stringify(clickRequest))
-                    console.log(JSON.stringify(clickRequest))
                 }
             } else {
                 setTimeout(()=>{
@@ -755,7 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
             request: 'build'
         }
         socket.send(JSON.stringify(clickRequest))
-        console.log(JSON.stringify(clickRequest))
 
 
         restarting = true
@@ -784,7 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
             request: 'allBomb'
         }
         socket.send(JSON.stringify(clickRequest))
-        console.log(JSON.stringify(clickRequest))
     }
 
     function animVictory(){
