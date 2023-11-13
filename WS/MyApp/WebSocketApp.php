@@ -42,7 +42,7 @@ class WebSocketApp implements MessageComponentInterface {
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
 
             $pseudo[$SESSID] = $msg['pseudo'];
-            print('bonjour ' . $pseudo[$SESSID] . ' | ');
+            print('bonjour ' . $pseudo[$SESSID] . " | ");
             return;
         }
 
@@ -206,7 +206,7 @@ class WebSocketApp implements MessageComponentInterface {
 
 function build($SESSID){
 
-    print('BUILD Function | ');
+    print("\n BUILD Function | ");
 
     global $width, $squares, $squaresLeft, $firstSquare, $flagused, $secondSquare;
     $width = 20;
@@ -272,7 +272,7 @@ function allBomb($SESSID, $from){
 function winstats($SESSID, $elapsedTime){
     global $pseudo, $flagused;
 
-    print('winstats Function | ');
+    print("winstats Function | ");
 
     include('../GlobalsVars.php');
     $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
@@ -291,13 +291,13 @@ function winstats($SESSID, $elapsedTime){
         ]);
      }
 
-    $time = intval($elapsedTime);
+    print_r($elapsedTime);
 
     $sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
         $insertTimes = $db->prepare($sqlQuery);
         $insertTimes->execute([
             'pseudo'=>$pseudo,
-            'time'=>$time,
+            'time'=>$elapsedTime,
         ]);
 }
 
