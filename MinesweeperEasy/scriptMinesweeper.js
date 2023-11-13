@@ -801,6 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
         squaress.forEach((element)=>{
             setTimeout(()=>{
                 let square = element;
+                square.style.filter = 'contrast(80%)'
                 square.innerHTML =' '
                 square.style.animation = 'fadeIn 2s';
                 if (square.classList.contains('gray')) {
