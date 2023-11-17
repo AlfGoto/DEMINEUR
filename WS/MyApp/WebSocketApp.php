@@ -211,7 +211,7 @@ function build($SESSID){
     if(isset($pseudo[$SESSID])){
         print("\n BUILD Function " .  $pseudo[$SESSID] . " | ");
     }else{
-        print("\n BUILD Function UndefinedYet | ");
+        print("\n New player has joined | ");
     }
     
 
@@ -278,7 +278,7 @@ function allBomb($SESSID, $from){
 function winstats($SESSID, $elapsedTime){
     global $pseudo, $flagused;
 
-    print("winstats Function | ");
+    print("WINSTATS " . $pseudo[$SESSID] ." | ");
 
     include('../GlobalsVars.php');
     $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
@@ -311,7 +311,7 @@ function winstats($SESSID, $elapsedTime){
 function bombstats($SESSID){
     global $pseudo;
 
-    print('bombsstats Function  | ');
+    print('BOMBSTATS ' . $pseudo[$SESSID] .' | ');
 
     include('../GlobalsVars.php');
     $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
@@ -329,7 +329,7 @@ function bombstats($SESSID){
 function gamesstats($SESSID){
     global $pseudo;
 
-    print('gamesstats Function  | ');
+    print('GAMESSTATS ' . $pseudo[$SESSID] .' | ');
 
     include('../GlobalsVars.php');
     $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
