@@ -296,7 +296,7 @@ function winstats($SESSID, $elapsedTime){
     $sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
         $insertTimes = $db->prepare($sqlQuery);
         $insertTimes->execute([
-            'pseudo'=>$pseudo,
+            'pseudo'=>$pseudo[$SESSID],
             'time'=>$elapsedTime,
         ]);
 }
