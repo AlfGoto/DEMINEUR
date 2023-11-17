@@ -206,9 +206,15 @@ class WebSocketApp implements MessageComponentInterface {
 
 function build($SESSID){
 
-    print("\n BUILD Function | ");
+    global $width, $squares, $squaresLeft, $firstSquare, $flagused, $secondSquare, $pseudo;
 
-    global $width, $squares, $squaresLeft, $firstSquare, $flagused, $secondSquare;
+    if(isset($pseudo[$SESSID])){
+        print("\n BUILD Function " .  $pseudo[$SESSID] . " | ");
+    }else{
+        print("\n BUILD Function UndefinedYet | ");
+    }
+    
+
     $width = 20;
     $squares[$SESSID] = [];
     $flagused[$SESSID] = false;
@@ -294,11 +300,12 @@ function winstats($SESSID, $elapsedTime){
     print_r($elapsedTime);
 
     $sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
-        $insertTimes = $db->prepare($sqlQuery);
-        $insertTimes->execute([
-            'pseudo'=>$pseudo[$SESSID],
-            'time'=>$elapsedTime,
-        ]);
+    $insertTimes = $db->prepare($sqlQuery);
+    $insertTimes->execute([
+        'pseudo'=>$pseudo[$SESSID],
+        'time'=>$elapsedTime,
+    ]);
+    $db->connection = null;
 }
 
 function bombstats($SESSID){
@@ -315,6 +322,7 @@ function bombstats($SESSID){
     $NBbomb->execute([
         'pseudo'=>$pseudo[$SESSID]
     ]);
+    $db->connection = null;
         
 }
 
@@ -331,4 +339,5 @@ function gamesstats($SESSID){
     $NBgames->execute([
         'pseudo'=>$pseudo[$SESSID]
     ]);
+    $db->connection = null;
 }
