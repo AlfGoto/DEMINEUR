@@ -39,8 +39,8 @@ if (isMobileDevice()) {
 
 
 if (isset($_COOKIE['pseudo'])) {
-  $_SESSION['isLogged'] = true;
-  $_SESSION['user'] = $_COOKIE['pseudo'];
+    $_SESSION['isLogged'] = true;
+    $_SESSION['user'] = $_COOKIE['pseudo'];
 }
 
 
@@ -63,38 +63,38 @@ if (isset($_SESSION['isLogged'])) {
 
 #Tables
 try {
-  $conn = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE);
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 20";
-  $stmtA = $conn->query($sqlA);
+    $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 20";
+    $stmtA = $conn->query($sqlA);
 
-  $seenTimes = array();
-  $tablePseudo = array();
-  $tableTime = array();
+    $seenTimes = array();
+    $tablePseudo = array();
+    $tableTime = array();
 
-  while ($rowa = $stmtA->fetch(PDO::FETCH_ASSOC)) {
-    $pseudo = $rowa["pseudo"];
-    $time = $rowa["time"];
+    while ($rowa = $stmtA->fetch(PDO::FETCH_ASSOC)) {
+        $pseudo = $rowa["pseudo"];
+        $time = $rowa["time"];
 
-    if (!isset($seenTimes[$time])) {
-      $tablePseudo[] = $pseudo;
-      $tableTime[] = $time;
-      $seenTimes[$time] = true;
+        if (!isset($seenTimes[$time])) {
+            $tablePseudo[] = $pseudo;
+            $tableTime[] = $time;
+            $seenTimes[$time] = true;
+        }
     }
-  }
 
-  $sqlB = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 20";
-  $stmtB = $conn->query($sqlB);
+    $sqlB = "SELECT pseudo, MIN(time) as best_time FROM times GROUP BY pseudo ORDER BY best_time ASC LIMIT 20";
+    $stmtB = $conn->query($sqlB);
 
-  $playerClassment = array();
+    $playerClassment = array();
 
-  while ($rowb = $stmtB->fetch(PDO::FETCH_ASSOC)) {
-    $playerClassment[] = array(
-      'pseudo' => $rowb["pseudo"],
-      'bestTime' => $rowb["best_time"]
-    );
-  }
+    while ($rowb = $stmtB->fetch(PDO::FETCH_ASSOC)) {
+        $playerClassment[] = array(
+            'pseudo' => $rowb["pseudo"],
+            'bestTime' => $rowb["best_time"]
+        );
+    }
 
 
 
@@ -125,27 +125,26 @@ try {
     $stats = array();
 
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $stats['victories'] = $row['victories'];
-      $stats['victoriesaverages'] = $row['victoriesaverages'];
-      $stats['victoriesflagless'] = $row['victoriesflagless'];
-      $stats['games'] = $row['games'];
-      $stats['bombsExploded'] = $row['bombsExploded'];
-      if($stats['games']>0){
-        $statsWinrate = round(($stats['victories'] / $stats['games']) * 100) . '%';
-      }else{
-        $statsWinrate = 0;
-      }
-      
+        $stats['victories'] = $row['victories'];
+        $stats['victoriesaverages'] = $row['victoriesaverages'];
+        $stats['victoriesflagless'] = $row['victoriesflagless'];
+        $stats['games'] = $row['games'];
+        $stats['bombsExploded'] = $row['bombsExploded'];
+        if($stats['games']>0){
+            $statsWinrate = round(($stats['victories'] / $stats['games']) * 100) . '%';
+        }else{
+            $statsWinrate = 0;
+        }
     }
 
-  }
-  
+    }
 
 
 
-  $conn = null;
+
+    $conn = null;
 } catch (PDOException $e) {
-  echo "Connection failed: " . $e->getMessage();
+    echo "Connection failed: " . $e->getMessage();
 }
 
 
@@ -248,10 +247,10 @@ if (isset($_SESSION['user'])) {
                         Logged as
                         <?php echo $_SESSION['user'];
             if (isset($_SESSION['rank'])) {
-              echo ', rank #' . $_SESSION['rank'];
-              if (isset($_SESSION['rank'])) {
+                echo ', rank #' . $_SESSION['rank'];
+                if (isset($_SESSION['rank'])) {
                 echo '<br/>Best score : ' . $_SESSION['bestTime'] / 1000 . "s";
-              }
+            }
             } ?>
                     </p>
                 </div>

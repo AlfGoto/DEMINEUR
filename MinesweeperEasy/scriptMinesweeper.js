@@ -782,13 +782,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function animVictory(){
         const shuffle = array => {
             for (let k = array.length - 1; k > 0; k--) {
-              const l = Math.floor(Math.random() * (k + 1));
-              const temp = array[k];
-              array[k] = array[l];
-              array[l] = temp;
+                const l = Math.floor(Math.random() * (k + 1));
+                const temp = array[k];
+                array[k] = array[l];
+                array[l] = temp;
             }
             return array
-          }
+            }
         let squaress = shuffle(squares)
         squaress.forEach((element)=>{
             setTimeout(()=>{
