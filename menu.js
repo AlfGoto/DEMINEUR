@@ -131,40 +131,37 @@ document.addEventListener('DOMContentLoaded', () => {
     statsDiv.addEventListener('click', () => {
         if(statsDivOpen){
             statsDivOpen = false
-            statsDiv.style.height = '27.5vh'
+            statsDiv.style.height = 'auto'
         }else{
             statsDivOpen = true
             statsDiv.style.height = '7vh'
         }
-        
     })
 
     let tableDiv = document.getElementById('tableDiv')
     let tableOpen = true
-    tableDiv.style.transition = 'height 0.5s ease';
+    // tableDiv.style.transition = 'height 0.5s ease';
     tableDiv.addEventListener('click', () => {
         if(tableOpen){
             tableOpen = false
-            tableDiv.style.height = '35vh'
+            tableDiv.style.height = 'auto'
         }else{
             tableOpen = true
             tableDiv.style.height = '7vh'
         }
-        
     })
 
     let tablePlayerDiv = document.getElementById('tablePlayersDiv')
     let tablePlayerOpen = true
-    tablePlayerDiv.style.transition = 'height 0.5s ease';
+    // tablePlayerDiv.style.transition = 'height 0.5s ease';
     tablePlayerDiv.addEventListener('click', () => {
         if(tablePlayerOpen){
             tablePlayerOpen = false
-            tablePlayerDiv.style.height = '35vh'
+            tablePlayerDiv.style.height = 'auto'
         }else{
             tablePlayerOpen = true
             tablePlayerDiv.style.height = '7vh'
         }
-        
     })
 
 

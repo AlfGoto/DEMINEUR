@@ -10,11 +10,13 @@ use PDO;
 
 
 
-class WebSocketApp implements MessageComponentInterface {
+class WebSocketApp implements MessageComponentInterface
+{
     private $clients = [];
-    
 
-    public function onOpen(ConnectionInterface $conn) {
+
+    public function onOpen(ConnectionInterface $conn)
+    {
         // Générer un identifiant unique pour la connexion
         $connId = uniqid();
 
@@ -23,7 +25,7 @@ class WebSocketApp implements MessageComponentInterface {
         $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
 
         build($SESSID);
-        
+
         // Stocker la connexion dans le tableau clients avec l'identifiant unique comme clé
         $this->clients[$connId] = $conn;
     }
@@ -31,12 +33,13 @@ class WebSocketApp implements MessageComponentInterface {
 
 
     //MESSAGE
-    public function onMessage(ConnectionInterface $from, $msg) {
+    public function onMessage(ConnectionInterface $from, $msg)
+    {
         $msg = json_decode($msg, true);
 
 
         //if BONJOUR
-        if($msg['request'] == 'bonjour'){
+        if ($msg['request'] == 'bonjour') {
             global $pseudo;
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
@@ -47,7 +50,7 @@ class WebSocketApp implements MessageComponentInterface {
         }
 
         //if BUILD
-        if($msg['request'] == 'build'){
+        if ($msg['request'] == 'build') {
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
 
@@ -56,7 +59,7 @@ class WebSocketApp implements MessageComponentInterface {
         }
 
         //if FLAGUSED
-        if($msg['request'] == 'flagused'){
+        if ($msg['request'] == 'flagused') {
             global $flagused;
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
@@ -76,33 +79,38 @@ class WebSocketApp implements MessageComponentInterface {
 
 
         //if CLICK
-        if($msg['request'] == 'click'){
+        if ($msg['request'] == 'click') {
             global $squares, $squaresLeft, $firstSquare, $secondSquare;
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
             $id = $msg['id'];
-            if($squares[$SESSID][$id]['checked'] == true){return;}
+            if ($squares[$SESSID][$id]['checked'] == true) {
+                return;
+            }
             $squares[$SESSID][$id]['checked'] = true;
             $squaresLeft[$SESSID]--;
 
-            if($squares[$SESSID][$id]['isBomb'] == true){
+            if ($squares[$SESSID][$id]['isBomb'] == true) {
                 $info = array(
                     'request' => 'isBomb',
                     'id' => $id
                 );
-                if($firstSquare[$SESSID] == true || $secondSquare[$SESSID] == true){}else{bombstats($SESSID);}
+                if ($firstSquare[$SESSID] == true || $secondSquare[$SESSID] == true) {
+                } else {
+                    bombstats($SESSID);
+                }
                 $clickResponse = json_encode($info);
                 $from->send($clickResponse);
                 return;
             }
-            if($squares[$SESSID][$id]["data"] == 0){
-                if($squaresLeft[$SESSID] == 0){
+            if ($squares[$SESSID][$id]["data"] == 0) {
+                if ($squaresLeft[$SESSID] == 0) {
                     global $timer;
                     $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
                     $info = array(
                         'request' => 'data0',
                         'id' => $id,
-                        'victory'=> true,
+                        'victory' => true,
                     );
                     $clickResponse = json_encode($info);
                     $from->send($clickResponse);
@@ -117,26 +125,26 @@ class WebSocketApp implements MessageComponentInterface {
                 $from->send($clickResponse);
                 return;
             }
-            if($squares[$SESSID][$id]["data"] > 0){
+            if ($squares[$SESSID][$id]["data"] > 0) {
                 global $timer, $squares, $firstSquare, $secondSquare;
-                if($secondSquare[$SESSID] == true){
+                if ($secondSquare[$SESSID] == true) {
                     $secondSquare[$SESSID] = false;
                     gamesstats($SESSID);
                 }
-                if($firstSquare[$SESSID] == true){
+                if ($firstSquare[$SESSID] == true) {
                     $firstSquare[$SESSID] = false;
                     $secondSquare[$SESSID] = true;
                     $timer[$SESSID]['start'] = round(microtime(true) * 1000);
                 }
                 $data = $squares[$SESSID][$id]["data"];
-                if($squaresLeft[$SESSID] == 0){
+                if ($squaresLeft[$SESSID] == 0) {
                     global $timer;
                     $timer[$SESSID]['finish'] = round(microtime(true) * 1000) - $timer[$SESSID]['start'];
                     $info = array(
                         'request' => 'data0',
                         'id' => $id,
                         'data' => $data,
-                        'victory'=> true,
+                        'victory' => true,
                     );
                     $clickResponse = json_encode($info);
                     $from->send($clickResponse);
@@ -152,7 +160,7 @@ class WebSocketApp implements MessageComponentInterface {
                 $from->send($clickResponse);
                 return;
             }
-        } 
+        }
 
 
 
@@ -164,21 +172,22 @@ class WebSocketApp implements MessageComponentInterface {
 
 
         //if ALLBOMB
-        if($msg['request'] == 'allBomb'){
+        if ($msg['request'] == 'allBomb') {
             $cookieArray = $from->httpRequest->getHeader('Cookie');
             $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
 
             allBomb($SESSID, $from);
         }
-        
+
     }
 
-    
 
 
 
-    public function onClose(ConnectionInterface $conn) {
-        global $squares, $timer, $squaresLeft, $pseudo, $flagused, $firstSquare, $secondSquare;
+
+    public function onClose(ConnectionInterface $conn)
+    {
+        global $squares, $timer, $squaresLeft, $pseudo, $flagused, $firstSquare, $secondSquare, $bombsArray, $validsArray;
         $cookieArray = $conn->httpRequest->getHeader('Cookie');
         $SESSID = str_replace('PHPSESSID=', "", $cookieArray[0]);
         unset($squares[$SESSID]);
@@ -188,6 +197,8 @@ class WebSocketApp implements MessageComponentInterface {
         unset($flagused[$SESSID]);
         unset($firstSquare[$SESSID]);
         unset($secondSquare[$SESSID]);
+        unset($bombsArray[$SESSID]);
+        unset($validsArray[$SESSID]);
         // Trouver et supprimer la connexion du tableau clients lorsqu'elle se déconnecte
         foreach ($this->clients as $connId => $client) {
             if ($conn === $client) {
@@ -197,72 +208,90 @@ class WebSocketApp implements MessageComponentInterface {
         }
     }
 
-    public function onError(ConnectionInterface $conn, \Exception $e) {
+    public function onError(ConnectionInterface $conn, \Exception $e)
+    {
     }
 }
 
 
 
 
-function build($SESSID){
+function build($SESSID)
+{
 
     global $width, $squares, $squaresLeft, $firstSquare, $flagused, $secondSquare, $pseudo;
 
-    if(isset($pseudo[$SESSID])){
-        print("\n BUILD Function " .  $pseudo[$SESSID] . " | ");
-    }else{
+    if (isset($pseudo[$SESSID])) {
+        print("\n BUILD Function " . $pseudo[$SESSID] . " | ");
+    } else {
         print("\n New player has joined | ");
     }
-    
+
 
     $width = 20;
     $squares[$SESSID] = [];
     $flagused[$SESSID] = false;
     $bombAmount = 70;
-    $squares['bombsArray'] = [];
-    $squares['validsArray'] = [];
+    $bombsArray[$SESSID] = [];
+    $validsArray[$SESSID] = [];
     $firstSquare[$SESSID] = true;
     $secondSquare[$SESSID] = false;
-    $squaresLeft[$SESSID] = $width*$width - $bombAmount;
+    $squaresLeft[$SESSID] = $width * $width - $bombAmount;
 
 
-    $squares['bombsArray'] = array_fill(0, $bombAmount, ['isBomb' => true, 'checked' => false]);
-    $squares['validsArray'] = array_fill(0, $width*$width - $bombAmount, ['isBomb' => false, 'checked' => false]);
-    $squares[$SESSID] = array_merge($squares['bombsArray'], $squares['validsArray']);
+    $bombsArray[$SESSID] = array_fill(0, $bombAmount, ['isBomb' => true, 'checked' => false]);
+    $validsArray[$SESSID] = array_fill(0, $width * $width - $bombAmount, ['isBomb' => false, 'checked' => false]);
+    $squares[$SESSID] = array_merge($bombsArray[$SESSID], $validsArray[$SESSID]);
     shuffle($squares[$SESSID]);
 
     //numbers on square
-    for ($i = 0; $i < $width*$width; $i++) {
+    for ($i = 0; $i < $width * $width; $i++) {
         $total = 0;
         $isLeftEdge = ($i % $width === 0);
-        $isRightEdge = ($i % $width === $width -1);
+        $isRightEdge = ($i % $width === $width - 1);
 
         if ($squares[$SESSID][$i]['isBomb'] == false) {
-            if ($i > 0 && !$isLeftEdge && $squares[$SESSID][$i -1]['isBomb']) $total++;
-            if ($i > 19 && !$isRightEdge && $squares[$SESSID][$i +1 -$width]['isBomb']) $total++;
-            if ($i > 20 && $squares[$SESSID][$i - $width]['isBomb']) $total++;
-            if ($i > 21 && !$isLeftEdge && $squares[$SESSID][$i  -1 -$width]['isBomb']) $total++;
-            if ($i < 398 && !$isRightEdge && $squares[$SESSID][$i  +1]['isBomb']) $total++;
-            if ($i < 380 && !$isLeftEdge && $squares[$SESSID][$i  -1 +$width]['isBomb']) $total++;
-            if ($i < 378 && !$isRightEdge && $squares[$SESSID][$i  +1 +$width]['isBomb']) $total++;
-            if ($i < 379 && $squares[$SESSID][$i  +$width]['isBomb']) $total++;
-            if ($i === 398 && $squares[$SESSID][$i  +1]['isBomb']) $total++;
-            if ($i === 379 && $squares[$SESSID][$i  +20]['isBomb']) $total++;
-            if ($i === 378 && $squares[$SESSID][$i  +21]['isBomb']) $total++;
-            if ($i === 21 && $squares[$SESSID][$i  -21]['isBomb']) $total++;
-            if ($i === 20 && $squares[$SESSID][$i  -20]['isBomb']) $total++;
+            if ($i > 0 && !$isLeftEdge && $squares[$SESSID][$i - 1]['isBomb'])
+                $total++;
+            if ($i > 19 && !$isRightEdge && $squares[$SESSID][$i + 1 - $width]['isBomb'])
+                $total++;
+            if ($i > 20 && $squares[$SESSID][$i - $width]['isBomb'])
+                $total++;
+            if ($i > 21 && !$isLeftEdge && $squares[$SESSID][$i - 1 - $width]['isBomb'])
+                $total++;
+            if ($i < 398 && !$isRightEdge && $squares[$SESSID][$i + 1]['isBomb'])
+                $total++;
+            if ($i < 380 && !$isLeftEdge && $squares[$SESSID][$i - 1 + $width]['isBomb'])
+                $total++;
+            if ($i < 378 && !$isRightEdge && $squares[$SESSID][$i + 1 + $width]['isBomb'])
+                $total++;
+            if ($i < 379 && $squares[$SESSID][$i + $width]['isBomb'])
+                $total++;
+            if ($i === 398 && $squares[$SESSID][$i + 1]['isBomb'])
+                $total++;
+            if ($i === 379 && $squares[$SESSID][$i + 20]['isBomb'])
+                $total++;
+            if ($i === 378 && $squares[$SESSID][$i + 21]['isBomb'])
+                $total++;
+            if ($i === 21 && $squares[$SESSID][$i - 21]['isBomb'])
+                $total++;
+            if ($i === 20 && $squares[$SESSID][$i - 20]['isBomb'])
+                $total++;
             $squares[$SESSID][$i]['data'] = $total;
         }
     }
 }
 
-function allBomb($SESSID, $from){
+function allBomb($SESSID, $from)
+{
     global $width, $squares;
-    if(isset($bombsPosition[$SESSID])){unset($bombsPosition[$SESSID]);}
+    if (isset($bombsPosition[$SESSID])) {
+        unset($bombsPosition[$SESSID]);
+    }
     $bombsPosition = [];
     $bombsPosition[$SESSID] = [];
-    for($i = 0; $i < $width * $width; $i++){
-        if($squares[$SESSID][$i]['isBomb'] == true){
+    for ($i = 0; $i < $width * $width; $i++) {
+        if ($squares[$SESSID][$i]['isBomb'] == true) {
             array_push($bombsPosition[$SESSID], $i);
         }
     }
@@ -275,69 +304,73 @@ function allBomb($SESSID, $from){
     return;
 }
 
-function winstats($SESSID, $elapsedTime){
+function winstats($SESSID, $elapsedTime)
+{
     global $pseudo, $flagused;
 
-    print("WINSTATS " . $pseudo[$SESSID] ." | ");
+    print("WINSTATS " . $pseudo[$SESSID] . " | ");
 
     include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     $sqlNBvictory = 'UPDATE stats SET victories = victories + 1 WHERE pseudo = :pseudo';
     $NBvictory = $db->prepare($sqlNBvictory);
     $NBvictory->execute([
-        'pseudo'=>$pseudo[$SESSID]
+        'pseudo' => $pseudo[$SESSID]
     ]);
 
-    if ($flagused[$SESSID]){}else{
+    if ($flagused[$SESSID]) {
+    } else {
         $sqlNBflagless = 'UPDATE stats SET victoriesflagless = victoriesflagless + 1 WHERE pseudo = :pseudo';
         $NBflagless = $db->prepare($sqlNBflagless);
         $NBflagless->execute([
-            'pseudo'=>$pseudo[$SESSID]
+            'pseudo' => $pseudo[$SESSID]
         ]);
-     }
+    }
 
     print_r($elapsedTime);
 
     $sqlQuery = 'INSERT INTO times (id, pseudo, time) VALUES (NULL, :pseudo, :time)';
     $insertTimes = $db->prepare($sqlQuery);
     $insertTimes->execute([
-        'pseudo'=>$pseudo[$SESSID],
-        'time'=>$elapsedTime,
+        'pseudo' => $pseudo[$SESSID],
+        'time' => $elapsedTime,
     ]);
     $db->connection = null;
 }
 
-function bombstats($SESSID){
+function bombstats($SESSID)
+{
     global $pseudo;
 
-    print('BOMBSTATS ' . $pseudo[$SESSID] .' | ');
+    print('BOMBSTATS ' . $pseudo[$SESSID] . ' | ');
 
     include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
     $sqlNBbomb = 'UPDATE stats SET bombsExploded = bombsExploded + 1 WHERE pseudo = :pseudo';
     $NBbomb = $db->prepare($sqlNBbomb);
     $NBbomb->execute([
-        'pseudo'=>$pseudo[$SESSID]
+        'pseudo' => $pseudo[$SESSID]
     ]);
     $db->connection = null;
-        
+
 }
 
-function gamesstats($SESSID){
+function gamesstats($SESSID)
+{
     global $pseudo;
 
-    print('GAMESSTATS ' . $pseudo[$SESSID] .' | ');
+    print('GAMESSTATS ' . $pseudo[$SESSID] . ' | ');
 
     include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
     $NBgames = $db->prepare($sqlNBgames);
     $NBgames->execute([
-        'pseudo'=>$pseudo[$SESSID]
+        'pseudo' => $pseudo[$SESSID]
     ]);
     $db->connection = null;
 }
