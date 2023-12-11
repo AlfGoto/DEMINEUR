@@ -5,9 +5,13 @@ header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
 
-session_start(); 
+session_start();
 
 include('GlobalsVars.php');
+
+// $GLOBALS['DBNAME'] = 'minesweeper';
+// $GLOBALS['DBPSEUDO'] = 'root';
+// $GLOBALS['DBCODE'] = 'root';
 
 
 $_SESSION['flagused'] = false;
@@ -15,7 +19,8 @@ $_SESSION['flagused'] = false;
 
 
 #Detect mobile device and redirect them
-function isMobileDevice() {
+function isMobileDevice()
+{
     $userAgent = $_SERVER['HTTP_USER_AGENT'];
     $mobileKeywords = array('Android', 'iPhone', 'iPad', 'Windows Phone', 'BlackBerry', 'BB10', 'Symbian', 'Opera Mini', 'Mobile', 'Mobile Safari', 'Tablet', 'IEMobile');
 
@@ -29,7 +34,7 @@ function isMobileDevice() {
 
 if (isMobileDevice()) {
     header('Location: ./welcomeDearMobileUser.html');
-} 
+}
 
 
 
@@ -45,25 +50,25 @@ if (isset($_COOKIE['pseudo'])) {
 
 
 #mute cookie
-if (isset($_COOKIE['mute'])){
+if (isset($_COOKIE['mute'])) {
     echo "<script>var muteCookie = " . $_COOKIE['mute'] . ";</script>";
 }
 
 #Transfer the variables to JS
 if (isset($_SESSION['isLogged'])) {
-    if($_SESSION['isLogged']){
+    if ($_SESSION['isLogged']) {
         echo '<script>var isLogged = ' . json_encode($_SESSION['isLogged']) . ';</script>';
         $sessionPseudo = $_SESSION['user'];
         echo "<script>let sessionPseudo = '" . $sessionPseudo . "';</script>";
     }
-}else{
+} else {
     header('Location: ./loginRegister.php');
 }
 
 
 #Tables
 try {
-    $conn = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE);
+    $conn = new PDO("mysql:host=localhost;dbname=" . $GLOBALS['DBNAME'], $GLOBALS['DBPSEUDO'], $GLOBALS['DBCODE']);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sqlA = "SELECT pseudo, time FROM times ORDER BY time ASC LIMIT 20";
@@ -98,44 +103,44 @@ try {
 
 
 
-  //Average win times in stats
-  if(isset($_SESSION['user']) == true){
-    $currentUser = $_SESSION['user'];
+    //Average win times in stats
+    if (isset($_SESSION['user']) == true) {
+        $currentUser = $_SESSION['user'];
 
-    $sqlC = "SELECT AVG(time) as average_time FROM times WHERE pseudo = :currentUser";
-    $stmtC = $conn->prepare($sqlC);
-    $stmtC->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-    $stmtC->execute();
-    $rowc = $stmtC->fetch(PDO::FETCH_ASSOC);
-    $averageTime = $rowc["average_time"];
+        $sqlC = "SELECT AVG(time) as average_time FROM times WHERE pseudo = :currentUser";
+        $stmtC = $conn->prepare($sqlC);
+        $stmtC->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+        $stmtC->execute();
+        $rowc = $stmtC->fetch(PDO::FETCH_ASSOC);
+        $averageTime = $rowc["average_time"];
 
-    $updateSql = "UPDATE stats SET victoriesaverages = :averageTime WHERE pseudo = :currentUser";
-    $updateStmt = $conn->prepare($updateSql);
-    $updateStmt->bindParam(':averageTime', $averageTime, PDO::PARAM_INT);
-    $updateStmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-    $updateStmt->execute();
+        $updateSql = "UPDATE stats SET victoriesaverages = :averageTime WHERE pseudo = :currentUser";
+        $updateStmt = $conn->prepare($updateSql);
+        $updateStmt->bindParam(':averageTime', $averageTime, PDO::PARAM_INT);
+        $updateStmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+        $updateStmt->execute();
 
 
-    //get the STATS in an array
-    $sql = "SELECT * FROM stats WHERE pseudo = :currentUser";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
-    $stmt->execute();
+        //get the STATS in an array
+        $sql = "SELECT * FROM stats WHERE pseudo = :currentUser";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':currentUser', $currentUser, PDO::PARAM_STR);
+        $stmt->execute();
 
-    $stats = array();
+        $stats = array();
 
-    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $stats['victories'] = $row['victories'];
-        $stats['victoriesaverages'] = $row['victoriesaverages'];
-        $stats['victoriesflagless'] = $row['victoriesflagless'];
-        $stats['games'] = $row['games'];
-        $stats['bombsExploded'] = $row['bombsExploded'];
-        if($stats['games']>0){
-            $statsWinrate = round(($stats['victories'] / $stats['games']) * 100) . '%';
-        }else{
-            $statsWinrate = 0;
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $stats['victories'] = $row['victories'];
+            $stats['victoriesaverages'] = $row['victoriesaverages'];
+            $stats['victoriesflagless'] = $row['victoriesflagless'];
+            $stats['games'] = $row['games'];
+            $stats['bombsExploded'] = $row['bombsExploded'];
+            if ($stats['games'] > 0) {
+                $statsWinrate = round(($stats['victories'] / $stats['games']) * 100) . '%';
+            } else {
+                $statsWinrate = 0;
+            }
         }
-    }
 
     }
 
@@ -151,13 +156,13 @@ try {
 
 #Get the classment and Bestscore of the Session player
 if (isset($_SESSION['user'])) {
-  for ($i = 0; $i < count($playerClassment); $i++) {
-    if ($playerClassment[$i]['pseudo'] == $_SESSION['user']) {
-      $_SESSION['rank'] = $i + 1;
-      $_SESSION['bestTime'] = $playerClassment[$i]['bestTime'];
-      break;
+    for ($i = 0; $i < count($playerClassment); $i++) {
+        if ($playerClassment[$i]['pseudo'] == $_SESSION['user']) {
+            $_SESSION['rank'] = $i + 1;
+            $_SESSION['bestTime'] = $playerClassment[$i]['bestTime'];
+            break;
+        }
     }
-  }
 }
 
 
@@ -171,16 +176,17 @@ if (isset($_SESSION['user'])) {
 
 <head>
     <script>
-    //mute globalisation
-    window.mute = false
-    if(typeof muteCookie !== 'undefined'){
-        if(muteCookie == true){window.mute = true}
-        if(muteCookie == false){window.mute = false}
-    }
+        //mute globalisation
+        window.mute = false
+        if (typeof muteCookie !== 'undefined') {
+            if (muteCookie == true) { window.mute = true }
+            if (muteCookie == false) { window.mute = false }
+        }
     </script>
 
 
-    <link href="./style.css" rel="stylesheet"></link>
+    <link href="./style.css" rel="stylesheet">
+    </link>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src='isLogged.js'></script>
     <script src='menu.js'></script>
@@ -221,7 +227,7 @@ if (isset($_SESSION['user'])) {
     </div>
 
 
-        
+
 
 
 
@@ -246,12 +252,12 @@ if (isset($_SESSION['user'])) {
                     <p>
                         Logged as
                         <?php echo $_SESSION['user'];
-            if (isset($_SESSION['rank'])) {
-                echo ', rank #' . $_SESSION['rank'];
-                if (isset($_SESSION['rank'])) {
-                echo '<br/>Best score : ' . $_SESSION['bestTime'] / 1000 . "s";
-            }
-            } ?>
+                        if (isset($_SESSION['rank'])) {
+                            echo ', rank #' . $_SESSION['rank'];
+                            if (isset($_SESSION['rank'])) {
+                                echo '<br/>Best score : ' . $_SESSION['bestTime'] / 1000 . "s";
+                            }
+                        } ?>
                     </p>
                 </div>
                 <div id='statsDiv' class='tableDiv'>
@@ -275,7 +281,7 @@ if (isset($_SESSION['user'])) {
                             <tr>
                                 <td class='tableStatsStatsNames'>Average win time : </td>
                                 <td>
-                                    <?= $stats['victoriesaverages']/1000 ?>
+                                    <?= $stats['victoriesaverages'] / 1000 ?>
                                 </td>
                             </tr>
                             <tr>
@@ -305,7 +311,7 @@ if (isset($_SESSION['user'])) {
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div id='tablePlayersDiv' class='tableDiv'>
                     <div id='tablePlayerHaut'>
                         <h2 id='tablePlayerTitle'>Best players</h2>
@@ -469,12 +475,17 @@ if (isset($_SESSION['user'])) {
                             </tr>
                             <tr>
                                 <th id='tableClassment7'>7</th>
-                                <td id='tablePseudo7'><?= $tablePseudo[6] ?></td>
-                                <td id='tableTime7'><?= $tableTime[6] / 1000 ?></td>
+                                <td id='tablePseudo7'>
+                                    <?= $tablePseudo[6] ?>
+                                </td>
+                                <td id='tableTime7'>
+                                    <?= $tableTime[6] / 1000 ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th id='tableClassment8'>8</th>
-                                <td id='tablePseudo8'><?= $tablePseudo[7] ?>
+                                <td id='tablePseudo8'>
+                                    <?= $tablePseudo[7] ?>
                                 </td>
                                 <td id='tableTime8'>
                                     <?= $tableTime[7] / 1000 ?>
@@ -503,7 +514,7 @@ if (isset($_SESSION['user'])) {
 
                     </table>
                 </div>
-                
+
                 <div id='unlogButtonDiv' class='visible'>
                     <form action="index.php" method="post">
                         <button class='button' name='unlogButton' type="submit" value='Unlog'

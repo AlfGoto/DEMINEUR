@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             checkSquare(square, msg['id'])
             square.classList.add('checked')
+            if (square.classList.contains('flag')) { square.classList.remove('flag') }
             if (typeof msg['victory'] !== 'undefined' && isGameOver == false) {
                 stopTimer()
                 isGameOver = true
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (msg['request'] == 'isData') {
             let square = document.getElementById(msg['id'])
             square.classList.add('checked')
+            if (square.classList.contains('flag')) { square.classList.remove('flag') }
             if (square.classList.contains('green')) {
                 square.classList.remove('green')
                 square.classList.add('gray')

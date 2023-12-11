@@ -31,7 +31,7 @@ if (isMobileDevice()) {
 
 
 #Connecting to the database
-try{$db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE,
+try{$db = new PDO("mysql:host=localhost;dbname=" .$GLOBALS['DBNAME'], $GLOBALS['DBPSEUDO'], $GLOBALS['DBCODE'],
   [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}
 catch(Exception $e){
   die('erreur : '. $e->getMessage());

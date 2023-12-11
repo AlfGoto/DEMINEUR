@@ -8,7 +8,7 @@ use Ratchet\ConnectionInterface;
 use PDO;
 
 
-
+include('../GlobalsVars.php');
 
 class WebSocketApp implements MessageComponentInterface
 {
@@ -310,8 +310,8 @@ function winstats($SESSID, $elapsedTime)
 
     print("WINSTATS " . $pseudo[$SESSID] . " | ");
 
-    include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    //include('../GlobalsVars.php');
+    $db = new PDO("mysql:host=localhost;dbname=" . $GLOBALS['DBNAME'], $GLOBALS['DBPSEUDO'], $GLOBALS['DBCODE'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     $sqlNBvictory = 'UPDATE stats SET victories = victories + 1 WHERE pseudo = :pseudo';
     $NBvictory = $db->prepare($sqlNBvictory);
@@ -345,8 +345,8 @@ function bombstats($SESSID)
 
     print('BOMBSTATS ' . $pseudo[$SESSID] . ' | ');
 
-    include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    //include('../GlobalsVars.php');
+    $db = new PDO("mysql:host=localhost;dbname=" . $GLOBALS['DBNAME'], $GLOBALS['DBPSEUDO'], $GLOBALS['DBCODE'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
     $sqlNBbomb = 'UPDATE stats SET bombsExploded = bombsExploded + 1 WHERE pseudo = :pseudo';
@@ -364,8 +364,8 @@ function gamesstats($SESSID)
 
     print('GAMESSTATS ' . $pseudo[$SESSID] . ' | ');
 
-    include('../GlobalsVars.php');
-    $db = new PDO("mysql:host=localhost;dbname=$DBNAME", $DBPSEUDO, $DBCODE, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    //include('../GlobalsVars.php');
+    $db = new PDO("mysql:host=localhost;dbname=" . $GLOBALS['DBNAME'], $GLOBALS['DBPSEUDO'], $GLOBALS['DBCODE'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     $sqlNBgames = 'UPDATE stats SET games = games + 1 WHERE pseudo = :pseudo';
     $NBgames = $db->prepare($sqlNBgames);
